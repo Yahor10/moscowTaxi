@@ -20,6 +20,8 @@
     <string name="favorites_places">Избранные места</string>
     <string name="favorites_route">Избранные маршруты</string>
 
+    <string name="addresses">Адресса</string>
+
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

@@ -12,13 +12,11 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.Locale;
 
@@ -134,7 +132,14 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position){
+                case 0:
+                    return PlaceholderFragment.newInstance(0);
+                case 1:
+                    return RouteholderFragment.newInstance(1);
+                default:
+                    return null;
+            }
         }
 
         @Override
@@ -184,7 +189,37 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_favorites_places, container, false);
+            return rootView;
+        }
+    }
+
+    public static class RouteholderFragment extends Fragment {
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+        public static RouteholderFragment newInstance(int sectionNumber) {
+            RouteholderFragment fragment = new RouteholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public RouteholderFragment() {
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_favorites_route, container, false);
             return rootView;
         }
     }
