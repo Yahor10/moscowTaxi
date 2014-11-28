@@ -4,6 +4,7 @@ package ru.moscowtaxi.android.moscowtaxi;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +21,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -28,6 +35,11 @@ import android.widget.Toast;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
+    // имена атрибутов для Map
+    final String ATTRIBUTE_NAME_TEXT = "text";
+    final String ATTRIBUTE_NAME_TEXT2 = "text2";
+
 
     /**
      * Remember the position of the selected item.
@@ -97,15 +109,55 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+
+        String[] texts1 = { getString(R.string.navigation_personal_info), getString(R.string.navigation_favorites), getString(R.string.navigation_favorites_rides),
+                getString(R.string.navigation_history_rides), getString(R.string.navigation_rewards) };
+        String[] texts2 = { getString(R.string.navigation_personal_info_change), getString(R.string.navigation_favorites_list), getString(R.string.navigation_favorites_list),
+                getString(R.string.navigation_history_rides_list),  getString(R.string.navigation_private_rewards) };
+        int img = R.drawable.ic_launcher;
+
+        // упаковываем данные в понятную для адаптера структуру
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
+                texts1.length);
+        Map<String, Object> m;
+        for (int i = 0; i < texts1.length; i++) {
+            m = new HashMap<String, Object>();
+            m.put(ATTRIBUTE_NAME_TEXT, texts1[i]);
+            m.put(ATTRIBUTE_NAME_TEXT2, texts2[i]);
+            data.add(m);
+        }
+
+        // массив имен атрибутов, из которых будут читаться данные
+        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_TEXT2,
+                };
+        // массив ID View-компонентов, в которые будут вставлять данные
+        int[] to = { android.R.id.text1, android.R.id.text2 };
+
+        // создаем адаптер
+        SimpleAdapter sAdapter = new SimpleAdapter(getActivity(), data, android.R.layout.simple_list_item_activated_2,
+                from, to){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                text1.setTextColor(Color.YELLOW);
+
+                return view;
+            }
+        };
+
+
+//        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+//                getActionBar().getThemedContext(),
+//                android.R.layout.simple_list_item_activated_2,
+//                android.R.id.text1,
+//                new String[]{
+//                        getString(R.string.title_section1),
+//                        getString(R.string.title_section2),
+//                        getString(R.string.title_section3),
+//                }));
+
+                mDrawerListView.setAdapter(sAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

@@ -2,8 +2,23 @@
 <resources>
 
     <string name="app_name">MoscowTaxi</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
+
+
+    <!-- Drawable -->
+    <string name="navigation_personal_info">Личная информация</string>
+    <string name="navigation_personal_info_change">Изменение личных данных</string>
+    <string name="navigation_favorites">Избранные места</string>
+    <string name="navigation_favorites_list">Список избранных мест</string>
+    <string name="navigation_favorites_rides">Избранные маршруты</string>
+    <string name="navigation_favorites_rides_list">Список избранных маршрутов</string>
+    <string name="navigation_history_rides">История заказов</string>
+    <string name="navigation_history_rides_list">Список прошлых заказов</string>
+    <string name="navigation_rewards">Награды</string>
+    <string name="navigation_private_rewards">Личные награды</string>
+
+    <string name="title_section1">Section 3</string>
+    <string name="title_section2">Section 3</string>
+
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
