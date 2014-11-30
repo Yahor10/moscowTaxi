@@ -24,6 +24,12 @@
     <string name="order">Заказать</string>
     <string name="follow">Отследить</string>
     <string name="map">Карта</string>
+    <!-- page order-->
+    <string name="from_here">Откуда</string>
+    <string name="where">Куда</string>
+    <!-- rage order-->
+
+    <!-- MAIN PAGE-->
 
     <string name="addresses">Адресса</string>
 
