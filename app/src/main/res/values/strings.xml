@@ -20,6 +20,11 @@
     <string name="favorites_places">Избранные места</string>
     <string name="favorites_route">Избранные маршруты</string>
 
+    <!-- MAIN PAGE-->
+    <string name="order">Заказать</string>
+    <string name="follow">Отследить</string>
+    <string name="map">Карта</string>
+
     <string name="addresses">Адресса</string>
 
     <string name="title_section3">Section 3</string>

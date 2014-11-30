@@ -46,7 +46,7 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorites);
+        setContentView(R.layout.view_pager_layout);
 
 
         // Create the adapter that will return a fragment for each of the three
