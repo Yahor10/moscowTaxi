@@ -118,7 +118,6 @@
         android:paddingLeft="@dimen/page_order_padding_left">
 
         <EditText
-            android:id="@+id/"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2.5" />

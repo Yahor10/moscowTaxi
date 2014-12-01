@@ -115,11 +115,11 @@
     <states>
       <state key="ProjectJDKs.UI">
         <settings>
-          <last-edited>Android API 18 Platform</last-edited>
+          <last-edited>Android API 14 Platform</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.33037037" />
               </list>
             </option>
           </splitter-proportions>

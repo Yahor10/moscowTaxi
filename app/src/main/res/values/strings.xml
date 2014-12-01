@@ -33,6 +33,10 @@
 
     <string name="addresses">Адресса</string>
 
+    <!-- Actions -->
+    <string name="edit">Изменить</string>
+    <string name="remove">Удалить</string>
+
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
