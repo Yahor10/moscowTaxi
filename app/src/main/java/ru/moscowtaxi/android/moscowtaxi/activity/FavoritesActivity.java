@@ -1,4 +1,4 @@
-package ru.moscowtaxi.android.moscowtaxi;
+package ru.moscowtaxi.android.moscowtaxi.activity;
 
 
 import android.app.Activity;
@@ -6,10 +6,8 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 
@@ -22,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.Locale;
+
+import ru.moscowtaxi.android.moscowtaxi.R;
 
 
 public class FavoritesActivity extends Activity implements ActionBar.TabListener {

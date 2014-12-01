@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import ru.moscowtaxi.android.moscowtaxi.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.R;
 
 /**
@@ -45,7 +44,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Toast.makeText(this, "Authorize", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_registration:
-                Intent intent = new Intent(this,MainActivity.class);
+                Intent intent = new Intent(this,RegistrationActivity.class);
                 startActivity(intent);
                 break;
         }

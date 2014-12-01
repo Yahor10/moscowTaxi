@@ -1,4 +1,4 @@
-package ru.moscowtaxi.android.moscowtaxi;
+package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 
 import android.app.Activity;
@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -28,6 +27,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.FavoritesActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

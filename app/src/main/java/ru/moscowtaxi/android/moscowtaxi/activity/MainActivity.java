@@ -1,4 +1,4 @@
-package ru.moscowtaxi.android.moscowtaxi;
+package ru.moscowtaxi.android.moscowtaxi.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
+import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.fragments.FragmentMain;
 
 
