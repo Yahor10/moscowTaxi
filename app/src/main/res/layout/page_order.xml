@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_background"
-
+    android:background="@color/dark_background">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical">
 
@@ -27,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/page_order_padding_left">
 
@@ -35,63 +36,88 @@
             android:id="@+id/edt_from"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray_text"
             android:layout_weight="2.5" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/gray_divider" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/lay_determine"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:orientation="vertical">
+            android:layout_weight="3">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Определить" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_launcher" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/gray_text"
+                    android:text="Определить" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_but_determine"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:background="@color/gray_divider" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/lay_my_adresses_from"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Мои адресса" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_launcher" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/gray_text"
+                    android:text="Мои адресса" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_but_my_adreeses_from"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -99,7 +125,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/page_order_padding_left"
-        android:layout_marginTop="10dp"
         android:text="@string/where"
         android:textColor="@color/gray_text"
         android:textSize="@dimen/page_order_title_size" />
@@ -113,14 +138,15 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/page_order_padding_left">
 
         <EditText
-            android:id="@+id/"
+            android:id="@+id/edt_where"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray_text"
             android:layout_weight="2.5" />
 
         <View
@@ -135,7 +161,7 @@
 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:orientation="vertical"
             android:visibility="invisible">
 
@@ -160,26 +186,38 @@
             android:layout_marginTop="5dp"
             android:background="@color/gray_divider" />
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/lay_my_adresses_where"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Мои адресса" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_launcher" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/gray_text"
+                    android:text="Мои адресса" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_but_my_adreeses_where"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -202,17 +240,78 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:paddingLeft="@dimen/page_order_padding_left">
 
         <Spinner
             android:id="@+id/spinner_hour"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="2" />
 
         <Spinner
             android:id="@+id/spinner_minute"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/gray_divider" />
+
+        <FrameLayout
+            android:id="@+id/lay_get_car_now"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.7"
+            android:paddingLeft="5dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/gray_text"
+                    android:layout_marginLeft="4dp"
+                    android:text="Подать сейчас" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_but_get_car_now"
+                android:layout_width="fill_parent"
+                android:textColor="@color/gray_text"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/gray_divider" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60dp">
+
+        <Spinner
+            android:id="@+id/spinner_tariff"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -221,34 +320,148 @@
             android:layout_width="1dp"
             android:layout_height="fill_parent"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="4dp"
+            android:layout_marginTop="5dp"
             android:background="@color/gray_divider" />
 
-        <LinearLayout
-            android:id="@+id/lay_get_car_now"
+        <Spinner
+            android:id="@+id/spinner_additional_settings"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:orientation="horizontal">
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/page_order_padding_left"
+        android:layout_marginTop="5dp"
+        android:text="Коментарий"
+        android:textColor="@color/gray_text"
+        android:textSize="@dimen/page_order_title_size" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/gray_divider" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/page_order_padding_left">
+
+        <EditText
+            android:id="@+id/edt_koment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_text"
+            android:layout_weight="1" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/gray_divider" />
+
+        <FrameLayout
+            android:id="@+id/lay_my_clear_koment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/gray_text"
+                    android:text="Очистить" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view_but_cleat_koment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="@dimen/page_order_padding_left"
+        android:paddingRight="@dimen/page_order_padding_left">
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
+                android:id="@+id/img_car"
+                android:layout_width="50dp"
+                android:layout_height="10dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <Button android:id="@+id/button_get_taxi"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
-                android:text="Подать сейчас" />
+                android:layout_below="@+id/img_car"
+                android:text="Заказать такси"
+                android:textSize="12sp" />
+        </RelativeLayout>
 
-        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_car_2"
+                android:layout_width="50dp"
+                android:layout_height="10dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher"
+                android:visibility="invisible" />
+
+            <Button android:id="@+id/button_call_operator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_car_2"
+                android:layout_weight="1"
+                android:text="Позвонить оператору"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
     </LinearLayout>
 
 
 </LinearLayout>
+
+</ScrollView>
