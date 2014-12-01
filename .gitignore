@@ -2,6 +2,20 @@
 *.apk
 *.ap_
 
+# User-specific configurations
+.idea/libraries/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+*.iml
+
 # Files for the Dalvik VM
 *.dex
 
@@ -16,6 +30,8 @@ gen/
 .gradle/
 build/
 
+
+
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -24,3 +40,4 @@ proguard/
 
 # Log Files
 *.log
+
