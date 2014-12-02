@@ -4,10 +4,13 @@ package ru.moscowtaxi.android.moscowtaxi.view;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -28,6 +31,25 @@ public class FavoritesListView extends EntityListView<FavoritePlaceORM> {
 
     public FavoritesListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        Button address = new Button(context);
+        LinearLayout footer = new LinearLayout(context);
+        LayoutParams linLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+        footer.setLayoutParams(linLayoutParam);
+        footer.setGravity(Gravity.CENTER);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        layoutParams.setMargins(0, 35, 0, 0);
+
+        String addFavorite = context.getString(R.string.add_favorites_place);
+        address.setText(addFavorite);
+        address.setLayoutParams(layoutParams);
+
+        footer.addView(address);
+        addFooterView(footer);
     }
 
     @Override
@@ -41,7 +63,11 @@ public class FavoritesListView extends EntityListView<FavoritePlaceORM> {
                 if (favoritesPlaces == null) {
                     favoritesPlaces = new ArrayList<FavoritePlaceORM>();
                 }
-                favoritesPlaces.add(null);//
+                favoritesPlaces.add(new FavoritePlaceORM());
+                favoritesPlaces.add(new FavoritePlaceORM());
+                favoritesPlaces.add(new FavoritePlaceORM());
+
+
                 return favoritesPlaces;
             }
 

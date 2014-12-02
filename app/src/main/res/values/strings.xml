@@ -19,6 +19,9 @@
 
     <string name="favorites_places">Избранные места</string>
     <string name="favorites_route">Избранные маршруты</string>
+    <string name="add_favorites_place">Добавить адресс</string>
+    <string name="favorite_address">Адресс</string>
+    <string name="favorite_name">Название</string>
 
     <!-- MAIN PAGE-->
     <string name="order">Заказать</string>
@@ -35,7 +38,9 @@
 
     <!-- Actions -->
     <string name="edit">Изменить</string>
+    <string name="detect">Определить</string>
     <string name="remove">Удалить</string>
+    <string name="save">Сохранить</string>
 
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

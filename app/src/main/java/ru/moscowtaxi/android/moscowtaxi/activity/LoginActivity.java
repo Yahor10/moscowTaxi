@@ -33,6 +33,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         butAuthorize.setOnClickListener(this);
         butRegistration.setOnClickListener(this);
+
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 
     @Override

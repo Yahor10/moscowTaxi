@@ -57,7 +57,7 @@ public class FavoritePlaceORM  extends EntityORM {
             final Dao<FavoritePlaceORM, String> dao = helper.getFavoritesPlacesDAO();
 //            String currentUser = PreferenceUtils.getCurrentUser(context);
             PreparedQuery<FavoritePlaceORM> prepare = dao.queryBuilder().where()
-                    .eq(FavoritePlaceORM.KEY_USER, "").prepare();
+                    .eq(FavoritePlaceORM.KEY_USER, "Test").prepare();
             query = dao.query(prepare);
         } catch (SQLException e) {
             e.printStackTrace();
