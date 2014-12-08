@@ -3,26 +3,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
     android:gravity="center"
     android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/addressSummary"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="match_parent"
-        android:visibility="visible"
-
         android:layout_marginLeft="10dp"
-        android:orientation="vertical">
+        android:layout_weight="1"
+
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="10dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="H1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -39,52 +40,50 @@
     <LinearLayout
         android:id="@+id/addressEditSummary"
         android:layout_width="wrap_content"
-        android:layout_weight="1"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="horizontal">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-        <EditText
-            android:id="@+id/nameEdit"
-            android:layout_width="match_parent"
-            android:layout_gravity="center_vertical"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-             />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="@string/favorite_name"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/nameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="@string/favorite_name"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/addressEdit"
                 android:layout_width="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
-                android:gravity="center"
-                />
+                android:layout_weight="1"
+                android:gravity="center" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -109,21 +108,23 @@
     <LinearLayout
         android:id="@+id/editLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="72dp"
         android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
         android:gravity="center"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_edit" />
 
         <TextView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:text="@string/edit"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -132,21 +133,23 @@
     <LinearLayout
         android:id="@+id/detectLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="72dp"
         android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
         android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_get_address" />
 
         <TextView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
             android:text="@string/detect"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -163,20 +166,22 @@
     <LinearLayout
         android:id="@+id/removeLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="5dp"
         android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_delete" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
             android:text="@string/remove"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -185,21 +190,23 @@
     <LinearLayout
         android:id="@+id/saveLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="72dp"
         android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
         android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/ic_save" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
             android:text="@string/save"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

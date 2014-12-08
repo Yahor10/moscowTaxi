@@ -12,20 +12,26 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 
 
+import android.support.v13.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 import java.util.Locale;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
+import ru.moscowtaxi.android.moscowtaxi.helpers.TabHostUtils;
 
 
-public class FavoritesActivity extends Activity implements ActionBar.TabListener {
+public class FavoritesActivity extends Activity implements ActionBar.TabListener, NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+
+    private FragmentTabHost mTabHost;
 
     public static Intent buildIntent(Context context) {
         return new Intent(context, FavoritesActivity.class);
@@ -45,11 +51,12 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_pager_layout);
+        setContentView(R.layout.activity_favorites);
 
 
         // Create the adapter that will return a fragment for each of the three
@@ -61,18 +68,7 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-            // Create a tab with text corresponding to the page title defined by the adapter.
-            // Also specify this Activity object, which implements the TabListener interface, as the
-            // listener for when this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
-                            .setTabListener(this));
-
-        }
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -80,29 +76,33 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
                 // When swiping between different app sections, select the corresponding tab.
                 // We can also use ActionBar.Tab#select() to do this if we have a reference to the
                 // Tab.
-                actionBar.setSelectedNavigationItem(position);
+//                actionBar.setSelectedNavigationItem(position);
             }
         });
-    }
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.favorites, menu);
-        return true;
-    }
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
+        mTabHost.setup(this, getFragmentManager(), R.id.tabFrameLayout);
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+                mViewPager.setCurrentItem(Integer.parseInt(tabId));
+
+            }
+        });
+
+        TabHostUtils.setupTab("0", getString(R.string.favorites_places), mTabHost, PlaceholderFragment.class);
+        TabHostUtils.setupTab("1", getString(R.string.favorites_route), mTabHost, RouteholderFragment.class);
+
     }
 
     @Override
@@ -117,6 +117,11 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
 
     }
 
@@ -135,7 +140,7 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            switch (position){
+            switch (position) {
                 case 0:
                     return PlaceholderFragment.newInstance(0);
                 case 1:
@@ -167,7 +172,7 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment  {
+    public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -226,5 +231,6 @@ public class FavoritesActivity extends Activity implements ActionBar.TabListener
             return rootView;
         }
     }
+
 
 }
