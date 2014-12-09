@@ -3,6 +3,7 @@ package ru.moscowtaxi.android.moscowtaxi.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -35,6 +36,12 @@ public class FavoritesListView extends EntityListView<FavoritePlaceORM> implemen
         Button address = new Button(context);
         address.setOnClickListener(this);
         address.setId(R.id.add_favorite_address);
+
+        Resources resources = getResources();
+        address.setBackgroundColor(resources.getColor(R.color.orange_color));
+        address.setTextColor(resources.getColor(android.R.color.white));
+        address.setGravity(Gravity.CENTER_HORIZONTAL);
+
         String addFavorite = context.getString(R.string.add_favorites_place);
         address.setText(addFavorite);
 

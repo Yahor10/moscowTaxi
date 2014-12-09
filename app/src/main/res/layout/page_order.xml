@@ -61,7 +61,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_get_address" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_favorite" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -202,7 +202,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_favorite" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -279,7 +279,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_refresh" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -386,7 +386,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_launcher" />
+                    android:src="@drawable/ic_delete" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -431,7 +431,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_car"
                 android:text="Заказать такси"
-                android:textSize="12sp" />
+                style="@style/ButtonText"
+                 />
         </RelativeLayout>
 
         <RelativeLayout
@@ -454,7 +455,8 @@
                 android:layout_below="@+id/img_car_2"
                 android:layout_weight="1"
                 android:text="Позвонить оператору"
-                android:textSize="12sp" />
+                style="@style/ButtonText"
+                 />
 
         </RelativeLayout>
 

@@ -25,6 +25,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@color/orange_color"
             android:text="H1"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:text="address 2"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
@@ -127,6 +129,8 @@
             android:gravity="bottom"
             android:textSize="13dp"
             android:text="@string/edit"
+            android:textColor="@android:color/white"
+
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>
@@ -186,6 +190,8 @@
             android:gravity="bottom"
             android:textSize="13dp"
             android:text="@string/remove"
+            android:textColor="@android:color/white"
+
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>

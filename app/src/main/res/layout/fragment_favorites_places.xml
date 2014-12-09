@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@color/dark_background"
     tools:context="ru.moscowtaxi.android.moscowtaxi.activity.FavoritesActivity$PlaceholderFragment">
 
     <TextView
         android:id="@+id/section_label"
         android:layout_margin="10dp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:text="@string/addresses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view"
+        android:background="@android:color/transparent"
 
          />
 
