@@ -3,13 +3,47 @@
 
     <string name="app_name">MoscowTaxi</string>
 
-
-    <string name="navigation_personal_info">Личная Информация</string>
+    <!-- Drawable navigation -->
+    <string name="navigation_personal_info">Личная информация</string>
     <string name="navigation_personal_info_change">Изменение личных данных</string>
+    <string name="navigation_favorites">Избранные места</string>
+    <string name="navigation_favorites_list">Список избранных мест</string>
+    <string name="navigation_favorites_rides">Избранные маршруты</string>
+    <string name="navigation_favorites_rides_list">Список избранных маршрутов</string>
+    <string name="navigation_history_rides">История заказов</string>
+    <string name="navigation_history_rides_list">Список прошлых заказов</string>
+    <string name="navigation_rewards">Награды</string>
+    <string name="navigation_private_rewards">Личные награды</string>
+
+    <!-- Favorities activity-->
+
+    <string name="favorites_places">Избранные места</string>
+    <string name="favorites_route">Избранные маршруты</string>
+
+    <!-- MAIN PAGE-->
+    <string name="order">Заказать</string>
+    <string name="follow">Отследить</string>
+    <string name="map">Карта</string>
+    <!-- page order-->
+    <string name="from_here">Откуда</string>
+    <string name="where">Куда</string>
+    <!-- rage order-->
+
+    <!-- MAIN PAGE-->
+
+    <string name="addresses">Адресса</string>
+
+    <!-- Actions -->
+    <string name="edit">Изменить</string>
+    <string name="remove">Удалить</string>
+
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_favorites">FavoritesActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 
 </resources>

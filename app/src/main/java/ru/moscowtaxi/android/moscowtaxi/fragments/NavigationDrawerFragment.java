@@ -234,15 +234,15 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void selectItem(int position) {
         mCurrentSelectedPosition = position;
-        Activity activity = getActivity();
-        switch (position){
-            case 1:
-                startActivity(FavoritesActivity.buildIntent(activity));
-                break;
-            case 2:
-                startActivity(FavoritesActivity.buildIntent(activity));
-                break;
-        }
+//        Activity activity = getActivity();
+//        switch (position){
+//            case 1:
+//                startActivity(FavoritesActivity.buildIntent(activity));
+//                break;
+//            case 2:
+//                startActivity(FavoritesActivity.buildIntent(activity));
+//                break;
+//        }
 
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);

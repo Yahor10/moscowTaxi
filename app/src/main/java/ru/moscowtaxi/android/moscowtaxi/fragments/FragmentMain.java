@@ -67,9 +67,9 @@ public class FragmentMain extends Fragment {
             }
         });
 
-        setupTab("0", pagerAdapter.getPageTitle(0).toString(), PageFollow.class);
+        setupTab("0", pagerAdapter.getPageTitle(0).toString(), PageOrder.class);
         setupTab("1", pagerAdapter.getPageTitle(1).toString(), PageFollow.class);
-        setupTab("2", pagerAdapter.getPageTitle(2).toString(), PageFollow.class);
+        setupTab("2", pagerAdapter.getPageTitle(2).toString(), PageMap.class);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

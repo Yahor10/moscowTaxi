@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.fragments.FragmentMain;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
 
 
 public class MainActivity extends Activity
@@ -50,7 +51,13 @@ public class MainActivity extends Activity
         Fragment fragment;
         switch (position) {
             case 0:
-                fragment = FragmentMain.newInstance(1);
+                fragment = FragmentMain.newInstance(0);
+                break;
+            case 1:
+                fragment = PageFavorite.newInstance(0);
+                break;
+            case 2:
+                fragment = PageFavorite.newInstance(1);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);

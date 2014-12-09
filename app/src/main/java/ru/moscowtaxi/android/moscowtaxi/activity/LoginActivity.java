@@ -31,21 +31,27 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         butAuthorize = (Button) findViewById(R.id.button_authorize);
         butRegistration = (Button) findViewById(R.id.button_registration);
 
+        findViewById(R.id.button_go_main).setOnClickListener(this);
+
         butAuthorize.setOnClickListener(this);
         butRegistration.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.button_authorize:
 
 
                 Toast.makeText(this, "Authorize", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_registration:
-                Intent intent = new Intent(this,RegistrationActivity.class);
+                Intent intent = new Intent(this, RegistrationActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.button_go_main:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

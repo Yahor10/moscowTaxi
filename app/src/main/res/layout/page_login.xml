@@ -28,6 +28,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Зарегестрироваться"/>
+    <Button
+        android:id="@+id/button_go_main"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="временная кнопка"/>
+
 
 
 
