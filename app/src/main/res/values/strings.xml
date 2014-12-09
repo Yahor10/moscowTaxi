@@ -41,6 +41,20 @@
     <string name="detect">Определить</string>
     <string name="remove">Удалить</string>
     <string name="save">Сохранить</string>
+    <string name="order_taxi">Заказать такси</string>
+    <string name="order_now">Подать сейчас</string>
+    <string name="call_operator">Позвонить оператору</string>
+    <string name="clear">Очистить</string>
+    <string name="time_order_taxi">Время подачи машины</string>
+    <string name="my_adresses">Мои адресса</string>
+
+
+
+    <string name="comment">Комментарий</string>
+
+
+
+
 
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
