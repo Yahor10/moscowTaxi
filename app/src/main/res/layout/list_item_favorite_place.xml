@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:orientation="vertical">
 
             <EditText
@@ -107,10 +107,10 @@
 
     <LinearLayout
         android:id="@+id/editLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="72dp"
         android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible">
@@ -125,6 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="bottom"
+            android:textSize="13dp"
             android:text="@string/edit"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -132,10 +133,10 @@
 
     <LinearLayout
         android:id="@+id/detectLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="72dp"
         android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -149,6 +150,7 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="13dp"
             android:gravity="bottom"
             android:text="@string/detect"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -165,10 +167,10 @@
 
     <LinearLayout
         android:id="@+id/removeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="72dp"
         android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -182,6 +184,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="bottom"
+            android:textSize="13dp"
             android:text="@string/remove"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -189,10 +192,10 @@
 
     <LinearLayout
         android:id="@+id/saveLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="72dp"
         android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
+        android:layout_margin="2dp"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
@@ -206,6 +209,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:textSize="13dp"
             android:gravity="bottom"
             android:text="@string/save"
             android:textAppearance="?android:attr/textAppearanceMedium" />

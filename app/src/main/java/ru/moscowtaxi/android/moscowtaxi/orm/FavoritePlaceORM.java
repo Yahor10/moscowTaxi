@@ -66,4 +66,5 @@ public class FavoritePlaceORM  extends EntityORM {
         }
         return query;
     }
+
 }
