@@ -1,5 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.view;
 
+import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 
 
@@ -30,6 +31,9 @@ public abstract class EntityListView<E extends EntityORM> extends ListView imple
 
     public EntityAdapter<E> getAdapter() {
         ListAdapter adapter = super.getAdapter();
+        if(adapter instanceof HeaderViewListAdapter){
+            return ((EntityAdapter<E>)((HeaderViewListAdapter)super.getAdapter()).getWrappedAdapter());
+        }
         return (EntityAdapter<E>) adapter;
     }
 

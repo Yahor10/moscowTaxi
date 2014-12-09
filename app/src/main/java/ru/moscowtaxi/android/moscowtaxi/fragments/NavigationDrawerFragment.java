@@ -4,6 +4,7 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -142,7 +143,10 @@ public class NavigationDrawerFragment extends Fragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-                text1.setTextColor(Color.YELLOW);
+                Resources resources = getResources();
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                text1.setTextColor(resources.getColor(R.color.orange_color));
+                text2.setTextColor(resources.getColor(android.R.color.white));
 
                 return view;
             }

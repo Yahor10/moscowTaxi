@@ -4,6 +4,6 @@
     <color name="dark_background">#121212</color>
     <color name="gray_divider">#999999</color>
     <color name="gray_text">#cccccc</color>
-
+    <color name="orange_color">#ffbb33</color>
 
 </resources>
