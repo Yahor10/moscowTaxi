@@ -59,9 +59,9 @@ public class FragmentMain extends Fragment {
             }
         });
 
-        TabHostUtils.setupTab("0", pagerAdapter.getPageTitle(0).toString(),mTabHost, PageFollow.class);
+        TabHostUtils.setupTab("0", pagerAdapter.getPageTitle(0).toString(),mTabHost, PageOrder.class);
         TabHostUtils.setupTab("1", pagerAdapter.getPageTitle(1).toString(),mTabHost, PageFollow.class);
-        TabHostUtils.setupTab("2", pagerAdapter.getPageTitle(2).toString(),mTabHost, PageFollow.class);
+        TabHostUtils.setupTab("2", pagerAdapter.getPageTitle(2).toString(),mTabHost, PageMap.class);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
