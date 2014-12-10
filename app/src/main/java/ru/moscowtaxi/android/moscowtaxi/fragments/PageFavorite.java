@@ -12,6 +12,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.helpers.TabHostUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoriteFragmentViewPagerAdapter;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.MainFragmentViewPagerAdapter;
 
@@ -32,15 +33,6 @@ public class PageFavorite extends Fragment {
         PageFavorite fragment = new PageFavorite();
         fragment.positionOfViewPager = sectionNumber;
         return fragment;
-    }
-
-    private static View createTabView(final Context context, final String text) {
-        View view = LayoutInflater.from(context).inflate(
-                R.layout.tab_text_layout, null);
-        TextView tv = (TextView) view.findViewById(R.id.txt_tab);
-        tv.setText(text);
-
-        return view;
     }
 
     @Override
@@ -67,8 +59,8 @@ public class PageFavorite extends Fragment {
             }
         });
 
-        setupTab("0", pagerAdapter.getPageTitle(0).toString(), PageFollow.class);
-        setupTab("1", pagerAdapter.getPageTitle(1).toString(), PageFollow.class);
+        TabHostUtils.setupTab("0", pagerAdapter.getPageTitle(0).toString(),mTabHost, PageFollow.class);
+        TabHostUtils.setupTab("1", pagerAdapter.getPageTitle(0).toString(),mTabHost, PageFollow.class);
 
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -80,16 +72,4 @@ public class PageFavorite extends Fragment {
 
         return rootView;
     }
-
-    private void setupTab(String tag, String text,
-                          Class<? extends Fragment> fragment) {
-
-        View tabview = createTabView(mTabHost.getContext(), text);
-
-        TabHost.TabSpec setContent = mTabHost.newTabSpec(tag).setIndicator(tabview);
-
-        mTabHost.addTab(setContent, fragment, null);
-    }
-
-
 }
