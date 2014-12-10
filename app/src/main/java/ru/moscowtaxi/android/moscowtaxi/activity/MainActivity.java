@@ -4,6 +4,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.R;
@@ -51,22 +55,17 @@ public class MainActivity extends Activity
         // Action Bar
 
         // Adapter
-        SpinnerAdapter adapter =
-                ArrayAdapter.createFromResource(this, R.array.actions,
+        CustomSpinnerAdapter adapter =
+                (CustomSpinnerAdapter) CustomSpinnerAdapter.createFromResource(this, R.array.cities,
                         android.R.layout.simple_spinner_dropdown_item);
 
 // Callback
         ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
 
-            String[] items = getResources().getStringArray(R.array.actions); // List items from res
+            String[] items = getResources().getStringArray(R.array.cities); // List items from res
 
             @Override
             public boolean onNavigationItemSelected(int position, long id) {
-
-                // Do stuff when navigation item is selected
-
-                Log.d("NavigationItemSelected", items[position]); // Debug
-
                 return true;
 
             }
@@ -77,15 +76,10 @@ public class MainActivity extends Activity
         actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         actions.setDisplayShowTitleEnabled(false);
         actions.setListNavigationCallbacks(adapter, callback);
+        Context themedContext = actions.getThemedContext();
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-        return true;
-    }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -165,6 +159,37 @@ public class MainActivity extends Activity
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
+
+    public static class CustomSpinnerAdapter<T> extends ArrayAdapter<T> {
+
+        public CustomSpinnerAdapter(Context context, int textViewResourceId, T[] objects) {
+            super(context, textViewResourceId, objects);
+        }
+
+        public static CustomSpinnerAdapter<CharSequence> createFromResource(Context context, int textArrayResId, int textViewResId) {
+            CharSequence[] strings = context.getResources().getTextArray(textArrayResId);
+            return new CustomSpinnerAdapter<CharSequence>(context, textViewResId, strings);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            return SetOrangeColor(view);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View view = super.getView(position, convertView, parent);
+            return SetOrangeColor(view);
+        }
+
+        private View SetOrangeColor(View v) {
+            Resources resources = getContext().getResources();
+            int color = resources.getColor(R.color.orange_color);
+            if (v instanceof TextView) ((TextView)v).setTextColor(color); // white
+            return v;
         }
     }
 

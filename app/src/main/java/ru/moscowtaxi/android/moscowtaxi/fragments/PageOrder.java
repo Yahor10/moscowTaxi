@@ -1,16 +1,24 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 
 /**
  * Created by alex-pers on 11/30/14.
@@ -64,6 +72,19 @@ public class PageOrder extends Fragment implements View.OnClickListener {
         spinnerMinute = (Spinner) rootView.findViewById(R.id.spinner_minute);
         spinnerTariff = (Spinner) rootView.findViewById(R.id.spinner_tariff);
         spinnerAdditionalSettings = (Spinner) rootView.findViewById(R.id.spinner_additional_settings);
+
+        Activity activity = getActivity();
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(activity,android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
+        MainActivity.CustomSpinnerAdapter tariffAdapter =
+                (  MainActivity.CustomSpinnerAdapter)   MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.tariffs,
+                        android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerTariff.setAdapter(tariffAdapter);
+
+        MainActivity.CustomSpinnerAdapter additionSettingsAdapter =
+                (  MainActivity.CustomSpinnerAdapter)   MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.additional_settings,
+                        android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdditionalSettings.setAdapter(additionSettingsAdapter);
 
         butGetTaxi = (Button) rootView.findViewById(R.id.button_get_taxi);
         butCallOperator = (Button) rootView.findViewById(R.id.button_call_operator);

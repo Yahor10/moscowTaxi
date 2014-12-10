@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,11 +67,14 @@ public class FavoritesListView extends EntityListView<FavoritePlaceORM> implemen
             @Override
             public List<FavoritePlaceORM> loadData() {
                 Context context = getContext();
+                Log.v(null,"PLACES1 ");
                 List<FavoritePlaceORM> favoritesPlaces = FavoritePlaceORM.getFavoritesPlaces(context);
                 if (favoritesPlaces == null) {
                     favoritesPlaces = new ArrayList<FavoritePlaceORM>();
                 }
                 favoritesPlaces.add(new FavoritePlaceORM());
+                favoritesPlaces.add(new FavoritePlaceORM());
+
 
                 return favoritesPlaces;
             }
