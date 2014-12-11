@@ -21,7 +21,6 @@ public class PageMain extends Fragment {
     public int positionOfViewPager;
     public MainFragmentViewPagerAdapter pagerAdapter;
     ViewPager mViewPager;
-    private FragmentTabHost mTabHost;
 
     public PageMain() {
     }
@@ -44,21 +43,8 @@ public class PageMain extends Fragment {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mViewPager.setAdapter(pagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
 
-        mTabHost = (FragmentTabHost) rootView.findViewById(R.id.tabhost);
-        mTabHost.setup(getActivity(), getActivity().getFragmentManager(), R.id.tabFrameLayout);
-        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-            @Override
-            public void onTabChanged(String tabId) {
-                mViewPager.setCurrentItem(Integer.parseInt(tabId));
-
-            }
-        });
-
-        TabHostUtils.setupTab("0", pagerAdapter.getPageTitle(0).toString(),mTabHost, PageOrder.class);
-        TabHostUtils.setupTab("1", pagerAdapter.getPageTitle(1).toString(),mTabHost, PageFollow.class);
-        TabHostUtils.setupTab("2", pagerAdapter.getPageTitle(2).toString(),mTabHost, PageMap.class);
 
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

@@ -60,7 +60,7 @@ public class HistoryListViewAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-        holder.setData(items.get(i));
+//        holder.setData(items.get(i));
 
         return convertView;
     }

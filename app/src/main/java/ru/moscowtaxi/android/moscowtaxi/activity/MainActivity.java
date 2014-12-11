@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageGift_History;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
-import ru.moscowtaxi.android.moscowtaxi.fragments.PageGift_HIstory;
 
 
 public class MainActivity extends Activity
@@ -90,10 +90,10 @@ public class MainActivity extends Activity
                 fragment = PageFavorite.newInstance(1);
                 break;
             case 3:
-                fragment = PageGift_HIstory.newInstance(0);
+                fragment = PageGift_History.newInstance(0);
                 break;
             case 4:
-                fragment = PageGift_HIstory.newInstance(1);
+                fragment = PageGift_History.newInstance(1);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);
