@@ -6,24 +6,19 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.fragments.FragmentMain;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageGift_HIstory;
 
 
 public class MainActivity extends Activity
@@ -86,13 +81,19 @@ public class MainActivity extends Activity
         Fragment fragment;
         switch (position) {
             case 0:
-                fragment = FragmentMain.newInstance(0);
+                fragment = PageMain.newInstance(0);
                 break;
             case 1:
                 fragment = PageFavorite.newInstance(0);
                 break;
             case 2:
                 fragment = PageFavorite.newInstance(1);
+                break;
+            case 3:
+                fragment = PageGift_HIstory.newInstance(0);
+                break;
+            case 4:
+                fragment = PageGift_HIstory.newInstance(1);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);

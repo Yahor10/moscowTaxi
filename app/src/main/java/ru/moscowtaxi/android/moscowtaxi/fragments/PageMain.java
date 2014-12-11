@@ -1,7 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v13.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
@@ -9,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.TabHostUtils;
@@ -19,18 +16,18 @@ import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.MainFragmentViewPagerAd
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class FragmentMain extends Fragment {
+public class PageMain extends Fragment {
 
     public int positionOfViewPager;
     public MainFragmentViewPagerAdapter pagerAdapter;
     ViewPager mViewPager;
     private FragmentTabHost mTabHost;
 
-    public FragmentMain() {
+    public PageMain() {
     }
 
-    public static FragmentMain newInstance(int sectionNumber) {
-        FragmentMain fragment = new FragmentMain();
+    public static PageMain newInstance(int sectionNumber) {
+        PageMain fragment = new PageMain();
         fragment.positionOfViewPager = sectionNumber;
         return fragment;
     }
@@ -42,7 +39,7 @@ public class FragmentMain extends Fragment {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        pagerAdapter = new MainFragmentViewPagerAdapter(getActivity().getFragmentManager(), getActivity().getApplicationContext());
+        pagerAdapter = new MainFragmentViewPagerAdapter(this.getChildFragmentManager(), getActivity().getApplicationContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);

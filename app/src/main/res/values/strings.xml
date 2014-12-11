@@ -64,4 +64,7 @@
     <string name="title_activity_favorites">FavoritesActivity</string>
     <string name="hello_world">Hello world!</string>
 
+    <string name="when">Время подачи:</string>
+    <string name="type">Класс: </string>
+
 </resources>
