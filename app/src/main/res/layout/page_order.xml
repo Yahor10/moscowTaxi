@@ -431,6 +431,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/img_car"
                 android:text="@string/order_taxi"
+
                 style="@style/ButtonText"
                  />
         </RelativeLayout>
