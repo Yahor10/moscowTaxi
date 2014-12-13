@@ -87,15 +87,15 @@ public class PageMain extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.view_but_tab_order:
                 updateTabs(0);
-                mViewPager.setCurrentItem(0,true);
+                mViewPager.setCurrentItem(0, true);
                 break;
             case R.id.view_but_tab_follow:
                 updateTabs(1);
-                mViewPager.setCurrentItem(1,true);
+                mViewPager.setCurrentItem(1, true);
                 break;
             case R.id.view_but_tab_map:
                 updateTabs(2);
-                mViewPager.setCurrentItem(2,true);
+                mViewPager.setCurrentItem(2, true);
                 break;
         }
 
