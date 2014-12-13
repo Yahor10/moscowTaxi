@@ -79,4 +79,8 @@
     <string name="expert_award_description">Проехать 500 и более км</string>
     <string name="tourist_award_description">10 или более раз заказать такси на вокзал или аэропорт</string>
     <string name="club_award_description">10 или более раз заказать из клуба или в клуб</string>
+
+    <!-- GIFTS_HYSTORY PAGE-->
+    <string name="gifts">Награды</string>
+    <string name="history">История</string>
 </resources>

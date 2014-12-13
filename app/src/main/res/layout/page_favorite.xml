@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,16 +18,16 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/txt_tab_gifts"
+                android:id="@+id/txt_tab_favorite_pace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/gifts"
+                android:text="@string/favorites_places"
                 android:textColor="@color/gray_text"
                 android:textSize="@dimen/tab_text_size" />
 
             <RelativeLayout
-                android:id="@+id/rel_tab_indicator_gifts"
+                android:id="@+id/rel_tab_indicator_favorites_place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
@@ -50,7 +51,7 @@
 
 
             <View
-                android:id="@+id/view_but_tab_gifts"
+                android:id="@+id/view_but_tab_favorite_place"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
 
@@ -62,16 +63,16 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/txt_tab_history"
+                android:id="@+id/txt_tab_favorites_route"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/history"
+                android:text="@string/favorites_route"
                 android:textColor="@color/gray_text"
-                android:textSize="@dimen/tab_text_size" />
+                android:textSize="16sp" />
 
             <RelativeLayout
-                android:id="@+id/rel_tab_indicator_history"
+                android:id="@+id/rel_tab_indicator_favorites_route"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
@@ -94,7 +95,7 @@
 
 
             <View
-                android:id="@+id/view_but_tab_history"
+                android:id="@+id/view_but_tab_favorites_route"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
 

@@ -90,10 +90,10 @@ public class MainActivity extends Activity
                 fragment = PageFavorite.newInstance(1);
                 break;
             case 3:
-                fragment = PageGift_History.newInstance(0);
+                fragment = PageGift_History.newInstance(1);
                 break;
             case 4:
-                fragment = PageGift_History.newInstance(1);
+                fragment = PageGift_History.newInstance(0);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);

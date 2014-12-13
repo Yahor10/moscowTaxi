@@ -27,10 +27,10 @@ public class Gift_HistoryFragmentViewPagetAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return PageHistory.newInstance();
+                return PageGift.newInstance();
 
             case 1:
-                return PageGift.newInstance();
+                return PageHistory.newInstance();
 
             default:
                 return null;
