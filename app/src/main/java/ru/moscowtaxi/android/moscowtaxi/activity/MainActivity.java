@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +15,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.fragments.PageGift_History;
-import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
+import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward_History;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
+    public static int PAGE_MAIN = 0;
+    public static int PAGE_FAVORITE_PLACE = 1;
+    public static int PAGE_FAVORITE_ROUTE = 2;
+    public static int PAGE_HISTORY = 3;
+    public static int PAGE_REWARDS = 4;
+    public int current_page = -1;
+    public Fragment current_fragment = null;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -81,23 +88,68 @@ public class MainActivity extends Activity
         Fragment fragment;
         switch (position) {
             case 0:
+                if (current_page == PAGE_MAIN)
+                    return;
                 fragment = PageMain.newInstance(0);
                 break;
             case 1:
+                if (current_page == PAGE_FAVORITE_PLACE) {
+                    return;
+                } else if (current_page == PAGE_FAVORITE_ROUTE) {
+                    ViewPager pager = ((PageFavorite) current_fragment).mViewPager;
+                    if (pager != null) {
+                        pager.setCurrentItem(0, true);
+                        current_page = position;
+                    }
+                    return;
+                }
                 fragment = PageFavorite.newInstance(0);
                 break;
             case 2:
+                if (current_page == PAGE_FAVORITE_ROUTE) {
+                    return;
+                } else if (current_page == PAGE_FAVORITE_PLACE) {
+                    ViewPager pager = ((PageFavorite) current_fragment).mViewPager;
+                    if (pager != null) {
+                        pager.setCurrentItem(1, true);
+                        current_page = position;
+                    }
+                    return;
+                }
                 fragment = PageFavorite.newInstance(1);
                 break;
             case 3:
-                fragment = PageGift_History.newInstance(1);
+                if (current_page ==PAGE_HISTORY ) {
+                    return;
+                } else if (current_page == PAGE_REWARDS ) {
+                    ViewPager pager = ((PageReward_History) current_fragment).mViewPager;
+                    if (pager != null) {
+                        pager.setCurrentItem(1, true);
+                        current_page = position;
+                    }
+                    return;
+                }
+                fragment = PageReward_History.newInstance(1);
                 break;
             case 4:
-                fragment = PageGift_History.newInstance(0);
+                if (current_page == PAGE_REWARDS) {
+                    return;
+                } else if (current_page == PAGE_HISTORY) {
+                    ViewPager pager = ((PageReward_History) current_fragment).mViewPager;
+                    if (pager != null) {
+                        pager.setCurrentItem(0, true);
+                        current_page = position;
+                    }
+                    return;
+                }
+                fragment = PageReward_History.newInstance(0);
                 break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);
         }
+
+        current_fragment = fragment;
+        current_page = position;
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
@@ -189,7 +241,7 @@ public class MainActivity extends Activity
         private View SetOrangeColor(View v) {
             Resources resources = getContext().getResources();
             int color = resources.getColor(R.color.orange_color);
-            if (v instanceof TextView) ((TextView)v).setTextColor(color); // white
+            if (v instanceof TextView) ((TextView) v).setTextColor(color); // white
             return v;
         }
     }

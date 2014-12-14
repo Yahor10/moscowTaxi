@@ -8,16 +8,16 @@ import android.support.v13.app.FragmentPagerAdapter;
 import java.util.Locale;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.fragments.PageGift;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageHistory;
 
 /**
  * Created by alex-pers on 12/10/14.
  */
-public class Gift_HistoryFragmentViewPagetAdapter extends FragmentPagerAdapter {
+public class Reward_HistoryFragmentViewPagetAdapter extends FragmentPagerAdapter {
     Context context;
 
-    public Gift_HistoryFragmentViewPagetAdapter(FragmentManager fm, Context context) {
+    public Reward_HistoryFragmentViewPagetAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
@@ -27,7 +27,7 @@ public class Gift_HistoryFragmentViewPagetAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                return PageGift.newInstance();
+                return PageReward.newInstance();
 
             case 1:
                 return PageHistory.newInstance();

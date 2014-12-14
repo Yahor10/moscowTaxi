@@ -23,7 +23,7 @@ public class PageFavorite extends Fragment implements View.OnClickListener{
 
     public int positionOfViewPager;
     public FavoriteFragmentViewPagerAdapter pagerAdapter;
-    ViewPager mViewPager;
+    public ViewPager mViewPager;
 
     TextView txt_tab_favorites_place;
     TextView txt_tab_favorites_route;
@@ -46,7 +46,7 @@ public class PageFavorite extends Fragment implements View.OnClickListener{
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        pagerAdapter = new FavoriteFragmentViewPagerAdapter(getActivity().getFragmentManager(), getActivity().getApplicationContext());
+        pagerAdapter = new FavoriteFragmentViewPagerAdapter(getChildFragmentManager(), getActivity().getApplicationContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
@@ -55,7 +55,7 @@ public class PageFavorite extends Fragment implements View.OnClickListener{
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-
+                updateTabs(position);
             }
         });
 

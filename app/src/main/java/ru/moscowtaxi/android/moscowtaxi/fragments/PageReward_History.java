@@ -9,27 +9,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.Gift_HistoryFragmentViewPagetAdapter;
+import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.Reward_HistoryFragmentViewPagetAdapter;
 
 /**
  * Created by alex-pers on 12/9/14.
  */
-public class PageGift_History extends Fragment implements View.OnClickListener {
+public class PageReward_History extends Fragment implements View.OnClickListener {
 
     public int positionOfViewPager;
-    public Gift_HistoryFragmentViewPagetAdapter pagerAdapter;
-    ViewPager mViewPager;
+    public Reward_HistoryFragmentViewPagetAdapter pagerAdapter;
+    public ViewPager mViewPager;
 
     TextView txt_tab_gifts;
     TextView txt_tab_history;
     View tab_indicator_gifts;
     View tab_indicator_history;
 
-    public PageGift_History() {
+    public PageReward_History() {
     }
 
-    public static PageGift_History newInstance(int sectionNumber) {
-        PageGift_History fragment = new PageGift_History();
+    public static PageReward_History newInstance(int sectionNumber) {
+        PageReward_History fragment = new PageReward_History();
         fragment.positionOfViewPager = sectionNumber;
         return fragment;
     }
@@ -41,10 +41,11 @@ public class PageGift_History extends Fragment implements View.OnClickListener {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        pagerAdapter = new Gift_HistoryFragmentViewPagetAdapter(getActivity().getFragmentManager(), getActivity().getApplicationContext());
+        pagerAdapter = new Reward_HistoryFragmentViewPagetAdapter(getChildFragmentManager(), getActivity().getApplicationContext());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
+
         mViewPager.setAdapter(pagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
 
@@ -77,6 +78,7 @@ public class PageGift_History extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         mViewPager.setCurrentItem(positionOfViewPager, true);
+        pagerAdapter.notifyDataSetChanged();
     }
 
     private void updateTabs(int currentTab) {
