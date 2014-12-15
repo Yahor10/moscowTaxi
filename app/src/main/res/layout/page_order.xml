@@ -32,7 +32,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/page_order_padding_left">
 
-        <EditText
+        <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
             android:id="@+id/edt_from"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/page_order_padding_left">
 
-        <EditText
+        <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
             android:id="@+id/edt_where"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -355,7 +355,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/page_order_padding_left">
 
-        <EditText
+        <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
             android:id="@+id/edt_koment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
