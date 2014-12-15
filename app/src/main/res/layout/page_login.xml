@@ -6,7 +6,8 @@
     android:padding="20dp"
     android:layout_gravity="center"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bcg720">
 
     <EditText android:id="@+id/edt_phone_number"
         android:layout_width="fill_parent"
@@ -21,18 +22,21 @@
          android:id="@+id/button_authorize"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Войти"/>
+        android:text="Войти"
+        style="@style/ButtonText"/>
 
     <Button
         android:id="@+id/button_registration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Зарегестрироваться"/>
+        android:text="Зарегестрироваться"
+        style="@style/ButtonText"/>
     <Button
         android:id="@+id/button_go_main"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="временная кнопка"/>
+        android:text="временная кнопка"
+        style="@style/ButtonText"/>
 
 
 
