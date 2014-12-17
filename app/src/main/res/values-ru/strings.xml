@@ -19,10 +19,9 @@
 
     <string name="favorites_places">Избранные места</string>
     <string name="favorites_route">Избранные маршруты</string>
-
-
-
-
+    <string name="add_favorites_place">Добавить адресс</string>
+    <string name="favorite_address">Адресс</string>
+    <string name="favorite_name">Название</string>
 
     <!-- MAIN PAGE-->
     <string name="order">Заказать</string>
@@ -31,28 +30,28 @@
     <!-- page order-->
     <string name="from_here">Откуда</string>
     <string name="where">Куда</string>
-
     <!-- rage order-->
 
     <!-- MAIN PAGE-->
-
-
-
-    <!-- GIFTS_HYSTORY PAGE-->
-    <string name="gifts">Награды</string>
-    <string name="history">История</string>
-
-
-
-    <!-- GIFTS_HYSTORY PAGE-->
-
-
 
     <string name="addresses">Адресса</string>
 
     <!-- Actions -->
     <string name="edit">Изменить</string>
+    <string name="detect">Определить</string>
     <string name="remove">Удалить</string>
+    <string name="save">Сохранить</string>
+    <string name="order_taxi">Заказать такси</string>
+    <string name="order_now">Подать сейчас</string>
+    <string name="call_operator">Позвонить оператору</string>
+    <string name="clear">Очистить</string>
+    <string name="time_order_taxi">Время подачи машины</string>
+    <string name="my_adresses">Мои адресса</string>
+
+
+
+    <string name="comment">Комментарий</string>
+
 
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -62,9 +61,26 @@
     <string name="title_activity_favorites">FavoritesActivity</string>
     <string name="hello_world">Hello world!</string>
 
-
     <string name="when">Время подачи:</string>
     <string name="type">Класс: </string>
 
 
+    <!-- Awards -->
+    <string name="beginer_award">Начинающий пассажир</string>
+    <string name="intermidiate_award">Продвинутый пассажир</string>
+    <string name="proffesional_award">Проффесиональный пассажир</string>
+    <string name="expert_award">Эксперт</string>
+    <string name="tourist_award">Путешественник</string>
+    <string name="club_award">Король вечеринок</string>
+
+    <string name="beginer_award_description">Проехать 10 и более км</string>
+    <string name="intermidiate_award_description">Проехать 100 и более км</string>
+    <string name="proffesional_award_description">Проехать 250 и более км</string>
+    <string name="expert_award_description">Проехать 500 и более км</string>
+    <string name="tourist_award_description">10 или более раз заказать такси на вокзал или аэропорт</string>
+    <string name="club_award_description">10 или более раз заказать из клуба или в клуб</string>
+
+    <!-- GIFTS_HYSTORY PAGE-->
+    <string name="gifts">Награды</string>
+    <string name="history">История</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cities">
+        <item>Москва</item>
+    </string-array>
+
+    <string-array name="tariffs">
+        <item>Тарифный план</item>
+    </string-array>
+
+    <string-array name="additional_settings">
+        <item>Дополнительные параметры</item>
+    </string-array>
+</resources>

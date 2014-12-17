@@ -21,7 +21,7 @@ import ru.moscowtaxi.android.moscowtaxi.constants.ConstantsJson;
  * Created by alex-pers on 12/1/14.
  */
 public class TaxiHttpClient extends DefaultHttpClient {
-    public static String URL_REGISTRATE = "http://example.opteum.ru/client/api/register/";
+    public static String URL_REGISTRATE = "http://788.opteum.ru/client/api/register/";
     Context context;
 
     public TaxiHttpClient(Context context) {
