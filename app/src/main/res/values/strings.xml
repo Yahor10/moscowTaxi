@@ -72,13 +72,21 @@
     <string name="expert_award">Эксперт</string>
     <string name="tourist_award">Путешественник</string>
     <string name="club_award">Король вечеринок</string>
+    <string name="avia_award">Авиа магнат</string>
+    <string name="train_award">Авиа магнат</string>
+    <string name="morning_award">Ранняя пташка</string>
+    <string name="night_award">Полуночник</string>
 
     <string name="beginer_award_description">Проехать 10 и более км</string>
     <string name="intermidiate_award_description">Проехать 100 и более км</string>
     <string name="proffesional_award_description">Проехать 250 и более км</string>
     <string name="expert_award_description">Проехать 500 и более км</string>
     <string name="tourist_award_description">10 или более раз заказать такси на вокзал или аэропорт</string>
-    <string name="club_award_description">10 или более раз заказать из клуба или в клуб</string>
+    <string name="club_award_description">10 или более раз заказать такси из клуба или в клуб</string>
+    <string name="avia_award_description">10 или более раз заказать такси из аэропорта или в аэропотр</string>
+    <string name="train_award_description">10 или более раз заказать такси с вокзала или на вокзал</string>
+    <string name="morning_award_description">10 или более раз заказать такси с 5 до 7 часов утра</string>
+    <string name="night_award_description">10 или более раз заказать такси с 23 до 1 часов ночи</string>
 
     <!-- GIFTS_HYSTORY PAGE-->
     <string name="gifts">Награды</string>
