@@ -2,10 +2,17 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +22,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.internal.ho;
+import com.google.android.gms.location.LocationServices;
+
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
@@ -23,15 +41,18 @@ import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageOrder extends Fragment implements View.OnClickListener {
+public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     public static Fragment newInstance() {
         PageOrder fragment = new PageOrder();
         return fragment;
     }
 
-    public PageOrder(){
+    public PageOrder() {
 
     }
 
@@ -43,14 +64,13 @@ public class PageOrder extends Fragment implements View.OnClickListener {
     View butMyAdresesWhere;
     View butGetCarNow;
     View butClearKoment;
-    Spinner spinnerHour;
-    Spinner spinnerMinute;
+    TextView textHour;
+    TextView textMinutes;
+
     Spinner spinnerTariff;
     Spinner spinnerAdditionalSettings;
     Button butGetTaxi;
     Button butCallOperator;
-
-
 
 
     @Override
@@ -62,27 +82,31 @@ public class PageOrder extends Fragment implements View.OnClickListener {
         edtWhere = (EditText) rootView.findViewById(R.id.edt_where);
         edtKoment = (EditText) rootView.findViewById(R.id.edt_koment);
 
-        butDetermine = (View)rootView.findViewById(R.id.view_but_determine);
+        butDetermine = (View) rootView.findViewById(R.id.view_but_determine);
         butMyAdresesFrom = (View) rootView.findViewById(R.id.view_but_my_adreeses_from);
         butMyAdresesWhere = (View) rootView.findViewById(R.id.view_but_my_adreeses_where);
         butGetCarNow = (View) rootView.findViewById(R.id.view_but_get_car_now);
         butClearKoment = (View) rootView.findViewById(R.id.view_but_cleat_koment);
 
-        spinnerHour = (Spinner) rootView.findViewById(R.id.spinner_hour);
-        spinnerMinute = (Spinner) rootView.findViewById(R.id.spinner_minute);
+        textHour = (TextView) rootView.findViewById(R.id.text_hour);
+        textMinutes = (TextView) rootView.findViewById(R.id.text_minutes);
+
         spinnerTariff = (Spinner) rootView.findViewById(R.id.spinner_tariff);
         spinnerAdditionalSettings = (Spinner) rootView.findViewById(R.id.spinner_additional_settings);
 
+        textHour.setOnClickListener(this);
+        textMinutes.setOnClickListener(this);
+
         Activity activity = getActivity();
-        ContextThemeWrapper wrapper = new ContextThemeWrapper(activity,android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
+        ContextThemeWrapper wrapper = new ContextThemeWrapper(activity, android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
         MainActivity.CustomSpinnerAdapter tariffAdapter =
-                (  MainActivity.CustomSpinnerAdapter)   MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.tariffs,
+                (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.tariffs,
                         android.R.layout.simple_spinner_dropdown_item);
 
         spinnerTariff.setAdapter(tariffAdapter);
 
         MainActivity.CustomSpinnerAdapter additionSettingsAdapter =
-                (  MainActivity.CustomSpinnerAdapter)   MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.additional_settings,
+                (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.additional_settings,
                         android.R.layout.simple_spinner_dropdown_item);
         spinnerAdditionalSettings.setAdapter(additionSettingsAdapter);
 
@@ -98,36 +122,189 @@ public class PageOrder extends Fragment implements View.OnClickListener {
         butCallOperator.setOnClickListener(this);
 
 
-
+        buildGoogleApiClient();
+        connectGoogleApiClient();
         return rootView;
+    }
+
+    private void connectGoogleApiClient() {
+        if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.connect();
+        }
     }
 
     @Override
     public void onClick(View view) {
 
-
-        switch (view.getId()){
+        Calendar mcurrentTime = null;
+        int hour = 0;
+        int minute = 0;
+        switch (view.getId()) {
             case R.id.view_but_determine:
-                Toast.makeText(getActivity(),"DETERMINE",Toast.LENGTH_SHORT ).show();
+                Activity activity = getActivity();
+                Toast.makeText(activity, "DETERMINE", Toast.LENGTH_SHORT).show();
+
+                if(mLastLocation != null) {
+                    new GetAddressTask(activity).execute(mLastLocation);// TODO get single task reference
+                }
                 break;
             case R.id.view_but_my_adreeses_from:
-                Toast.makeText(getActivity(),"FROM",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "FROM", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_but_my_adreeses_where:
-                Toast.makeText(getActivity(),"WHERE",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "WHERE", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_but_get_car_now:
-                Toast.makeText(getActivity(),"NOW",Toast.LENGTH_SHORT ).show();
+                mcurrentTime = Calendar.getInstance();
+                hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                minute = mcurrentTime.get(Calendar.MINUTE);
+                textHour.setText(Integer.toString(hour));
+                textMinutes.setText(Integer.toString(minute));
                 break;
             case R.id.view_but_cleat_koment:
                 edtKoment.setText("");
                 break;
             case R.id.button_get_taxi:
-                Toast.makeText(getActivity(),"I want Taxi",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "I want Taxi", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.button_call_operator:
-                Toast.makeText(getActivity(),"CALL",Toast.LENGTH_SHORT ).show();
+                Toast.makeText(getActivity(), "CALL", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.text_minutes:
+            case R.id.text_hour:
+                mcurrentTime = Calendar.getInstance();
+                hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//                        eReminderTime.setText( selectedHour + ":" + selectedMinute);
+                        textHour.setText(Integer.toString(selectedHour));
+                        textMinutes.setText(Integer.toString(selectedMinute));
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
                 break;
         }
     }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.v(null, "ON CONNECTED!");
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    /**
+     * A subclass of AsyncTask that calls getFromLocation() in the
+     * background. The class definition has these generic types:
+     * Location - A Location object containing
+     * the current location.
+     * Void     - indicates that progress units are not used
+     * String   - An address passed to onPostExecute()
+     */
+    private class GetAddressTask extends
+            AsyncTask<Location, Void, String> {
+        Context mContext;
+
+        public GetAddressTask(Context context) {
+            super();
+            mContext = context;
+        }
+
+        /**
+         * Get a Geocoder instance, get the latitude and longitude
+         * look up the address, and return it
+         *
+         * @return A string containing the address of the current
+         * location, or an empty string if no address can be found,
+         * or an error message
+         * @params params One or more Location objects
+         */
+        @Override
+        protected String doInBackground(Location... params) {
+            Locale myLocale = new Locale("ru", "RU");
+            Geocoder geocoder =
+                    new Geocoder(mContext, myLocale);
+            // Get the current location from the input parameter list
+            Location loc = params[0];
+            // Create a list to contain the result address
+            List<Address> addresses = null;
+            try {
+                /*
+                 * Return 1 address.
+                 */
+                addresses = geocoder.getFromLocation(loc.getLatitude(),
+                        loc.getLongitude(), 1);
+            } catch (IOException e1) {
+                Log.e("LocationSampleActivity",
+                        "IO Exception in getFromLocation()");
+                e1.printStackTrace();
+                return ("IO Exception trying to get address");
+            } catch (IllegalArgumentException e2) {
+                // Error message to post in the log
+                String errorString = "Illegal arguments " +
+                        Double.toString(loc.getLatitude()) +
+                        " , " +
+                        Double.toString(loc.getLongitude()) +
+                        " passed to address service";
+                Log.e("LocationSampleActivity", errorString);
+                e2.printStackTrace();
+                return errorString;
+            }
+            // If the reverse geocode returned an address
+            if (addresses != null && addresses.size() > 0) {
+                // Get the first address
+                Address address = addresses.get(0);
+                /*
+                 * Format the first line of address (if available),
+                 * city, and country name.
+                 */
+                String addressText = String.format(
+                        "%s, %s, %s",
+                        // If there's a street address, add it
+                        address.getMaxAddressLineIndex() > 0 ?
+                                address.getAddressLine(0) : "",
+                        // Locality is usually a city
+                        address.getLocality(),
+                        // The country of the address
+                        address.getCountryName());
+                // Return the text
+                return addressText;
+            } else {
+                return "No address found";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.v(null,"ADDRESS" + s);
+            if(isVisible() && !TextUtils.isEmpty(s)){
+                edtFrom.setText(s);
+            }
+            super.onPostExecute(s);
+        }
+    }
+
+
 }
