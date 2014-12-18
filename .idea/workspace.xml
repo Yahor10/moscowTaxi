@@ -108,22 +108,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FavoritesPlacesListAdapter.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7798165" vertical-offset="1335" max-vertical-offset="2055">
-              <caret line="123" column="20" selection-start-line="123" selection-start-column="20" selection-end-line="123" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3428#3909#0" expanded="true" />
-                <element signature="e#3894#3895#0" expanded="true" />
-                <element signature="e#3952#4299#0" expanded="true" />
-                <element signature="e#4284#4285#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="list_item_favorite_place.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_favorite_place.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -137,13 +121,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PageFavoritePlace.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="PageFavoritePlace.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="96" max-vertical-offset="825">
-              <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.26605505" vertical-offset="171" max-vertical-offset="840">
+              <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
               <folding>
-                <element signature="e#1299#1317#0" expanded="true" />
+                <element signature="e#1445#1463#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -152,8 +136,8 @@
       <file leaf-file-name="FavoritePlaceORM.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1020">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -162,8 +146,8 @@
       <file leaf-file-name="EntityORM.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/data/EntityORM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="360">
+              <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -1328,10 +1312,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/page_follow.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_favorite_place.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java" />
       </list>
     </option>
   </component>
@@ -1925,7 +1909,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48814505" sideWeight="0.60694444" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.048814505" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.048814505" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6205674" order="1" side_tool="false" content_ui="tabs" />
@@ -1987,19 +1971,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageHistory.java</url>
-          <line>36</line>
+          <line>40</line>
           <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/HistoryListViewAdapter.java</url>
-          <line>49</line>
+          <line>56</line>
           <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageHistory.java</url>
-          <line>24</line>
+          <line>28</line>
           <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
@@ -2463,8 +2447,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/data/EntityORM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="360">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -2474,20 +2458,16 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1020">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="96" max-vertical-offset="825">
-          <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
+        <state vertical-scroll-proportion="2.4770641" vertical-offset="240" max-vertical-offset="2070">
+          <caret line="124" column="20" selection-start-line="124" selection-start-column="20" selection-end-line="124" selection-end-column="20" />
           <folding>
-            <element signature="e#1299#1317#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3441#3922#0" expanded="true" />
+            <element signature="e#3907#3908#0" expanded="true" />
+            <element signature="e#3965#4312#0" expanded="true" />
+            <element signature="e#4297#4298#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2503,16 +2483,20 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7798165" vertical-offset="1335" max-vertical-offset="2070">
-          <caret line="123" column="20" selection-start-line="123" selection-start-column="20" selection-end-line="123" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1500">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26605505" vertical-offset="171" max-vertical-offset="840">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3428#3909#0" expanded="true" />
-            <element signature="e#3894#3895#0" expanded="true" />
-            <element signature="e#3952#4299#0" expanded="true" />
-            <element signature="e#4284#4285#0" expanded="true" />
+            <element signature="e#1445#1463#0" expanded="true" />
           </folding>
         </state>
       </provider>
