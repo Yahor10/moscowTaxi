@@ -32,7 +32,27 @@ public class PageFavoritePlace extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_favorite_place, container, false);
         listView = (ListView) rootView.findViewById(R.id.list_favorite_place);
-        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), new ArrayList<FavoritePlaceORM>());
+
+        listView.setItemsCanFocus(true);
+        listView.setFocusable(false);
+        listView.setFocusableInTouchMode(false);
+        listView.setClickable(false);
+        ArrayList<FavoritePlaceORM> data = new ArrayList<FavoritePlaceORM>();
+
+       FavoritePlaceORM item1  = new FavoritePlaceORM();
+        item1.name =  "Работа";
+        item1.address = "Minsk ave.Nezavisimosti";
+        item1.is_edited_now = false;
+
+        FavoritePlaceORM item2  = new FavoritePlaceORM();
+        item2.name =  "Дом";
+        item2.address = "Гродненская обл. Кореличский р-н. д.Цирин";
+        item2.is_edited_now = false;
+
+        data.add(item1);
+        data.add(item2);
+
+        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), data);
         listView.setAdapter(adapter);
 
         return rootView;

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
 
     <com.google.android.gms.maps.MapView
@@ -13,8 +12,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/gray_background_transparent">
+        android:background="@color/gray_background_transparent"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,11 +129,11 @@
             android:id="@+id/lay_data_history"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:paddingLeft="10dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/txt_number_order"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -149,15 +148,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text="@string/from_here" />
+                        android:text="@string/from_here"
+                        android:textColor="@color/gray_text" />
 
                     <TextView
                         android:id="@+id/txt_from_here"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text=": Минск" />
+                        android:text=": Минск"
+                        android:textColor="@color/gray_text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -167,15 +166,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text="@string/where" />
+                        android:text="@string/where"
+                        android:textColor="@color/gray_text" />
 
                     <TextView
                         android:id="@+id/txt_where"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text=": Moscow" />
+                        android:text=": Moscow"
+                        android:textColor="@color/gray_text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -185,15 +184,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text="@string/when" />
+                        android:text="@string/when"
+                        android:textColor="@color/gray_text" />
 
                     <TextView
                         android:id="@+id/txt_time_auto"
                         android:layout_width="wrap_content"
-                        android:textColor="@color/gray_text"
                         android:layout_height="wrap_content"
-                        android:text=" 12 00" />
+                        android:text=" 12 00"
+                        android:textColor="@color/gray_text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -203,15 +202,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text="@string/type" />
+                        android:text="@string/type"
+                        android:textColor="@color/gray_text" />
 
                     <TextView
                         android:id="@+id/txt_type_auto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:text=" Бизнесс" />
+                        android:text=" Бизнесс"
+                        android:textColor="@color/gray_text" />
                 </LinearLayout>
 
 
@@ -238,8 +237,8 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="30dp"
@@ -274,13 +273,26 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Статус заказа:"/>
-            Text
-            </LinearLayout>
+                android:text="Статус заказа:"
+                android:textColor="@color/gray_text" />
+
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:paddingLeft="10dp"
+                android:text="Машина в пути"
+                android:textColor="@color/orange_color"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

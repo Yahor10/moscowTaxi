@@ -31,7 +31,10 @@ public class FavoritePlaceORM  extends EntityORM {
     @DatabaseField(columnName = NAME)
     public String name;
     @DatabaseField(columnName = ADDRESS)
-    public int address;
+    public String address;
+
+
+    public boolean is_edited_now;
 
 
     public static int insertFavoritePlace(Context context, FavoritePlaceORM place) {
