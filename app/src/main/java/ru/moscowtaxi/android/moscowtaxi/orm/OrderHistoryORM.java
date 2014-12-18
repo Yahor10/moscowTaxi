@@ -44,9 +44,12 @@ public class OrderHistoryORM extends EntityORM {
 
     }
 
-    public OrderHistoryORM(String userName, String name, String address) {
-        this.userName = userName;
-
+    public OrderHistoryORM(String userName, String name, String addressFrom, String addressTo, long time, OrderType type) {
+        this.name = name;
+        this.addressFrom = addressFrom;
+        this.addressTo = addressTo;
+        this.time = time;
+        this.type = type;
     }
 
     public static int insertOrderHistory(Context context, OrderHistoryORM order) {
