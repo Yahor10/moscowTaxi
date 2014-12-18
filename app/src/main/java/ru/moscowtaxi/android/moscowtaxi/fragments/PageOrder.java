@@ -142,17 +142,13 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         switch (view.getId()) {
             case R.id.view_but_determine:
                 Activity activity = getActivity();
-                Toast.makeText(activity, "DETERMINE", Toast.LENGTH_SHORT).show();
-
                 if(mLastLocation != null) {
                     new GetAddressTask(activity).execute(mLastLocation);// TODO get single task reference
                 }
                 break;
             case R.id.view_but_my_adreeses_from:
-                Toast.makeText(getActivity(), "FROM", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_but_my_adreeses_where:
-                Toast.makeText(getActivity(), "WHERE", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_but_get_car_now:
                 mcurrentTime = Calendar.getInstance();
@@ -165,10 +161,10 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 edtKoment.setText("");
                 break;
             case R.id.button_get_taxi:
-                Toast.makeText(getActivity(), "I want Taxi", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.button_call_operator:
-                Toast.makeText(getActivity(), "CALL", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.text_minutes:
             case R.id.text_hour:
@@ -179,7 +175,6 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                        eReminderTime.setText( selectedHour + ":" + selectedMinute);
                         textHour.setText(Integer.toString(selectedHour));
                         textMinutes.setText(Integer.toString(selectedMinute));
                     }
@@ -200,7 +195,6 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.v(null, "ON CONNECTED!");
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
     }
