@@ -6,6 +6,8 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
@@ -19,7 +21,7 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
  */
 
 @DatabaseTable(tableName = "favorite_place")
-public class FavoritePlaceORM  extends EntityORM {
+public class FavoritePlaceORM extends EntityORM {
 
 
     public static final String NAME = "name";
@@ -31,11 +33,11 @@ public class FavoritePlaceORM  extends EntityORM {
     public String address;
 
 
-    public FavoritePlaceORM(){
+    public FavoritePlaceORM() {
 
     }
 
-    public FavoritePlaceORM(String userName,String name, String address) {
+    public FavoritePlaceORM(String userName, String name, String address) {
         this.userName = userName;
         this.name = name;
         this.address = address;
@@ -82,5 +84,24 @@ public class FavoritePlaceORM  extends EntityORM {
                 ", address='" + address + '\'' +
                 ", user='" + userName + '\'' +
                 '}';
+    }
+
+    public static boolean isPlaceExist(Context context, String currentUser, String name) {
+        DatabaseHelper helper = OpenHelperManager.getHelper(context,
+                DatabaseHelper.class);
+        final Dao<FavoritePlaceORM, String> dao;
+        try {
+            dao = helper.getFavoritesPlacesDAO();
+            QueryBuilder<FavoritePlaceORM, String> queryBuilder = dao.queryBuilder();
+            Where<FavoritePlaceORM, String> eq = queryBuilder.where().eq(FavoritePlaceORM.NAME, name);
+
+            PreparedQuery<FavoritePlaceORM> preparedQuery = queryBuilder.prepare();
+            List<FavoritePlaceORM> placeList = dao.query(preparedQuery);
+            return !placeList.isEmpty();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

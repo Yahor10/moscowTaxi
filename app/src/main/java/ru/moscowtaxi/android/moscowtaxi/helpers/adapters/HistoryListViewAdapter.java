@@ -1,15 +1,18 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
@@ -18,10 +21,10 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
  */
 public class HistoryListViewAdapter extends BaseAdapter {
 
-    ArrayList<OrderORM> items;
+    List<OrderHistoryORM> items;
     LayoutInflater inflater;
 
-    public HistoryListViewAdapter(LayoutInflater inflater, ArrayList<OrderORM> data) {
+    public HistoryListViewAdapter(LayoutInflater inflater, List<OrderHistoryORM> data) {
         this.inflater = inflater;
         items = data;
     }
@@ -31,7 +34,7 @@ public class HistoryListViewAdapter extends BaseAdapter {
     public int getCount() {
         if (items == null)
             return 0;
-        return 4;
+        return items.size();
     }
 
     @Override
@@ -65,7 +68,12 @@ public class HistoryListViewAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     String currentUser = PreferenceUtils.getCurrentUser(context);
-                    FavoritePlaceORM.insertFavoritePlace(context,new FavoritePlaceORM(currentUser,"TEST","TEST address"));
+                    boolean placeExist = FavoritePlaceORM.isPlaceExist(context, currentUser, "TEST");
+                    if (!placeExist) {
+                        FavoritePlaceORM.insertFavoritePlace(context, new FavoritePlaceORM(currentUser, "TEST", "TEST address"));
+                    } else {
+                        Log.v(null, "PLACE EXIST");
+                    }
                 }
             });
 
