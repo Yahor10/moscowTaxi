@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
@@ -19,10 +20,10 @@ import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
  */
 public class FavoritesPlacesListAdapter extends BaseAdapter {
 
-    ArrayList<FavoritePlaceORM> items;
+    List<FavoritePlaceORM> items;
     LayoutInflater inflater;
 
-    public FavoritesPlacesListAdapter(LayoutInflater inflater, ArrayList<FavoritePlaceORM> data) {
+    public FavoritesPlacesListAdapter(LayoutInflater inflater, List<FavoritePlaceORM> data) {
         this.inflater = inflater;
         items = data;
     }

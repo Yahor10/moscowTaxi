@@ -1,17 +1,21 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.HistoryListViewAdapter;
-import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
+
 
 /**
  * Created by alex-pers on 12/10/14.
@@ -36,7 +40,13 @@ public class PageHistory extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_history, container, false);
         listView  = (ListView) rootView.findViewById(R.id.list_history);
-        adapter = new HistoryListViewAdapter(getActivity().getLayoutInflater(),new ArrayList<OrderORM>());
+        Activity activity = getActivity();
+
+        OrderHistoryORM.insertOrderHistory(getActivity(),new OrderHistoryORM());
+        List<OrderHistoryORM> historyOrders = OrderHistoryORM.getHistoryOrders(activity);
+        Log.v(null,"HISTORY ORDERS SIZE" + historyOrders.size());
+
+        adapter = new HistoryListViewAdapter(activity.getLayoutInflater(), historyOrders);
         listView.setAdapter(adapter);
 
         return rootView;

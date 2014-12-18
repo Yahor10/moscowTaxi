@@ -91,4 +91,8 @@
     <!-- GIFTS_HYSTORY PAGE-->
     <string name="gifts">Награды</string>
     <string name="history">История</string>
+    <string name="no_playservices">отсутствует приложение google play service</string>
+    <string name="history_orders">Прошлые заказы</string>
+    <string name="in_favorites">в избранное</string>
+    <string name="your_awars">Ваши награды за использование наших услуг</string>
 </resources>

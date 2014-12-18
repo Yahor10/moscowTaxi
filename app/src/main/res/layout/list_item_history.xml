@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#dd333333">
+    android:background="@android:color/black">
 
     <TextView
         android:id="@+id/txt_number_order"
@@ -20,7 +20,7 @@
     <LinearLayout
         android:id="@+id/lay_data_history"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="72dp"
         android:paddingLeft="10dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txt_number_order"
@@ -48,6 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
+                    android:singleLine="true"
                     android:text=": Минск" />
             </LinearLayout>
 
@@ -66,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
+                    android:singleLine="true"
                     android:text=": Moscow" />
             </LinearLayout>
 
@@ -84,6 +86,7 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/gray_text"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text=" 12 00" />
             </LinearLayout>
 
@@ -102,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
+                    android:singleLine="true"
                     android:text=" Бизнесс" />
             </LinearLayout>
 
@@ -111,19 +115,22 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3">
+            android:gravity="center"
+            android:layout_weight="2">
 
             <View
                 android:layout_width="1dp"
-                android:layout_height="fill_parent"
+                android:layout_height="40dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
                 android:background="@color/gray_divider" />
 
             <FrameLayout
-                android:id="@+id/lay_my_adresses_from"
+                android:id="@+id/lay_my_adresses_to_favorites"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_weight="3">
 
                 <LinearLayout
@@ -142,14 +149,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:text="в избранное"
+                        android:text="@string/in_favorites"
                         android:textColor="@color/gray_text" />
                 </LinearLayout>
 
-                <View
-                    android:id="@+id/view_but_my_adreeses_from"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" />
 
             </FrameLayout>
 
