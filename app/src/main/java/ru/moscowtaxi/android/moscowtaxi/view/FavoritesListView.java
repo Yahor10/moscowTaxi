@@ -72,8 +72,8 @@ public class FavoritesListView extends EntityListView<FavoritePlaceORM> implemen
                 if (favoritesPlaces == null) {
                     favoritesPlaces = new ArrayList<FavoritePlaceORM>();
                 }
-                favoritesPlaces.add(new FavoritePlaceORM());
-                favoritesPlaces.add(new FavoritePlaceORM());
+//                favoritesPlaces.add(new FavoritePlaceORM());
+//                favoritesPlaces.add(new FavoritePlaceORM());
 
 
                 return favoritesPlaces;

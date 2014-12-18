@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
@@ -16,10 +17,10 @@ import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
  */
 public class FavoritesPlacesListAdapter extends BaseAdapter {
 
-    ArrayList<FavoritePlaceORM> items;
+    List<FavoritePlaceORM> items;
     LayoutInflater inflater;
 
-    public FavoritesPlacesListAdapter(LayoutInflater inflater, ArrayList<FavoritePlaceORM> data) {
+    public FavoritesPlacesListAdapter(LayoutInflater inflater, List<FavoritePlaceORM> data) {
         this.inflater = inflater;
         items = data;
     }
@@ -29,7 +30,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
     public int getCount() {
         if (items == null)
             return 0;
-        return 3;
+        return items.size();
     }
 
     @Override

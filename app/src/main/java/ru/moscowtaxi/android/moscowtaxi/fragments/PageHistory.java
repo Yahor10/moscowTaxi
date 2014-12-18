@@ -36,7 +36,8 @@ public class PageHistory extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_history, container, false);
         listView  = (ListView) rootView.findViewById(R.id.list_history);
-        adapter = new HistoryListViewAdapter(getActivity().getLayoutInflater(),new ArrayList<OrderORM>());
+        ArrayList<OrderORM> data = new ArrayList<OrderORM>();
+        adapter = new HistoryListViewAdapter(getActivity().getLayoutInflater(), data);
         listView.setAdapter(adapter);
 
         return rootView;

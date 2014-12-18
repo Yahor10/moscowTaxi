@@ -1,5 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,9 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/10/14.
@@ -48,13 +51,23 @@ public class HistoryListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         Holder holder;
+
         if (convertView == null) {
             holder = new Holder();
             convertView = inflater
                     .inflate(R.layout.list_item_history, null);
             convertView.setTag(holder);
 
+            final Context context = convertView.getContext();
+            View viewById = convertView.findViewById(R.id.lay_my_adresses_to_favorites);
 
+            viewById.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String currentUser = PreferenceUtils.getCurrentUser(context);
+                    FavoritePlaceORM.insertFavoritePlace(context,new FavoritePlaceORM(currentUser,"TEST","TEST address"));
+                }
+            });
 
         } else {
             holder = (Holder) convertView.getTag();

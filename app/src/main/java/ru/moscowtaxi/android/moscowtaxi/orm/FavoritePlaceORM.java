@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.data.EntityORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by ychabatarou on 01.12.2014.
@@ -24,15 +25,21 @@ public class FavoritePlaceORM  extends EntityORM {
     public static final String NAME = "name";
     public static final String ADDRESS = "address";
 
-    @DatabaseField(columnName = KEY_ID)
-    public int id;
-    @DatabaseField(columnName = KEY_USER)
-    public int userName;
     @DatabaseField(columnName = NAME)
     public String name;
     @DatabaseField(columnName = ADDRESS)
-    public int address;
+    public String address;
 
+
+    public FavoritePlaceORM(){
+
+    }
+
+    public FavoritePlaceORM(String userName,String name, String address) {
+        this.userName = userName;
+        this.name = name;
+        this.address = address;
+    }
 
     public static int insertFavoritePlace(Context context, FavoritePlaceORM place) {
         int result;
@@ -55,9 +62,9 @@ public class FavoritePlaceORM  extends EntityORM {
             DatabaseHelper helper = OpenHelperManager.getHelper(context,
                     DatabaseHelper.class);
             final Dao<FavoritePlaceORM, String> dao = helper.getFavoritesPlacesDAO();
-//            String currentUser = PreferenceUtils.getCurrentUser(context);
+            String currentUser = PreferenceUtils.getCurrentUser(context);
             PreparedQuery<FavoritePlaceORM> prepare = dao.queryBuilder().where()
-                    .eq(FavoritePlaceORM.KEY_USER, "Test").prepare();
+                    .eq(FavoritePlaceORM.KEY_USER, currentUser).prepare();
             query = dao.query(prepare);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,4 +74,13 @@ public class FavoritePlaceORM  extends EntityORM {
         return query;
     }
 
+
+    @Override
+    public String toString() {
+        return "FavoritePlaceORM{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", user='" + userName + '\'' +
+                '}';
+    }
 }

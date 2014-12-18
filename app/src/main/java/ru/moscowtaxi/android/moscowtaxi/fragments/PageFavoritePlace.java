@@ -1,17 +1,21 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoritesPlacesListAdapter;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/2/14.
@@ -32,7 +36,10 @@ public class PageFavoritePlace extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_favorite_place, container, false);
         listView = (ListView) rootView.findViewById(R.id.list_favorite_place);
-        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), new ArrayList<FavoritePlaceORM>());
+
+        Activity activity = getActivity();
+        List<FavoritePlaceORM> favoritesPlaces = FavoritePlaceORM.getFavoritesPlaces(getActivity());
+        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), favoritesPlaces);
         listView.setAdapter(adapter);
 
         return rootView;
