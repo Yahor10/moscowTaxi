@@ -54,31 +54,7 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-        // Action Bar
 
-        // Adapter
-        CustomSpinnerAdapter adapter =
-                (CustomSpinnerAdapter) CustomSpinnerAdapter.createFromResource(this, R.array.cities,
-                        android.R.layout.simple_spinner_dropdown_item);
-
-// Callback
-        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
-
-            String[] items = getResources().getStringArray(R.array.cities); // List items from res
-
-            @Override
-            public boolean onNavigationItemSelected(int position, long id) {
-                return true;
-
-            }
-
-        };
-
-        ActionBar actions = getActionBar();
-        actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actions.setDisplayShowTitleEnabled(false);
-        actions.setListNavigationCallbacks(adapter, callback);
-        Context themedContext = actions.getThemedContext();
 
     }
 

@@ -51,7 +51,7 @@
 
 
     <string name="comment">Комментарий</string>
-
+    <string name="failed_determinate_location">Не удалось определить текущее местоположение</string>
 
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -95,4 +95,7 @@
     <string name="history_orders">Прошлые заказы</string>
     <string name="in_favorites">в избранное</string>
     <string name="your_awars">Ваши награды за использование наших услуг</string>
+
+
+
 </resources>

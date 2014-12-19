@@ -144,6 +144,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 Activity activity = getActivity();
                 if(mLastLocation != null) {
                     new GetAddressTask(activity).execute(mLastLocation);// TODO get single task reference
+                }else{
+                    Toast.makeText(activity,activity.getString(R.string.failed_determinate_location),Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.view_but_my_adreeses_from:

@@ -4,6 +4,7 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.FavoritesActivity;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -177,8 +179,36 @@ public class NavigationDrawerFragment extends Fragment {
         // set up the drawer's list view with items and click listener
 
         ActionBar actionBar = getActionBar();
+        // Action Bar
+
+        // Adapter
+       MainActivity. CustomSpinnerAdapter adapter =
+                (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(getActivity(), R.array.cities,
+                        android.R.layout.simple_spinner_dropdown_item);
+
+// Callback
+        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
+
+            String[] items = getResources().getStringArray(R.array.cities); // List items from res
+
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+                return true;
+
+            }
+
+        };
+
+        ActionBar actions = getActionBar();
+        actions.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actions.setDisplayShowTitleEnabled(false);
+        actions.setListNavigationCallbacks(adapter, callback);
+        Context themedContext = actions.getThemedContext();
+
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+
+
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
@@ -318,9 +348,33 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
+        // Action Bar
+
+        // Adapter
+        MainActivity. CustomSpinnerAdapter adapter =
+                (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(getActivity(), R.array.cities,
+                        android.R.layout.simple_spinner_dropdown_item);
+
+// Callback
+        ActionBar.OnNavigationListener callback = new ActionBar.OnNavigationListener() {
+
+            String[] items = getResources().getStringArray(R.array.cities); // List items from res
+
+            @Override
+            public boolean onNavigationItemSelected(int position, long id) {
+                return true;
+
+            }
+
+        };
+
+
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setListNavigationCallbacks(adapter, callback);
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
     }
 
     private ActionBar getActionBar() {
