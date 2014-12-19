@@ -18,12 +18,13 @@ import com.j256.ormlite.table.TableUtils;
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-	private static final Class<?>[] DATA_CLASSES = { FavoritePlaceORM.class ,OrderHistoryORM.class};
+	private static final Class<?>[] DATA_CLASSES = { FavoritePlaceORM.class ,FavoriteRouteORM.class,OrderHistoryORM.class};
 
 	public static final String DATABASE_NAME = "moscowtaxi.db";
 	private static final int DATABASE_VERSION = 1;
 
 	private Dao<FavoritePlaceORM, String> favoritePlacesDao = null;
+    private Dao<FavoriteRouteORM, String> favoriteRouteDao = null;
     private Dao<OrderHistoryORM, String>  historyOrderDao = null;
 
 	public DatabaseHelper(Context context) {
@@ -92,6 +93,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return historyOrderDao;
     }
 
+    public Dao<FavoriteRouteORM, String> getFavoriteRouteDao() throws SQLException {
+        if (favoriteRouteDao == null) {
+            favoriteRouteDao = getDao(FavoriteRouteORM.class);
+        }
+        return favoriteRouteDao;
+    }
 
 
 }
