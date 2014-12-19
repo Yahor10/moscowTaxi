@@ -2,6 +2,7 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,30 @@ public class PageFavoritePlace extends Fragment {
         listView.setFocusable(false);
         listView.setFocusableInTouchMode(false);
         listView.setClickable(false);
+
+        View footerView =  ((LayoutInflater)getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_favorite, null, false);
+        listView.addFooterView(footerView);
+
+        footerView.findViewById(R.id.but_new_place).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<FavoritePlaceORM> items =  adapter.getItems();
+                if(items==null){
+                    items = new ArrayList<FavoritePlaceORM>();
+                }
+
+                FavoritePlaceORM item1  = new FavoritePlaceORM();
+                item1.name =  "Название";
+                item1.address = "Адресс";
+                item1.is_edited_now = false;
+
+                items.add(item1);
+                adapter.setItems(items);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
+
         ArrayList<FavoritePlaceORM> data = new ArrayList<FavoritePlaceORM>();
 
        FavoritePlaceORM item1  = new FavoritePlaceORM();

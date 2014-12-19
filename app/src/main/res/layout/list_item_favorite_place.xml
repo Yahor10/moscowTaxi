@@ -33,7 +33,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -59,7 +60,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:singleLine="true" />
 
                 <TextView
                     android:layout_width="match_parent"

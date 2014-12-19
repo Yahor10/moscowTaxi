@@ -29,6 +29,15 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
     }
 
 
+    public List<FavoritePlaceORM> getItems(){
+        return items;
+    }
+
+    public  void setItems(List<FavoritePlaceORM> items){
+        this.items = items;
+    }
+
+
     @Override
     public int getCount() {
         if (items == null)
