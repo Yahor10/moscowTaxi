@@ -1,10 +1,10 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Loader;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +15,27 @@ import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoritesPlacesListAdapter;
+import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
-import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/2/14.
  */
-public class PageFavoritePlace extends Fragment {
+public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>> {
 
+    private static final int LOADER_ID = 101;
     ListView listView;
     FavoritesPlacesListAdapter adapter;
 
     public static PageFavoritePlace newInstance() {
         PageFavoritePlace fragment = new PageFavoritePlace();
         return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
 
@@ -43,19 +50,21 @@ public class PageFavoritePlace extends Fragment {
         listView.setFocusableInTouchMode(false);
         listView.setClickable(false);
 
-        View footerView =  ((LayoutInflater)getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_favorite, null, false);
+
+        View footerView = ((LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_favorite, null, false);
         listView.addFooterView(footerView);
+
 
         footerView.findViewById(R.id.but_new_place).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<FavoritePlaceORM> items =  adapter.getItems();
-                if(items==null){
+                List<FavoritePlaceORM> items = adapter.getItems();
+                if (items == null) {
                     items = new ArrayList<FavoritePlaceORM>();
                 }
 
-                FavoritePlaceORM item1  = new FavoritePlaceORM();
-                item1.name =  "Название";
+                FavoritePlaceORM item1 = new FavoritePlaceORM();
+                item1.name = "Название";
                 item1.address = "Адресс";
                 item1.is_edited_now = false;
 
@@ -68,23 +77,26 @@ public class PageFavoritePlace extends Fragment {
 
         ArrayList<FavoritePlaceORM> data = new ArrayList<FavoritePlaceORM>();
 
-       FavoritePlaceORM item1  = new FavoritePlaceORM();
-        item1.name =  "Работа";
-        item1.address = "Minsk ave.Nezavisimosti";
-        item1.is_edited_now = false;
 
-        FavoritePlaceORM item2  = new FavoritePlaceORM();
-        item2.name =  "Дом";
-        item2.address = "Гродненская обл. Кореличский р-н. д.Цирин";
-        item2.is_edited_now = false;
-
-        data.add(item1);
-        data.add(item2);
-
-        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), data);
-
-        listView.setAdapter(adapter);
-
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootView;
+    }
+
+
+    @Override
+    public Loader<List<FavoritePlaceORM>> onCreateLoader(int id, Bundle args) {
+        return new FavoritePlaceLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<FavoritePlaceORM>> loader, List<FavoritePlaceORM> data) {
+        // TODO check null adapters
+        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), data);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<FavoritePlaceORM>> loader) {
+
     }
 }
