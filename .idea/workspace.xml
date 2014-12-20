@@ -108,17 +108,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="page_follow.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="page_follow.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/page_follow.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.555555" vertical-offset="240" max-vertical-offset="5070">
-              <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+            <state vertical-scroll-proportion="0.8196721" vertical-offset="0" max-vertical-offset="5085">
+              <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
               <folding>
-                <element signature="e#1960#1992#0" expanded="true" />
-                <element signature="e#6865#6884#0" expanded="true" />
-                <element signature="e#7694#7709#0" expanded="true" />
-                <element signature="e#8516#8530#0" expanded="true" />
-                <element signature="e#9339#9353#0" expanded="true" />
+                <element signature="e#2003#2035#0" expanded="true" />
+                <element signature="e#6908#6927#0" expanded="true" />
+                <element signature="e#7737#7752#0" expanded="true" />
+                <element signature="e#8559#8573#0" expanded="true" />
+                <element signature="e#9382#9396#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,13 +127,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PageFollow.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PageFollow.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5135135" vertical-offset="2325" max-vertical-offset="2880">
-              <caret line="174" column="45" selection-start-line="174" selection-start-column="45" selection-end-line="174" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2343" max-vertical-offset="3105">
+              <caret line="61" column="63" selection-start-line="61" selection-start-column="63" selection-end-line="61" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2152#2301#0" expanded="true" />
+                <element signature="e#2290#2291#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1310,8 +1312,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoritePlace.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-ru/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/page_follow.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/page_follow.xml" />
       </list>
     </option>
   </component>
@@ -1882,17 +1884,17 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16180556" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16180556" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39748955" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18688981" sideWeight="0.27152777" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15760112" sideWeight="0.27152777" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.37943262" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19246861" sideWeight="0.60694444" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18688981" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15760112" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6205674" order="1" side_tool="false" content_ui="tabs" />
@@ -2003,19 +2005,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java</url>
-          <line>162</line>
+          <line>173</line>
           <properties />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java</url>
-          <line>173</line>
+          <line>188</line>
           <properties />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java</url>
-          <line>156</line>
+          <line>167</line>
           <properties />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
@@ -2446,31 +2448,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="453" max-vertical-offset="3105">
+          <caret line="61" column="63" selection-start-line="61" selection-start-column="63" selection-end-line="61" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2152#2301#0" expanded="true" />
+            <element signature="e#2290#2291#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/page_follow.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.555555" vertical-offset="240" max-vertical-offset="5070">
-          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.8196721" vertical-offset="0" max-vertical-offset="5085">
+          <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
           <folding>
-            <element signature="e#1960#1992#0" expanded="true" />
-            <element signature="e#6865#6884#0" expanded="true" />
-            <element signature="e#7694#7709#0" expanded="true" />
-            <element signature="e#8516#8530#0" expanded="true" />
-            <element signature="e#9339#9353#0" expanded="true" />
+            <element signature="e#2003#2035#0" expanded="true" />
+            <element signature="e#6908#6927#0" expanded="true" />
+            <element signature="e#7737#7752#0" expanded="true" />
+            <element signature="e#8559#8573#0" expanded="true" />
+            <element signature="e#9382#9396#0" expanded="true" />
           </folding>
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFollow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5135135" vertical-offset="2325" max-vertical-offset="2880">
-          <caret line="174" column="45" selection-start-line="174" selection-start-column="45" selection-end-line="174" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
   </component>

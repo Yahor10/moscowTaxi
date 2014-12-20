@@ -15,7 +15,7 @@
         android:layout_gravity="top">
 
         <Button
-            android:id="@+id/but_call_list"
+            android:id="@+id/but_call_layout"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:text="Изменить номер заказа" />
@@ -25,9 +25,10 @@
     <View
         android:id="@+id/view_level"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="100dp"
         android:layout_gravity="top"
-        android:background="#000000" />
+        android:background="#00000000" />
 
     <LinearLayout
         android:id="@+id/layot_main"

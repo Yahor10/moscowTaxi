@@ -2,15 +2,14 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -40,6 +39,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
     View viewLevel;
     View viewLevelPoint;
     View viewBetweenLMainAndMap;
+    Button butCallLayout;
 
 
     public PageFollow() {
@@ -59,8 +59,17 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
         mainLayout = (View) rootView.findViewById(R.id.layot_main);
         viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
         viewLevel = (View)rootView.findViewById(R.id.view_level);
-
+        viewLevelPoint = (View)rootView.findViewById(R.id.view_level_point);
+        butCallLayout = (Button) rootView.findViewById(R.id.but_call_layout);
         mainLayout.setOnTouchListener(this);
+
+        butCallLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLayout();
+            }
+        });
+
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -109,11 +118,13 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
 
 
     private void hideLayout() {
+        butCallLayout.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
         zoomMap(ZOOM_MAP_WITHOUT_LAYOUT);
     }
 
     private void showLayout() {
+        butCallLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
         zoomMap(ZOOM_MAP_WITH_LAYOUT);
     }
@@ -164,7 +175,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
                 int[] pos1 = { 0, 0 };
                 int[] pos2 = { 0, 0 };
 
-
+                viewLevel.getLocationOnScreen(pos1);
+                viewLevelPoint.getLocationOnScreen(pos2);
+                if (pos2[1] < pos1[1]) {
+                    hideLayout();
+                }
 
 
                 break;
@@ -174,7 +189,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
                 if(delta>0){
                     setMargins(mainLayout,0,-(int)delta,0,0);
                 }
-                Log.d("SWIPE","ACTION_MOVE");
+
                 break;
 
             default:
