@@ -2,7 +2,9 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,10 +23,23 @@ import ru.moscowtaxi.android.moscowtaxi.R;
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageFollow extends Fragment {
+public class PageFollow extends Fragment implements View.OnTouchListener{
+
+    static final float ZOOM_MAP_WITH_LAYOUT = 11;
+    static final float ZOOM_MAP_WITHOUT_LAYOUT = 13;
+    static final int DURATION_ZOOM_ANIMATION = 2000;
+    static final float CHANGES_DISTANCE_FOR_RELOADING_NEW_DATA = 500;
+
+
+    public float fingerDownPoint_Y = 0;
 
     MapView mMapView;
     private GoogleMap googleMap;
+
+    View mainLayout;
+    View viewLevel;
+    View viewLevelPoint;
+    View viewBetweenLMainAndMap;
 
 
     public PageFollow() {
@@ -40,6 +55,13 @@ public class PageFollow extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_follow, container, false);
+
+        mainLayout = (View) rootView.findViewById(R.id.layot_main);
+        viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
+        viewLevel = (View)rootView.findViewById(R.id.view_level);
+
+        mainLayout.setOnTouchListener(this);
+
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -74,6 +96,35 @@ public class PageFollow extends Fragment {
         return rootView;
     }
 
+
+    public static void setMargins(View v, int l, int t, int r, int b) {
+        // if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+        // ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v
+        // .getLayoutParams();
+        // p.setMargins(l, t, r, b);
+        v.setPadding(l, t, r, b);
+        v.requestLayout();
+        // }
+    }
+
+
+    private void hideLayout() {
+        mainLayout.setVisibility(View.GONE);
+        zoomMap(ZOOM_MAP_WITHOUT_LAYOUT);
+    }
+
+    private void showLayout() {
+        mainLayout.setVisibility(View.VISIBLE);
+        zoomMap(ZOOM_MAP_WITH_LAYOUT);
+    }
+
+    private void zoomMap(float zoom) {
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(zoom),
+                DURATION_ZOOM_ANIMATION, null);
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -96,5 +147,40 @@ public class PageFollow extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        switch (motionEvent.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                fingerDownPoint_Y = motionEvent.getY();
+
+                break;
+
+            case MotionEvent.ACTION_UP:
+
+                setMargins(mainLayout, 0, 0, 0, 0);
+                int[] pos1 = { 0, 0 };
+                int[] pos2 = { 0, 0 };
+
+
+
+
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                float delta = (fingerDownPoint_Y - motionEvent.getY()  );
+                if(delta>0){
+                    setMargins(mainLayout,0,-(int)delta,0,0);
+                }
+                Log.d("SWIPE","ACTION_MOVE");
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
     }
 }
