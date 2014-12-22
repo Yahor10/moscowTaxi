@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -27,34 +25,30 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.internal.ho;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
+import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 
 /**
  * Created by alex-pers on 11/30/14.
  */
 public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-
-    public static Fragment newInstance() {
-        PageOrder fragment = new PageOrder();
-        return fragment;
-    }
-
-    public PageOrder() {
-
-    }
 
     EditText edtFrom;
     EditText edtWhere;
@@ -66,12 +60,21 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
     View butClearKoment;
     TextView textHour;
     TextView textMinutes;
-
     Spinner spinnerTariff;
     Spinner spinnerAdditionalSettings;
     Button butGetTaxi;
     Button butCallOperator;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
+    public PageOrder() {
+
+    }
+
+    public static Fragment newInstance() {
+        PageOrder fragment = new PageOrder();
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -142,10 +145,10 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         switch (view.getId()) {
             case R.id.view_but_determine:
                 Activity activity = getActivity();
-                if(mLastLocation != null) {
+                if (mLastLocation != null) {
                     new GetAddressTask(activity).execute(mLastLocation);// TODO get single task reference
-                }else{
-                    Toast.makeText(activity,activity.getString(R.string.failed_determinate_location),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, activity.getString(R.string.failed_determinate_location), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.view_but_my_adreeses_from:
@@ -163,6 +166,55 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 edtKoment.setText("");
                 break;
             case R.id.button_get_taxi:
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint(TaxiApi.MAIN_URL)
+                        .build();
+                TaxiApi service = restAdapter.create(TaxiApi.class);
+
+                String phone = "292044134";
+                String id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+
+
+                OrderModel orderModel = new OrderModel();
+                orderModel.date = "" + System.currentTimeMillis();
+                orderModel.imei = id;
+                orderModel.phone = phone;
+                orderModel.route = new ArrayList<OrderORM>();
+
+                OrderORM orderORM_FROM = new OrderORM();
+                orderORM_FROM.street = edtFrom.getText().toString();
+                orderORM_FROM.house = "51a";
+                orderORM_FROM.comment = " coment 1";
+                orderORM_FROM.geoData = 1200;
+
+                OrderORM orderORM_WHERE = new OrderORM();
+                orderORM_WHERE.street = edtWhere.getText().toString();
+                orderORM_WHERE.house = "2";
+                orderORM_WHERE.comment = edtKoment.getText().toString();
+                orderORM_WHERE.geoData = 1400;
+
+                orderModel.route.add(orderORM_FROM);
+                orderModel.route.add(orderORM_WHERE);
+                orderModel.typeCar = "1";
+
+
+                service.order(orderModel, new Callback<Response>() {
+                    @Override
+                    public void success(Response s, Response response) {
+                        try {
+                            Log.d("ORDER", WebUtils.getResponseString(s));
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
                 break;
             case R.id.button_call_operator:
@@ -208,6 +260,17 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    public class OrderModel {
+        public String phone;
+        public String imei;
+        public ArrayList<OrderORM> route;
+        @SerializedName(value = "class")
+        public String typeCar;
+        public String date;
+
 
     }
 
@@ -284,7 +347,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                         // Locality is usually a city
                         address.getLocality(),
                         // The country of the address
-                        address.getCountryName());
+                        address.getCountryName()
+                );
                 // Return the text
                 return addressText;
             } else {
@@ -294,13 +358,12 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         @Override
         protected void onPostExecute(String s) {
-            Log.v(null,"ADDRESS" + s);
-            if(isVisible() && !TextUtils.isEmpty(s)){
+            Log.v(null, "ADDRESS" + s);
+            if (isVisible() && !TextUtils.isEmpty(s)) {
                 edtFrom.setText(s);
             }
             super.onPostExecute(s);
         }
     }
-
 
 }
