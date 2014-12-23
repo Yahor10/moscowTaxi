@@ -95,6 +95,27 @@
     <string name="history_orders">Прошлые заказы</string>
     <string name="in_favorites">в избранное</string>
     <string name="your_awars">Ваши награды за использование наших услуг</string>
+	
+	<!--Internet connection -->
+	<string name="error_no_internet_connection">Отсутствует интернет соединение</string> 
+    <string name="error_connection_occured">Возникла ошибка при отправке запроса</string>
+	
+	<!--Internet connection error codes -->
+	<string name="error_auth">Ошибка авторизации</string>
+	
+
+	<!--Tariffs -->
+    <string name="tariff_bussiness">Бизнесс</string>
+	<string name="tariff_economi">Эконом</string>
+	
+	<!--Order status -->
+   <string name="order_allocation">Заказ на распределении</string>
+   <string name="order_allocation">Заказ на распределении, свободный</string>
+   <string name="order_allocation">Заказ принят водителем</string>
+   <string name="order_allocation">Водитель у клиента</string>
+   <string name="order_allocation">Водитель у клиента</string>
+   Забрал клиента
+   
 
 
 
