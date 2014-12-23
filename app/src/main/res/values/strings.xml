@@ -103,11 +103,9 @@
 	
 	<!--Internet connection error codes -->
 	<string name="error_auth">Ошибка авторизации</string>
-
-
     <string name="order_number">Номер заказа</string>
 
-
+    <string name="out_lenght_comment">Комментарий больше 300 символов</string>
 	<!--Tariffs -->
     <string name="tariff_bussiness">Бизнесс</string>
 	<string name="tariff_economi">Эконом</string>
@@ -120,6 +118,7 @@
    <string name="order_took">Забрал клиента</string>
    <string name="order_complete">Заказ завершен</string>
    <string name="order_status">Статус заказа:</string>
+
 
 
 </resources>
