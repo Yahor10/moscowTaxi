@@ -6,7 +6,6 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
-import ru.moscowtaxi.android.moscowtaxi.activity.LoginActivity;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageOrder;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
 
@@ -21,14 +20,17 @@ public interface TaxiApi {
     public void registration(@Body BaseRequestModel model, Callback<Response> callback);
 
 
+    //    @POST("/client/api/auth")
+//    public void login(@Body BaseRequestModel model, Callback<Response> callback);
+    @FormUrlEncoded
     @POST("/client/api/auth")
-    public void login(@Body BaseRequestModel model, Callback<Response> callback);
+    public void login(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5, Callback<Response> callback);
 
     @POST("/client/api/order")
     public void order(@Body PageOrder.OrderModel orderModel, Callback<Response> callback);
 
     @POST("/client/api/order")
-    public void orderCost(@Field("phone") String phoneNumber, @Field("imei") String phoneId,@Field("hash") String hashMD5,
+    public void orderCost(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
                           @Body PageOrder.OrderModel orderModel, Callback<Response> callback);
 
 }

@@ -6,4 +6,5 @@ package ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels;
 public class BaseRequestModel {
     public String phone;
     public String imei;
+    public String hash;
 }

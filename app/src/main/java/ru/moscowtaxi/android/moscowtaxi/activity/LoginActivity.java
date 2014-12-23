@@ -32,6 +32,7 @@ import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/1/14.
@@ -136,6 +137,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         butAuthorize.setOnClickListener(this);
         butRegistration.setOnClickListener(this);
 
+        // FOR DEBUG
+        if("".equals(PreferenceUtils.getCurrentUserPhone(this))){
+            PreferenceUtils.setCurrentPhone(this,"79510677310");
+        }
+
+        if("".equals(PreferenceUtils.getCurrentUserHash(this))){
+            PreferenceUtils.setCurrentHash(this,"35764");
+        }
+
+        if("".equals(PreferenceUtils.getDeviceId(this))){
+            PreferenceUtils.setDeviceId(this,Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        }
+
 //        startActivity(new Intent(this,MainActivity.class));
 //        finish();
     }
@@ -148,12 +162,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         .setEndpoint(TaxiApi.MAIN_URL)
                         .build();
                 TaxiApi service = restAdapter.create(TaxiApi.class);
-                String phone = edtPhoneNumber.getText().toString();
-                String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+//                String phone = edtPhoneNumber.getText().toString();
+                String phone = PreferenceUtils.getCurrentUserPhone(this);
+                String id =PreferenceUtils.getDeviceId(this);
+                String hash = PreferenceUtils.getCurrentUserHash(this);
+
                 BaseRequestModel model = new BaseRequestModel();
                 model.phone = phone;
                 model.imei = id;
-                service.login(model, new Callback<Response>() {
+                model.hash = hash;
+                service.login(phone,id,hash, new Callback<Response>() {
                     @Override
                     public void success(Response s, Response response) {
                         try {
