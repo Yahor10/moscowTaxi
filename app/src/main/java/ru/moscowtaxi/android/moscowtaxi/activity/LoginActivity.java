@@ -31,6 +31,7 @@ import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
 
 /**
  * Created by alex-pers on 12/1/14.
@@ -149,7 +150,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 TaxiApi service = restAdapter.create(TaxiApi.class);
                 String phone = edtPhoneNumber.getText().toString();
                 String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-                BaseModelApi model = new BaseModelApi();
+                BaseRequestModel model = new BaseRequestModel();
                 model.phone = phone;
                 model.imei = id;
                 service.login(model, new Callback<Response>() {
@@ -212,8 +213,5 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
 
-    public class BaseModelApi {
-        public String phone;
-        public String imei;
-    }
+
 }

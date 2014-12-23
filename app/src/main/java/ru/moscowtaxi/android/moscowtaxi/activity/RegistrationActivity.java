@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -15,6 +17,7 @@ import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
 
 /**
  * Created by alex-pers on 12/1/14.
@@ -39,15 +42,25 @@ public class RegistrationActivity extends Activity {
                             .setEndpoint(TaxiApi.MAIN_URL)
                             .build();
 
+                    String phone = edtPhoneNumber.getText().toString();
+                    String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                    BaseRequestModel model = new BaseRequestModel();
+                    model.phone = phone;
+                    model.imei = id;
+
                     TaxiApi service = restAdapter.create(TaxiApi.class);
 
-                    service.registration(edtPhoneNumber.getText().toString(), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID),  new Callback<Response>(){
+                    service.registration(model,  new Callback<Response>(){
 
 
 
                         @Override
                         public void success(Response response, Response response2) {
-                            Toast.makeText(getApplicationContext(),response2.toString(),Toast.LENGTH_LONG).show();
+                            try {
+                                Log.d("REGISTRATION", WebUtils.getResponseString(response));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         @Override

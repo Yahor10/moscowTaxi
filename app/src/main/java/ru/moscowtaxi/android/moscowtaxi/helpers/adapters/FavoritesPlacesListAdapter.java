@@ -136,6 +136,14 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                 }
             });
 
+            butDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getItems().remove(data);
+                    notifyDataSetChanged();
+                }
+            });
+
         }
     }
 }
