@@ -9,25 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top">
-
-        <Button
-            android:id="@+id/but_call_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:text="Изменить номер заказа" />
-    </LinearLayout>
-
 
     <View
         android:id="@+id/view_level"
         android:layout_width="fill_parent"
         android:layout_height="5dp"
-        android:layout_marginTop="100dp"
         android:layout_gravity="top"
+        android:layout_marginTop="100dp"
         android:background="#00000000" />
 
     <LinearLayout
@@ -40,13 +28,15 @@
 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_background_transparent"
+            android:background="@color/dark_background"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Номер заказа"
+                android:layout_margin="10dp"
+                android:text="@string/order_number"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/gray_text" />
 
             <View
@@ -57,10 +47,11 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/page_order_padding_left">
 
-                <EditText
+                <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
                     android:id="@+id/edt_from"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -70,8 +61,8 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="fill_parent"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+
+                    android:layout_margin="5dp"
                     android:background="@color/gray_divider" />
 
                 <FrameLayout
@@ -85,13 +76,14 @@
                         style="@style/ButtonTheme"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="Отседить"
+                        android:text="@string/follow"
                         android:textColor="#ffffff" />
                 </FrameLayout>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="fill_parent"
+                    android:layout_margin="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@color/gray_divider" />
@@ -106,6 +98,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
@@ -134,7 +127,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Данные"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/order_data"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/gray_text" />
 
             <View
@@ -308,16 +304,18 @@
                     android:id="@+id/view_level_point"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Статус заказа:"
+                    android:text="@string/order_status"
+                    android:layout_marginLeft="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/gray_text" />
 
                 <TextView
                     android:id="@+id/txt_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:paddingLeft="10dp"
-                    android:text="Машина в пути"
+                    android:text="@string/order_accepted"
+
                     android:textColor="@color/orange_color"
                     android:textSize="20sp" />
 

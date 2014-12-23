@@ -26,6 +26,7 @@
     <!-- MAIN PAGE-->
     <string name="order">Заказать</string>
     <string name="follow">Отследить</string>
+    <string name="order_data">Данные</string>
     <string name="map">Карта</string>
     <!-- page order-->
     <string name="from_here">Откуда</string>
@@ -47,7 +48,7 @@
     <string name="clear">Очистить</string>
     <string name="time_order_taxi">Время подачи машины</string>
     <string name="my_adresses">Мои адресса</string>
-
+    <string name="find_order">Отследить</string>
 
 
     <string name="comment">Комментарий</string>
@@ -102,7 +103,10 @@
 	
 	<!--Internet connection error codes -->
 	<string name="error_auth">Ошибка авторизации</string>
-	
+
+
+    <string name="order_number">Номер заказа</string>
+
 
 	<!--Tariffs -->
     <string name="tariff_bussiness">Бизнесс</string>
@@ -115,9 +119,7 @@
    <string name="order_came">Водитель у клиента</string>
    <string name="order_took">Забрал клиента</string>
    <string name="order_complete">Заказ завершен</string>
-
-   
-
+   <string name="order_status">Статус заказа:</string>
 
 
 </resources>
