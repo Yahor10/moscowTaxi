@@ -29,17 +29,12 @@ public class MainActivity extends Activity
     public static int PAGE_FAVORITE_ROUTE = 2;
     public static int PAGE_HISTORY = 3;
     public static int PAGE_REWARDS = 4;
-    public int current_page = -1;
+    private int current_page = -1;
     public Fragment current_fragment = null;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +43,7 @@ public class MainActivity extends Activity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
+
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -95,9 +90,9 @@ public class MainActivity extends Activity
                 fragment = PageFavorite.newInstance(1);
                 break;
             case 3:
-                if (current_page ==PAGE_HISTORY ) {
+                if (current_page == PAGE_HISTORY) {
                     return;
-                } else if (current_page == PAGE_REWARDS ) {
+                } else if (current_page == PAGE_REWARDS) {
                     ViewPager pager = ((PageReward_History) current_fragment).mViewPager;
                     if (pager != null) {
                         pager.setCurrentItem(1, true);
@@ -132,24 +127,9 @@ public class MainActivity extends Activity
                 .commit();
     }
 
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = "T1";
-                break;
-            case 2:
-                mTitle = "T2";
-                break;
-        }
+    public int getCurrentpage() {
+        return current_page;
     }
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
 
     /**
      * A placeholder fragment containing a simple view.
@@ -183,12 +163,7 @@ public class MainActivity extends Activity
             return rootView;
         }
 
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+
     }
 
     public static class CustomSpinnerAdapter<T> extends ArrayAdapter<T> {
@@ -220,6 +195,8 @@ public class MainActivity extends Activity
             if (v instanceof TextView) ((TextView) v).setTextColor(color); // white
             return v;
         }
+
+
     }
 
 }
