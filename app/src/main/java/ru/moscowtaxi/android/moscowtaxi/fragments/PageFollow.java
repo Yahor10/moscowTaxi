@@ -18,11 +18,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageFollow extends Fragment implements View.OnTouchListener{
+public class PageFollow extends Fragment implements View.OnTouchListener, View.OnClickListener{
 
     static final float ZOOM_MAP_WITH_LAYOUT = 11;
     static final float ZOOM_MAP_WITHOUT_LAYOUT = 13;
@@ -40,6 +41,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
     View viewLevelPoint;
     View viewBetweenLMainAndMap;
     Button butCallLayout;
+
 
 
     public PageFollow() {
@@ -60,15 +62,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
         viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
         viewLevel = (View)rootView.findViewById(R.id.view_level);
         viewLevelPoint = (View)rootView.findViewById(R.id.view_level_point);
-//        butCallLayout = (Button) rootView.findViewById(R.id.but_call_layout);
         mainLayout.setOnTouchListener(this);
 
-//        butCallLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                showLayout();
-//            }
-//        });
+      rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
+
+
 
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -197,5 +195,16 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
         }
 
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.view_but_from_history:
+                ((MainActivity)getActivity()).onNavigationDrawerItemSelected(3);
+                break;
+            default:
+                break;
+        }
     }
 }
