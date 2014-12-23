@@ -60,15 +60,15 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
         viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
         viewLevel = (View)rootView.findViewById(R.id.view_level);
         viewLevelPoint = (View)rootView.findViewById(R.id.view_level_point);
-        butCallLayout = (Button) rootView.findViewById(R.id.but_call_layout);
+//        butCallLayout = (Button) rootView.findViewById(R.id.but_call_layout);
         mainLayout.setOnTouchListener(this);
 
-        butCallLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLayout();
-            }
-        });
+//        butCallLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLayout();
+//            }
+//        });
 
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -118,13 +118,13 @@ public class PageFollow extends Fragment implements View.OnTouchListener{
 
 
     private void hideLayout() {
-        butCallLayout.setVisibility(View.VISIBLE);
+//        butCallLayout.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
         zoomMap(ZOOM_MAP_WITHOUT_LAYOUT);
     }
 
     private void showLayout() {
-        butCallLayout.setVisibility(View.GONE);
+//        butCallLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
         zoomMap(ZOOM_MAP_WITH_LAYOUT);
     }

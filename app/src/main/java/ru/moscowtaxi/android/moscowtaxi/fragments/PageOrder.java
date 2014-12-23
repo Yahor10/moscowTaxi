@@ -271,7 +271,6 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         public String typeCar;
         public String date;
 
-
     }
 
     /**
