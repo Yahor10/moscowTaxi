@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 
@@ -23,6 +24,14 @@ public class FavoriteRouteListAdapter extends BaseAdapter {
     public FavoriteRouteListAdapter(LayoutInflater inflater, List<FavoriteRouteORM> data) {
         this.inflater = inflater;
         items = data;
+    }
+
+    public List<FavoriteRouteORM> getItems(){
+        return items;
+    }
+
+    public  void setItems(List<FavoriteRouteORM> items){
+        this.items = items;
     }
 
 

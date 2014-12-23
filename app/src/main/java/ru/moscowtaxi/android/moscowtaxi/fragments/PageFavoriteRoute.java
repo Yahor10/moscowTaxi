@@ -2,6 +2,7 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.enumeration.OrderType;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoriteRouteListAdapter;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.HistoryListViewAdapter;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoriteRouteLoader;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 
@@ -39,6 +42,34 @@ public class PageFavoriteRoute extends Fragment implements LoaderManager.LoaderC
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_favorite_route, container, false);
         listView = (ListView) rootView.findViewById(R.id.list_favorite_route);
+
+
+        View footerView = ((LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_list_favorite, null, false);
+        listView.addFooterView(footerView);
+
+
+        footerView.findViewById(R.id.but_new_place).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<FavoriteRouteORM> items = adapter.getItems();
+                if (items == null) {
+                    items = new ArrayList<FavoriteRouteORM>();
+                }
+
+                FavoriteRouteORM item1 = new FavoriteRouteORM();
+                item1.name = "Название";
+                item1.addressFrom = "Адресс откуда";
+                item1.addressTo = "Адресс куда";
+                item1.time = 123123123;
+                item1.type = OrderType.Business;
+                item1.is_edited_now = true;
+
+                items.add(item1);
+                adapter.setItems(items);
+                adapter.notifyDataSetChanged();
+
+            }
+        });
 
 
         getLoaderManager().initLoader(LOADER_ID,null,this);

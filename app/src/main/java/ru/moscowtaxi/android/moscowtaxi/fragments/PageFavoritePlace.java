@@ -59,6 +59,9 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onClick(View view) {
                 List<FavoritePlaceORM> items = adapter.getItems();
+                for ( FavoritePlaceORM item : items){
+                    item.is_edited_now = false;
+                }
                 if (items == null) {
                     items = new ArrayList<FavoritePlaceORM>();
                 }
@@ -66,7 +69,7 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
                 FavoritePlaceORM item1 = new FavoritePlaceORM();
                 item1.name = "Название";
                 item1.address = "Адресс";
-                item1.is_edited_now = false;
+                item1.is_edited_now = true;
 
                 items.add(item1);
                 adapter.setItems(items);

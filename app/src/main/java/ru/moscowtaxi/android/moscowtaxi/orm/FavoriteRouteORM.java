@@ -38,6 +38,8 @@ public class FavoriteRouteORM extends EntityORM {
     public long time;
     @DatabaseField(columnName = TYPE)
     public OrderType type;
+
+    public boolean is_edited_now;
 //
 //
     public FavoriteRouteORM() {
