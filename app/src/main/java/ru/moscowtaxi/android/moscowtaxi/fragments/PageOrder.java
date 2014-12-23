@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -166,6 +169,13 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 edtKoment.setText("");
                 break;
             case R.id.button_get_taxi:
+
+                int commentLenght = edtKoment.getText().toString().length();
+                if(commentLenght > 300){
+                    Toast.makeText(getActivity(),getActivity().getString(R.string.out_lenght_comment),Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint(TaxiApi.MAIN_URL)
                         .build();
@@ -218,7 +228,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
                 break;
             case R.id.button_call_operator:
-
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "478543213"));
+                startActivity(intent);
                 break;
             case R.id.text_minutes:
             case R.id.text_hour:
@@ -318,7 +329,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 Log.e("LocationSampleActivity",
                         "IO Exception in getFromLocation()");
                 e1.printStackTrace();
-                return ("IO Exception trying to get address");
+                return getActivity().getString(R.string.failed_determinate_location);
             } catch (IllegalArgumentException e2) {
                 // Error message to post in the log
                 String errorString = "Illegal arguments " +
@@ -328,7 +339,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                         " passed to address service";
                 Log.e("LocationSampleActivity", errorString);
                 e2.printStackTrace();
-                return errorString;
+                return getActivity().getString(R.string.failed_determinate_location);
             }
             // If the reverse geocode returned an address
             if (addresses != null && addresses.size() > 0) {
@@ -351,7 +362,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 // Return the text
                 return addressText;
             } else {
-                return "No address found";
+                return getActivity().getString(R.string.failed_determinate_location);
             }
         }
 
