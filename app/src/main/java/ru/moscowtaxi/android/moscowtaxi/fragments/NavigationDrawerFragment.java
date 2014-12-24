@@ -75,6 +75,8 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private MenuItem orderTaxiMenuItem;
+    private static int ORDER_TAXI_MENU_ID = 23;
 
     public NavigationDrawerFragment() {
     }
@@ -324,11 +326,18 @@ public class NavigationDrawerFragment extends Fragment {
         // If the drawer is open, show the global app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         MainActivity activity = (MainActivity) getActivity();
-        Log.v(null, "Current page"+ activity.getCurrentpage());
+        int currentpage = activity.getCurrentpage();
+
+        orderTaxiMenuItem = menu.add(0,ORDER_TAXI_MENU_ID,0,R.string.order_taxi);
+        orderTaxiMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        if(currentpage == 0){
+            menu.removeItem(orderTaxiMenuItem.getItemId());
+        }
+
         if (mDrawerLayout != null && isDrawerOpen()) {
             showGlobalContextActionBar();
         }
-
         super.onCreateOptionsMenu(menu, inflater);
     }
 

@@ -228,7 +228,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
                 break;
             case R.id.button_call_operator:
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "478543213"));
+
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "74957887880"));
                 startActivity(intent);
                 break;
             case R.id.text_minutes:

@@ -1,8 +1,11 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -90,10 +93,13 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
     public class Holder {
         LinearLayout linStateNormal;
         LinearLayout linStateEdited;
+
         TextView txtName;
         TextView txtAdress;
+
         EditText edtName;
         EditText edtAdress;
+
         LinearLayout butChange;
         LinearLayout butDelete;
         LinearLayout butDetectAdress;
@@ -110,10 +116,32 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                 linStateNormal.setVisibility(View.VISIBLE);
             }
 
+
+            View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (!hasFocus) {
+                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
+                    }
+                }
+            };
+            edtName.setOnFocusChangeListener(focusChangeListener);
+
+            edtAdress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        InputMethodManager imm = (InputMethodManager)edtName.getContext().getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
+                    }
+                }
+            });
+
             txtName.setText(data.name);
             txtAdress.setText(data.address);
-            edtName.setText(data.name);
-            edtAdress.setText(data.address);
             butChange.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -2,13 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:clickable="false">
+>
 
     <LinearLayout
         android:id="@+id/lay_state_edited"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="visible">
@@ -26,7 +25,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <EditText
+                <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
                     android:id="@+id/nameEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -34,13 +33,15 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textColor="@android:color/white"
                     android:singleLine="true" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:text="@string/favorite_name"
+                    android:singleLine="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </LinearLayout>
@@ -50,16 +51,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="8"
+                android:layout_weight="5"
                 android:orientation="vertical">
 
-                <EditText
+                <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
                     android:id="@+id/addressEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
+                    android:textColor="@android:color/white"
                     android:gravity="center"
                     android:singleLine="true" />
 
@@ -168,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="H1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
