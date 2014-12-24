@@ -50,16 +50,10 @@ public class RegistrationActivity extends Activity {
 //                    String phone = edtPhoneNumber.getText().toString();
                     String phone = PreferenceUtils.getCurrentUserPhone(getApplicationContext());
                     String id = PreferenceUtils.getDeviceId(getApplicationContext());
-                    String hash = PreferenceUtils.getCurrentUserHash(getApplicationContext());
-
-                    BaseRequestModel model = new BaseRequestModel();
-                    model.phone = phone;
-                    model.imei = id;
-                    model.hash = hash;
 
                     TaxiApi service = restAdapter.create(TaxiApi.class);
 
-                    service.registration(model,  new Callback<Response>(){
+                    service.registration(phone,id,  new Callback<Response>(){
 
 
 

@@ -172,10 +172,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     String id = PreferenceUtils.getDeviceId(this);
                     String hash = PreferenceUtils.getCurrentUserHash(this);
 
-                    BaseRequestModel model = new BaseRequestModel();
-                    model.phone = phone;
-                    model.imei = id;
-                    model.hash = hash;
                     service.login(phone, id, hash, new Callback<Response>() {
                         @Override
                         public void success(Response s, Response response) {
