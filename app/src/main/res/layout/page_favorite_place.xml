@@ -19,6 +19,8 @@
     <ListView
         android:id="@+id/list_favorite_place"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></ListView>
+        android:layout_height="fill_parent"
+        android:descendantFocusability="afterDescendants"
+        android:focusable="false"></ListView>
 
 </LinearLayout>
