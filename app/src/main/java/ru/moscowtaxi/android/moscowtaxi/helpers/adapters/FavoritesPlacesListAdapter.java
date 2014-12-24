@@ -133,6 +133,9 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     Toast.makeText(view.getContext(),"SAVE",Toast.LENGTH_SHORT).show();
                     data.is_edited_now = false;
                     FavoritesPlacesListAdapter.this.notifyDataSetChanged();
+                    data.name = edtName.getText().toString();
+                    data.address = edtAdress.getText().toString();
+
                 }
             });
 
