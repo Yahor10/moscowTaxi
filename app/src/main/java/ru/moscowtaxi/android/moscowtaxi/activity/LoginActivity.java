@@ -3,6 +3,7 @@ package ru.moscowtaxi.android.moscowtaxi.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,10 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -44,6 +42,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     EditText edtSmsCode;
     Button butAuthorize;
     Button butRegistration;
+
 
     private static int getVersionFromPackageManager(Context context) {
         PackageManager packageManager = context.getPackageManager();
@@ -95,7 +94,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
 
-
     protected boolean readyToGo() {
         int status =
                 GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -138,16 +136,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         butRegistration.setOnClickListener(this);
 
         // FOR DEBUG
-        if("".equals(PreferenceUtils.getCurrentUserPhone(this))){
-            PreferenceUtils.setCurrentPhone(this,"79510677310");
+        if ("".equals(PreferenceUtils.getCurrentUserPhone(this))) {
+            PreferenceUtils.setCurrentPhone(this, "79510677310");
         }
 
-        if("".equals(PreferenceUtils.getCurrentUserHash(this))){
-            PreferenceUtils.setCurrentHash(this,"35764");
+        if ("".equals(PreferenceUtils.getCurrentUserHash(this))) {
+            PreferenceUtils.setCurrentHash(this, "eaf441351bf076375ab3a90f8b89b696");
         }
 
-        if("".equals(PreferenceUtils.getDeviceId(this))){
-            PreferenceUtils.setDeviceId(this,Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        if ("".equals(PreferenceUtils.getDeviceId(this))) {
+//            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+            PreferenceUtils.setDeviceId(this, "000");
         }
 
 //        startActivity(new Intent(this,MainActivity.class));
@@ -158,36 +157,53 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_authorize:
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(TaxiApi.MAIN_URL)
-                        .build();
-                TaxiApi service = restAdapter.create(TaxiApi.class);
+                if (WebUtils.isOnline(this)) {
+                    final ProgressDialog progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("Wait ...");
+                    progressDialog.show();
+
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint(TaxiApi.MAIN_URL)
+                            .build();
+                    TaxiApi service = restAdapter.create(TaxiApi.class);
 
 //                String phone = edtPhoneNumber.getText().toString();
-                String phone = PreferenceUtils.getCurrentUserPhone(this);
-                String id =PreferenceUtils.getDeviceId(this);
-                String hash = PreferenceUtils.getCurrentUserHash(this);
+                    String phone = PreferenceUtils.getCurrentUserPhone(this);
+                    String id = PreferenceUtils.getDeviceId(this);
+                    String hash = PreferenceUtils.getCurrentUserHash(this);
 
-                BaseRequestModel model = new BaseRequestModel();
-                model.phone = phone;
-                model.imei = id;
-                model.hash = hash;
-                service.login(phone,id,hash, new Callback<Response>() {
-                    @Override
-                    public void success(Response s, Response response) {
-                        try {
-                            Log.d("LOGIN", WebUtils.getResponseString(s));
+                    BaseRequestModel model = new BaseRequestModel();
+                    model.phone = phone;
+                    model.imei = id;
+                    model.hash = hash;
+                    service.login(phone, id, hash, new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            try {
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                                progressDialog.dismiss();
+                                Log.d("LOGIN", WebUtils.getResponseString(s));
+                                Toast.makeText(getApplicationContext(),"Result = "+WebUtils.getResponseString(s) , Toast.LENGTH_SHORT).show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void failure(RetrofitError error) {
+
+                            try {
+                                progressDialog.dismiss();
+                            }catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_auth) , Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.button_registration:
                 Intent intent = new Intent(this, RegistrationActivity.class);
@@ -230,7 +246,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         }
     }
-
 
 
 }

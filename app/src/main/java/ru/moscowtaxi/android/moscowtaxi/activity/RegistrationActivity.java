@@ -1,6 +1,7 @@
 package ru.moscowtaxi.android.moscowtaxi.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -18,6 +19,7 @@ import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/1/14.
@@ -38,15 +40,22 @@ public class RegistrationActivity extends Activity {
                 if (WebUtils.isOnline(RegistrationActivity.this.getApplicationContext())) {
 //                    RegistrationTask registrationTask = new RegistrationTask(edtPhoneNumber.getText().toString(), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), RegistrationActivity.this.getApplicationContext());
 //                    registrationTask.execute();
+                    final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this);
+                    progressDialog.setMessage("Wait ...");
+                    progressDialog.show();
                     RestAdapter restAdapter = new RestAdapter.Builder()
                             .setEndpoint(TaxiApi.MAIN_URL)
                             .build();
 
-                    String phone = edtPhoneNumber.getText().toString();
-                    String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+//                    String phone = edtPhoneNumber.getText().toString();
+                    String phone = PreferenceUtils.getCurrentUserPhone(getApplicationContext());
+                    String id = PreferenceUtils.getDeviceId(getApplicationContext());
+                    String hash = PreferenceUtils.getCurrentUserHash(getApplicationContext());
+
                     BaseRequestModel model = new BaseRequestModel();
                     model.phone = phone;
                     model.imei = id;
+                    model.hash = hash;
 
                     TaxiApi service = restAdapter.create(TaxiApi.class);
 
@@ -57,7 +66,9 @@ public class RegistrationActivity extends Activity {
                         @Override
                         public void success(Response response, Response response2) {
                             try {
+                                progressDialog.dismiss();
                                 Log.d("REGISTRATION", WebUtils.getResponseString(response));
+                                Toast.makeText(getApplicationContext(),"Result = "+WebUtils.getResponseString(response) , Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -65,6 +76,12 @@ public class RegistrationActivity extends Activity {
 
                         @Override
                         public void failure(RetrofitError error) {
+
+                            try {
+                                progressDialog.dismiss();
+                            }catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             Log.d("REGISTRATION_FAIL",error.toString());
                             Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
                         }

@@ -107,7 +107,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="LOGIN" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ru.moscowtaxi.android.moscowtaxi" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac22a470-62fe-4b24-8bcf-8b9725f71f3e" name="Default" comment="" />
@@ -132,34 +132,49 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PageFavoriteRoute.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageFavoriteRoute.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155">
-              <caret line="35" column="15" selection-start-line="35" selection-start-column="15" selection-end-line="35" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="LoginActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1940" max-vertical-offset="3150">
-              <caret line="174" column="43" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1965" max-vertical-offset="3405">
+              <caret line="195" column="28" selection-start-line="195" selection-start-column="28" selection-end-line="199" selection-end-column="29" />
+              <folding>
+                <element signature="e#3685#3709#0" expanded="true" />
+                <element signature="e#4060#4084#0" expanded="true" />
+                <element signature="e#7658#7703#0" expanded="true" />
+                <element signature="e#7866#7929#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaxiApi.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/http/TaxiApi.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+              <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RegistrationActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/RegistrationActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.74429226" vertical-offset="441" max-vertical-offset="1935">
+              <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TaxiApi.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/http/TaxiApi.java">
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24271844" vertical-offset="285" max-vertical-offset="630">
-              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.0" vertical-offset="1277" max-vertical-offset="1950">
+              <caret line="100" column="18" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1312,7 +1327,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/WebUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/OrderORM.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/RegistrationActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoriteRouteListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoriteRouteORM.java" />
@@ -1327,6 +1341,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/preferences/PreferenceUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/http/TaxiApi.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/RegistrationActivity.java" />
       </list>
     </option>
   </component>
@@ -2050,7 +2065,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19246861" sideWeight="0.60694444" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.51185495" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.026499303" sideWeight="0.72847223" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6205674" order="1" side_tool="false" content_ui="tabs" />
@@ -2174,12 +2189,6 @@
           <line>165</line>
           <properties />
           <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/LoginActivity.java</url>
-          <line>173</line>
-          <properties />
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
       <option name="time" value="38" />
@@ -2388,14 +2397,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7345133" vertical-offset="1041" max-vertical-offset="1605">
-          <caret line="86" column="42" selection-start-line="0" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values-ru/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.91150445" vertical-offset="1206" max-vertical-offset="1605">
@@ -2465,14 +2466,6 @@
             <element signature="e#9494#9864#0" expanded="true" />
             <element signature="e#9845#9846#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/RegistrationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57598037" vertical-offset="365" max-vertical-offset="1710">
-          <caret line="59" column="51" selection-start-line="59" selection-start-column="39" selection-end-line="59" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2614,21 +2607,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/LoginActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1940" max-vertical-offset="3150">
-          <caret line="174" column="43" selection-start-line="174" selection-start-column="43" selection-end-line="174" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1277" max-vertical-offset="1950">
+          <caret line="100" column="18" selection-start-line="100" selection-start-column="18" selection-end-line="100" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/http/TaxiApi.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24271844" vertical-offset="285" max-vertical-offset="630">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1965" max-vertical-offset="3405">
+          <caret line="195" column="28" selection-start-line="195" selection-start-column="28" selection-end-line="199" selection-end-column="29" />
+          <folding>
+            <element signature="e#3685#3709#0" expanded="true" />
+            <element signature="e#4060#4084#0" expanded="true" />
+            <element signature="e#7658#7703#0" expanded="true" />
+            <element signature="e#7866#7929#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/activity/RegistrationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74429226" vertical-offset="441" max-vertical-offset="1935">
+          <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
