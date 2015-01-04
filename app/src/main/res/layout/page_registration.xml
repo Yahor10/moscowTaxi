@@ -12,6 +12,7 @@
     <EditText
         android:id="@+id/edt_phone_number"
         android:layout_width="fill_parent"
+        android:textColor="@android:color/white"
         android:layout_height="wrap_content"
         android:hint="phone" />
 

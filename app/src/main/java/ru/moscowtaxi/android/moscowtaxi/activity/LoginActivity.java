@@ -157,6 +157,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_authorize:
+                if(edtPhoneNumber.getText().length()<7){
+                    edtPhoneNumber.setError("Слишком короткий номер");
+                    return;
+                }
+                if(edtSmsCode.getText().length()<3){
+                    edtSmsCode.setError("Слишком короткий код");
+                    return;
+                }
                 if (WebUtils.isOnline(this)) {
                     final ProgressDialog progressDialog = new ProgressDialog(this);
                     progressDialog.setMessage("Wait ...");
@@ -167,10 +175,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             .build();
                     TaxiApi service = restAdapter.create(TaxiApi.class);
 
-//                String phone = edtPhoneNumber.getText().toString();
-                    String phone = PreferenceUtils.getCurrentUserPhone(this);
+                String phone = edtPhoneNumber.getText().toString();
+//                    String phone = PreferenceUtils.getCurrentUserPhone(this);
                     String id = PreferenceUtils.getDeviceId(this);
-                    String hash = PreferenceUtils.getCurrentUserHash(this);
+                    String hash = WebUtils.md5(edtSmsCode.getText().toString());
 
                     service.login(phone, id, hash, new Callback<Response>() {
                         @Override

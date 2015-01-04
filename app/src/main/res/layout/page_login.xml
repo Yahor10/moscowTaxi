@@ -12,11 +12,13 @@
     <EditText android:id="@+id/edt_phone_number"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:hint="number"/>
 
     <EditText android:id="@+id/edt_code_sms"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:hint="sms-code"/>
     <Button
          android:id="@+id/button_authorize"

@@ -31,8 +31,9 @@ public interface TaxiApi {
     @POST("/client/api/order")
     public void order(@Body PageOrder.OrderModel orderModel, Callback<Response> callback);
 
+    @FormUrlEncoded
     @POST("/client/api/order")
     public void orderCost(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
-                          @Body PageOrder.OrderModel orderModel, Callback<Response> callback);
+                          @Field("body") PageOrder.OrderModel orderModel, Callback<Response> callback);
 
 }

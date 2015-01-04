@@ -2,6 +2,7 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -46,6 +47,7 @@ import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 11/30/14.
@@ -169,61 +171,71 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 edtKoment.setText("");
                 break;
             case R.id.button_get_taxi:
+                if (WebUtils.isOnline(getActivity())) {
+                    int commentLenght = edtKoment.getText().toString().length();
+                    if (commentLenght > 300) {
+                        Toast.makeText(getActivity(), getActivity().getString(R.string.out_lenght_comment), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                int commentLenght = edtKoment.getText().toString().length();
-                if(commentLenght > 300){
-                    Toast.makeText(getActivity(),getActivity().getString(R.string.out_lenght_comment),Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage("Wait ...");
+                    progressDialog.show();
 
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint(TaxiApi.MAIN_URL)
-                        .build();
-                TaxiApi service = restAdapter.create(TaxiApi.class);
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint(TaxiApi.MAIN_URL)
+                            .build();
+                    TaxiApi service = restAdapter.create(TaxiApi.class);
 
-                String phone = "292044134";
-                String id = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-
-
-                OrderModel orderModel = new OrderModel();
-                orderModel.date = "" + System.currentTimeMillis();
-                orderModel.imei = id;
-                orderModel.phone = phone;
-                orderModel.route = new ArrayList<OrderORM>();
-
-                OrderORM orderORM_FROM = new OrderORM();
-                orderORM_FROM.street = edtFrom.getText().toString();
-                orderORM_FROM.house = "51a";
-                orderORM_FROM.comment = " coment 1";
-                orderORM_FROM.geoData = 1200;
-
-                OrderORM orderORM_WHERE = new OrderORM();
-                orderORM_WHERE.street = edtWhere.getText().toString();
-                orderORM_WHERE.house = "2";
-                orderORM_WHERE.comment = edtKoment.getText().toString();
-                orderORM_WHERE.geoData = 1400;
-
-                orderModel.route.add(orderORM_FROM);
-                orderModel.route.add(orderORM_WHERE);
-                orderModel.typeCar = "1";
+                    String phone = PreferenceUtils.getCurrentUserPhone(getActivity());
+                    String id = PreferenceUtils.getDeviceId(getActivity());
+                    String hash = PreferenceUtils.getCurrentUserHash(getActivity());
 
 
-                service.order(orderModel, new Callback<Response>() {
-                    @Override
-                    public void success(Response s, Response response) {
-                        try {
-                            Log.d("ORDER", WebUtils.getResponseString(s));
+                    OrderModel orderModel = new OrderModel();
+                    orderModel.date = "" + System.currentTimeMillis();
+                    orderModel.route = new ArrayList<OrderORM>();
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    OrderORM orderORM_FROM = new OrderORM();
+                    orderORM_FROM.street = edtFrom.getText().toString();
+                    orderORM_FROM.house = "51a";
+                    orderORM_FROM.comment = " coment 1";
+                    orderORM_FROM.geoData = 1200;
+
+                    OrderORM orderORM_WHERE = new OrderORM();
+                    orderORM_WHERE.street = edtWhere.getText().toString();
+                    orderORM_WHERE.house = "2";
+                    orderORM_WHERE.comment = edtKoment.getText().toString();
+                    orderORM_WHERE.geoData = 1400;
+
+                    orderModel.route.add(orderORM_FROM);
+                    orderModel.route.add(orderORM_WHERE);
+                    orderModel.typeCar = "1";
+
+
+                    service.orderCost(phone, id, hash, orderModel, new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            try {
+
+                                progressDialog.dismiss();
+                                Log.d("ORDER", WebUtils.getResponseString(s));
+                                Toast.makeText(getActivity(),"Result = "+WebUtils.getResponseString(s) , Toast.LENGTH_SHORT).show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    Toast.makeText(getActivity(),getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
+                }
 
 
                 break;
@@ -276,8 +288,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
     }
 
     public class OrderModel {
-        public String phone;
-        public String imei;
+//        public String phone;
+//        public String imei;
         public ArrayList<OrderORM> route;
         @SerializedName(value = "class")
         public String typeCar;
