@@ -6,14 +6,29 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
@@ -23,7 +38,7 @@ import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward_History;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
     public static int PAGE_MAIN = 0;
     public static int PAGE_FAVORITE_PLACE = 1;
     public static int PAGE_FAVORITE_ROUTE = 2;
@@ -31,6 +46,9 @@ public class MainActivity extends Activity
     public static int PAGE_REWARDS = 4;
     private int current_page = -1;
     public Fragment current_fragment = null;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -131,6 +149,38 @@ public class MainActivity extends Activity
         return current_page;
     }
 
+
+    private void connectGoogleApiClient() {
+        if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -195,8 +245,110 @@ public class MainActivity extends Activity
             if (v instanceof TextView) ((TextView) v).setTextColor(color); // white
             return v;
         }
+    }
 
+    public Location getLastLocation() {
+        return mLastLocation;
+    }
 
+    /**
+     * A subclass of AsyncTask that calls getFromLocation() in the
+     * background. The class definition has these generic types:
+     * Location - A Location object containing
+     * the current location.
+     * Void     - indicates that progress units are not used
+     * String   - An address passed to onPostExecute()
+     */
+    public static class GetAddressTask extends
+            AsyncTask<Location, Void, String> {
+        Context mContext;
+        private final EditText edtFrom;
+
+        public GetAddressTask(Context context,EditText editText) {
+            super();
+            mContext = context;
+            edtFrom = editText;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            edtFrom.setText("");
+        }
+
+        /**
+         * Get a Geocoder instance, get the latitude and longitude
+         * look up the address, and return it
+         *
+         * @return A string containing the address of the current
+         * location, or an empty string if no address can be found,
+         * or an error message
+         * @params params One or more Location objects
+         */
+        @Override
+        protected String doInBackground(Location... params) {
+            Locale myLocale = new Locale("ru", "RU");
+            Geocoder geocoder =
+                    new Geocoder(mContext, myLocale);
+            // Get the current location from the input parameter list
+            Location loc = params[0];
+            // Create a list to contain the result address
+            List<Address> addresses = null;
+            try {
+                /*
+                 * Return 1 address.
+                 */
+                addresses = geocoder.getFromLocation(loc.getLatitude(),
+                        loc.getLongitude(), 1);
+            } catch (IOException e1) {
+                Log.e("LocationSampleActivity",
+                        "IO Exception in getFromLocation()");
+                e1.printStackTrace();
+                return mContext.getString(R.string.failed_determinate_location);
+            } catch (IllegalArgumentException e2) {
+                // Error message to post in the log
+                String errorString = "Illegal arguments " +
+                        Double.toString(loc.getLatitude()) +
+                        " , " +
+                        Double.toString(loc.getLongitude()) +
+                        " passed to address service";
+                Log.e("LocationSampleActivity", errorString);
+                e2.printStackTrace();
+                return mContext.getString(R.string.failed_determinate_location);
+            }
+            // If the reverse geocode returned an address
+            if (addresses != null && addresses.size() > 0) {
+                // Get the first address
+                Address address = addresses.get(0);
+                /*
+                 * Format the first line of address (if available),
+                 * city, and country name.
+                 */
+                String addressText = String.format(
+                        "%s, %s, %s",
+                        // If there's a street address, add it
+                        address.getMaxAddressLineIndex() > 0 ?
+                                address.getAddressLine(0) : "",
+                        // Locality is usually a city
+                        address.getLocality(),
+                        // The country of the address
+                        address.getCountryName()
+                );
+                // Return the text
+                return addressText;
+            } else {
+                return mContext.getString(R.string.failed_determinate_location);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Log.v(null, "ADDRESS" + s);
+            if (!TextUtils.isEmpty(s)) {
+                edtFrom.setText(s);
+            }
+            super.onPostExecute(s);
+        }
     }
 
 }
