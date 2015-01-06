@@ -12,14 +12,13 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -45,6 +44,7 @@ import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.AutoCompleteAdressAdapter;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
@@ -55,8 +55,8 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
-    EditText edtFrom;
-    EditText edtWhere;
+    AutoCompleteTextView edtFrom;
+    AutoCompleteTextView edtWhere;
     EditText edtKoment;
     View butDetermine;
     View butMyAdresesFrom;
@@ -86,8 +86,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.page_order, container, false);
 
-        edtFrom = (EditText) rootView.findViewById(R.id.edt_from);
-        edtWhere = (EditText) rootView.findViewById(R.id.edt_where);
+        edtFrom = (AutoCompleteTextView) rootView.findViewById(R.id.edt_from);
+        edtWhere = (AutoCompleteTextView) rootView.findViewById(R.id.edt_where);
         edtKoment = (EditText) rootView.findViewById(R.id.edt_koment);
 
         butDetermine = (View) rootView.findViewById(R.id.view_but_determine);
@@ -104,6 +104,10 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         textHour.setOnClickListener(this);
         textMinutes.setOnClickListener(this);
+        edtFrom.requestFocus();
+        edtFrom.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
+//        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity(), R.layout.list_item_autocomplete));
+
 
         Activity activity = getActivity();
         ContextThemeWrapper wrapper = new ContextThemeWrapper(activity, android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
@@ -220,7 +224,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
                                 progressDialog.dismiss();
                                 Log.d("ORDER", WebUtils.getResponseString(s));
-                                Toast.makeText(getActivity(),"Result = "+WebUtils.getResponseString(s) , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "Result = " + WebUtils.getResponseString(s), Toast.LENGTH_SHORT).show();
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -233,8 +237,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                             Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                }else{
-                    Toast.makeText(getActivity(),getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -288,7 +292,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
     }
 
     public class OrderModel {
-//        public String phone;
+        //        public String phone;
 //        public String imei;
         public ArrayList<OrderORM> route;
         @SerializedName(value = "class")

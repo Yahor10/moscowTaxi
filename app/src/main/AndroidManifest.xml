@@ -23,7 +23,6 @@
 
         <!-- AIzaSyBb9Q8t595278vyeeoF8tgWgEDClLVYr5w - DEBUG-->
         <!--AIzaSyD534OAY5JeZg7bZOfJGogY3VkZA3OApTI - RELEASE -->
-        <!---->
 
         <meta-data
             android:name="com.google.android.gms.version"

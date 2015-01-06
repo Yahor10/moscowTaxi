@@ -27,6 +27,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.helpers.HashUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
@@ -145,8 +146,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
 
         if ("".equals(PreferenceUtils.getDeviceId(this))) {
-//            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-            PreferenceUtils.setDeviceId(this, "000");
+            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+//            PreferenceUtils.setDeviceId(this, "000");
         }
 
 //        startActivity(new Intent(this,MainActivity.class));
@@ -178,7 +179,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 String phone = edtPhoneNumber.getText().toString();
 //                    String phone = PreferenceUtils.getCurrentUserPhone(this);
                     String id = PreferenceUtils.getDeviceId(this);
-                    String hash = WebUtils.md5(edtSmsCode.getText().toString());
+                    String hash = HashUtils.md5(edtSmsCode.getText().toString());
 
                     service.login(phone, id, hash, new Callback<Response>() {
                         @Override
