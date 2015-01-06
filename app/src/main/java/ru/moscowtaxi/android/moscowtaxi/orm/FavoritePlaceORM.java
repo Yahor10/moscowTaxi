@@ -1,12 +1,16 @@
 package ru.moscowtaxi.android.moscowtaxi.orm;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.PreparedUpdate;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -59,6 +63,36 @@ public class FavoritePlaceORM extends EntityORM {
         return result;
     }
 
+    public static void insertOrUpdateFavoritePlace(Context context, FavoritePlaceORM place) {
+
+        try {
+            DatabaseHelper helper = OpenHelperManager.getHelper(context,
+                    DatabaseHelper.class);
+            final Dao<FavoritePlaceORM, String> dao = helper.getFavoritesPlacesDAO();
+            PreparedQuery<FavoritePlaceORM> prepare = dao.queryBuilder().where()
+                    .eq(FavoritePlaceORM.KEY_ID, place.getId()).prepare();
+            List<FavoritePlaceORM> query = dao.query(prepare);
+            if (query.isEmpty()) {
+
+                if (insertFavoritePlace(context, place) == 0) {
+                    throw new IllegalArgumentException("cannot create favorite place");
+                }
+            } else {
+                UpdateBuilder<FavoritePlaceORM, String> updateBuilder = dao
+                        .updateBuilder();
+                updateBuilder.updateColumnValue(FavoritePlaceORM.NAME, place.name);
+                updateBuilder.updateColumnValue(FavoritePlaceORM.ADDRESS, place.address);
+                updateBuilder.where().eq(FavoritePlaceORM.KEY_ID, place.getId());
+                PreparedUpdate<FavoritePlaceORM> prepare2 = updateBuilder.prepare();
+                dao.update(prepare2);
+            }
+        } catch (Exception e1) {
+
+        } finally {
+            OpenHelperManager.releaseHelper();
+        }
+    }
+
     public static List<FavoritePlaceORM> getFavoritesPlaces(Context context) {
         List<FavoritePlaceORM> query = null;
         try {
@@ -77,6 +111,27 @@ public class FavoritePlaceORM extends EntityORM {
         return query;
     }
 
+    public static boolean deleteFavoritePlaceByID(Context context, long id) {
+        try {
+            DatabaseHelper helper = OpenHelperManager.getHelper(context,
+                    DatabaseHelper.class);
+            final Dao<FavoritePlaceORM, String> dao = helper.getFavoritesPlacesDAO();
+
+            DeleteBuilder<FavoritePlaceORM, String> deleteBuilder = dao.deleteBuilder();
+            deleteBuilder.where().eq(KEY_ID, id);
+            int key = deleteBuilder.delete();
+
+            if (key < 0) {
+                Log.e(null, "delete event by id");
+                return false;
+            }
+
+        } catch (SQLException e) {
+        } finally {
+            OpenHelperManager.releaseHelper();
+        }
+        return true;
+    }
 
     @Override
     public String toString() {
@@ -103,6 +158,8 @@ public class FavoritePlaceORM extends EntityORM {
             e.printStackTrace();
             return false;
         }
-
     }
+
+
 }
+

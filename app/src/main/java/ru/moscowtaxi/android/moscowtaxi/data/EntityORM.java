@@ -14,5 +14,10 @@ public class EntityORM {
     @DatabaseField(columnName = KEY_ID,generatedId = true)
     protected long id;
     @DatabaseField(columnName = KEY_USER)
-    protected String userName;
+    public String userName;
+
+    public long getId() {
+        return id;
+    }
+
 }

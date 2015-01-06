@@ -1,6 +1,9 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
 import android.content.Context;
+import android.location.Location;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +18,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.http.HEAD;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/15/14.
@@ -32,11 +39,11 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
     }
 
 
-    public List<FavoritePlaceORM> getItems(){
+    public List<FavoritePlaceORM> getItems() {
         return items;
     }
 
-    public  void setItems(List<FavoritePlaceORM> items){
+    public void setItems(List<FavoritePlaceORM> items) {
         this.items = items;
     }
 
@@ -108,10 +115,10 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
 
         public void setData(final FavoritePlaceORM data) {
 
-            if(data.is_edited_now){
+            if (data.is_edited_now) {
                 linStateEdited.setVisibility(View.VISIBLE);
                 linStateNormal.setVisibility(View.GONE);
-            }else{
+            } else {
                 linStateEdited.setVisibility(View.GONE);
                 linStateNormal.setVisibility(View.VISIBLE);
             }
@@ -132,8 +139,8 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             edtAdress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                        InputMethodManager imm = (InputMethodManager)edtName.getContext().getSystemService(
+                    if (!hasFocus) {
+                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
                                 Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
                     }
@@ -145,11 +152,10 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             butChange.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(),"CHANGE",Toast.LENGTH_SHORT).show();
-
-                    for ( FavoritePlaceORM item : items){
+                    for (FavoritePlaceORM item : items) {
                         item.is_edited_now = false;
                     }
+
                     data.is_edited_now = true;
                     FavoritesPlacesListAdapter.this.notifyDataSetChanged();
                 }
@@ -158,11 +164,22 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             butSave.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(),"SAVE",Toast.LENGTH_SHORT).show();
+                    Editable text = edtName.getText();
+                    Editable text1 = edtAdress.getText();
+                    Context context = view.getContext();
+                    if(TextUtils.isEmpty(text) || TextUtils.isEmpty(text1)){
+                        Toast.makeText(context,context.getString(R.string.empty_edit_text_error),Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     data.is_edited_now = false;
+                    data.userName = PreferenceUtils.getCurrentUser(context);
+                    data.name = text.toString();
+                    data.address = text1.toString();
+
                     FavoritesPlacesListAdapter.this.notifyDataSetChanged();
-                    data.name = edtName.getText().toString();
-                    data.address = edtAdress.getText().toString();
+                    FavoritePlaceORM.insertOrUpdateFavoritePlace(context,data);
+
 
                 }
             });
@@ -170,8 +187,23 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             butDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Context context = view.getContext();
                     getItems().remove(data);
                     notifyDataSetChanged();
+                    FavoritePlaceORM.deleteFavoritePlaceByID(context,data.getId());
+                }
+            });
+
+            butDetectAdress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    MainActivity activity = (MainActivity) v.getContext();
+                    Location lastLocation = activity.getLastLocation();
+                    if (lastLocation != null) {
+                        new MainActivity.GetAddressTask(activity,edtAdress).execute(lastLocation);
+                    } else {
+                        Toast.makeText(activity, activity.getString(R.string.failed_determinate_location), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

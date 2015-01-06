@@ -96,35 +96,38 @@
     <string name="history_orders">Прошлые заказы</string>
     <string name="in_favorites">в избранное</string>
     <string name="your_awars">Ваши награды за использование наших услуг</string>
-	
-	<!--Internet connection -->
-	<string name="error_no_internet_connection">Отсутствует интернет соединение</string> 
+
+    <!--Internet connection -->
+    <string name="error_no_internet_connection">Отсутствует интернет соединение</string>
     <string name="error_connection_occured">Возникла ошибка при отправке запроса</string>
-	
-	<!--Internet connection error codes -->
-	<string name="error_auth">Ошибка авторизации</string>
+    <string name="empty_edit_text_error">Поле не может быть пустым</string>
+
+    <!--Internet connection error codes -->
+    <string name="error_auth">Ошибка авторизации</string>
     <string name="error_application">Возникла ошибка приложения</string>
     <string name="error_sms">Возникла ошибка смс</string>
 
     <string name="order_number">Номер заказа</string>
 
     <string name="out_lenght_comment">Комментарий больше 300 символов</string>
-	<!--Tariffs -->
+    <!--Tariffs -->
     <string name="tariff_bussiness">Бизнесс</string>
-	<string name="tariff_economi">Эконом</string>
-	
-	<!--Order status -->
-   <string name="order_allocation">Заказ на распределении</string>
-   <string name="order_free">Заказ на распределении, свободный</string>
-   <string name="order_accepted">Заказ принят водителем</string>
-   <string name="order_came">Водитель у клиента</string>
-   <string name="order_took">Забрал клиента</string>
-   <string name="order_complete">Заказ завершен</string>
-   <string name="order_status">Статус заказа:</string>
-   <string name="order_fail">Заказ отменен</string>
+    <string name="tariff_economi">Эконом</string>
+
+    <!--Order status -->
+    <string name="order_allocation">Заказ на распределении</string>
+    <string name="order_free">Заказ на распределении, свободный</string>
+    <string name="order_accepted">Заказ принят водителем</string>
+    <string name="order_came">Водитель у клиента</string>
+    <string name="order_took">Забрал клиента</string>
+    <string name="order_complete">Заказ завершен</string>
+    <string name="order_status">Статус заказа:</string>
+    <string name="order_fail">Заказ отменен</string>
     <string name="order_send_to_driver">Заказ назначен водителю</string>
     <string name="order_wait_driver">Заказ предложен водителю (у водителя есть
     возможность не принимать заказ)</string>
+
+
 
 
 </resources>
