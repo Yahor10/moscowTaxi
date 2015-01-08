@@ -26,20 +26,24 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 1/6/15.
  */
-public class AutoCompleteAdressAdapter extends ArrayAdapter<Address> implements Filterable {
+public class AutoCompleteAdressAdapter extends ArrayAdapter<String> implements Filterable {
 
     private LayoutInflater mInflater;
-    private Geocoder mGeocoder;
+//    private Geocoder mGeocoder;
     private StringBuilder mSb = new StringBuilder();
 
     public AutoCompleteAdressAdapter(final Context context) {
         super(context, -1);
         mInflater = LayoutInflater.from(context);
-        mGeocoder = new Geocoder(context);
+//        Locale myLocale = new Locale("ru", "RU");
+//        mGeocoder = new Geocoder(context,myLocale);
     }
 
     @Override
@@ -51,7 +55,9 @@ public class AutoCompleteAdressAdapter extends ArrayAdapter<Address> implements 
             tv = (TextView) mInflater.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
         }
 
-        tv.setText(createFormattedAddressFromAddress(getItem(position)));
+//        tv.setText(createFormattedAddressFromAddress(getItem(position)));
+        tv.setText(getItem(position));
+
         return tv;
     }
 
@@ -72,15 +78,13 @@ public class AutoCompleteAdressAdapter extends ArrayAdapter<Address> implements 
         Filter myFilter = new Filter() {
             @Override
             protected FilterResults performFiltering(final CharSequence constraint) {
-                List<Address> addressList = null;
+                List<String> addressList = null;
                 if (constraint != null) {
-                    try {
-                        addressList = mGeocoder.getFromLocationName((String) constraint, 5);
-                    } catch (IOException e) {
-                    }
+                    addressList = PreferenceUtils.getSavedAddresses(getContext(),constraint.toString());
                 }
+
                 if (addressList == null) {
-                    addressList = new ArrayList<Address>();
+                    addressList = new ArrayList<String>();
                 }
 
                 final FilterResults filterResults = new FilterResults();
@@ -94,8 +98,8 @@ public class AutoCompleteAdressAdapter extends ArrayAdapter<Address> implements 
             @Override
             protected void publishResults(final CharSequence contraint, final FilterResults results) {
                 clear();
-                for (Address address : (List<Address>) results.values) {
-                    add(address);
+                for (String string : (List<String>) results.values) {
+                    add(string);
                 }
                 if (results.count > 0) {
                     notifyDataSetChanged();
@@ -106,7 +110,7 @@ public class AutoCompleteAdressAdapter extends ArrayAdapter<Address> implements 
 
             @Override
             public CharSequence convertResultToString(final Object resultValue) {
-                return resultValue == null ? "" : ((Address) resultValue).getAddressLine(0);
+                return resultValue == null ? "" : ((String) resultValue);
             }
         };
         return myFilter;

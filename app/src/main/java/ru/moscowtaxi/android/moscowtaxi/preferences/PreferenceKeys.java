@@ -6,6 +6,7 @@ public class PreferenceKeys {
     public static String KEY_CURRENT_PHONE_NUMBER = "current_phone";
     public static String KEY_CURRENT_HASH = "current_hash";
     public static String KEY_DEVICE_ID = "device_id";
+    public static String KEY_SAVED_PLACES = "saved_places";
 
 
 }

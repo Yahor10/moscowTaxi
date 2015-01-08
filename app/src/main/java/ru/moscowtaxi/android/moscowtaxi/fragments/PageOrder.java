@@ -105,6 +105,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         textHour.setOnClickListener(this);
         textMinutes.setOnClickListener(this);
         edtFrom.requestFocus();
+        edtFrom.setThreshold(4);
         edtFrom.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
 //        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity(), R.layout.list_item_autocomplete));
 
