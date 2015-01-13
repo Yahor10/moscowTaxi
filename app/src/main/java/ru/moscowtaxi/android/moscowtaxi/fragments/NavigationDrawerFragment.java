@@ -128,7 +128,7 @@ public class NavigationDrawerFragment extends Fragment {
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
                 texts1.length);
         Map<String, Object> m;
-        for (int i = 0; i < texts1.length; i++) {
+        for (int i = 0; i < texts1.length-1; i++) {
             m = new HashMap<String, Object>();
             m.put(ATTRIBUTE_NAME_TEXT, texts1[i]);
             m.put(ATTRIBUTE_NAME_TEXT2, texts2[i]);

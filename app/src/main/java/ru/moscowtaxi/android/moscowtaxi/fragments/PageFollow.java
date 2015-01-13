@@ -1,12 +1,16 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,8 +21,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
+import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
+import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 11/30/14.
@@ -41,6 +53,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     View viewLevelPoint;
     View viewBetweenLMainAndMap;
     Button butCallLayout;
+    EditText edtTaxiId;
 
 
 
@@ -62,9 +75,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
         viewLevel = (View)rootView.findViewById(R.id.view_level);
         viewLevelPoint = (View)rootView.findViewById(R.id.view_level_point);
+        edtTaxiId = (EditText)rootView.findViewById(R.id.edt_taxi_id);
         mainLayout.setOnTouchListener(this);
 
       rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
+        rootView.findViewById(R.id.but_follow_by_number).setOnClickListener(this);
 
 
 
@@ -201,7 +216,58 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.view_but_from_history:
-                ((MainActivity)getActivity()).onNavigationDrawerItemSelected(3);
+//                ((MainActivity)getActivity()).onNavigationDrawerItemSelected(3);
+                break;
+            case R.id.but_follow_by_number:
+                if (edtTaxiId.getText().length() < 1) {
+                    edtTaxiId.setError("Слишком короткий код");
+                    return;
+                }
+                if (WebUtils.isOnline(getActivity())) {
+                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage("Wait ...");
+                    progressDialog.show();
+
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint(TaxiApi.MAIN_URL)
+                            .build();
+                    TaxiApi service = restAdapter.create(TaxiApi.class);
+
+                    String phone = PreferenceUtils.getCurrentUserPhone(getActivity());
+                    String id = PreferenceUtils.getDeviceId(getActivity());
+                    String hash = PreferenceUtils.getCurrentUserHash(getActivity());
+                    String id_taxi = edtTaxiId.getText().toString();
+
+                    service.getStatus(phone, id, hash, id_taxi , new Callback<Response>() {
+                        @Override
+                        public void success(Response s, Response response) {
+                            String message = "Статут заказа не известен";
+                            try {
+                                progressDialog.dismiss();
+                                message = WebUtils.getResponseString(s);
+                                Log.d("ORDER", message);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                int number = Integer.parseInt(message);
+                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = "+ number,"Заказ успешно обработан");
+                                messageAndTitle.show(getChildFragmentManager(),"");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity().getApplicationContext(), "ОШИБКА С СЕРВЕРА = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
                 break;
             default:
                 break;

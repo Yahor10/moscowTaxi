@@ -2,10 +2,12 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,6 +20,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,17 +46,22 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
+import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.AutoCompleteAdressAdapter;
+import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoritesPlacesListAdapter;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>> {
 
+    private static final int LOADER_ID = 102;
 
     AutoCompleteTextView edtFrom;
     AutoCompleteTextView edtWhere;
@@ -104,9 +112,9 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         textHour.setOnClickListener(this);
         textMinutes.setOnClickListener(this);
-        edtFrom.requestFocus();
-        edtFrom.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
-//        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity(), R.layout.list_item_autocomplete));
+//        edtFrom.requestFocus();
+//        edtFrom.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
+//        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
 
 
         Activity activity = getActivity();
@@ -136,6 +144,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         buildGoogleApiClient();
         connectGoogleApiClient();
+
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootView;
     }
 
@@ -153,7 +163,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         int minute = 0;
         switch (view.getId()) {
             case R.id.view_but_determine:
-                Activity activity = getActivity();
+                final Activity activity = getActivity();
                 if (mLastLocation != null) {
                     new GetAddressTask(activity).execute(mLastLocation);// TODO get single task reference
                 } else {
@@ -220,21 +230,30 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                     service.orderCost(phone, id, hash, orderModel, new Callback<Response>() {
                         @Override
                         public void success(Response s, Response response) {
+                            String message = "Заказ не выполнен";
                             try {
-
                                 progressDialog.dismiss();
-                                Log.d("ORDER", WebUtils.getResponseString(s));
-                                Toast.makeText(getActivity(), "Result = " + WebUtils.getResponseString(s), Toast.LENGTH_SHORT).show();
+                                message = WebUtils.getResponseString(s);
+                                Log.d("ORDER", message);
 
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+                            }
+
+                            try {
+                                int number = Integer.parseInt(message);
+                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + number, "Заказ успешно обработан");
+                                messageAndTitle.show(getChildFragmentManager(), "");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity().getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "ОШИБКА С СЕРВЕРА = " + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 } else {
@@ -288,6 +307,34 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public Loader<List<FavoritePlaceORM>> onCreateLoader(int i, Bundle bundle) {
+        return new FavoritePlaceLoader(getActivity());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<FavoritePlaceORM>> listLoader, List<FavoritePlaceORM> favoritePlaceORMs) {
+
+        if(favoritePlaceORMs==null || favoritePlaceORMs.size()<=0){
+            return;
+        }
+        String[] adresses = new String[favoritePlaceORMs.size()];
+
+        for ( int i = 0; i< adresses.length; i++){
+            adresses[i] = favoritePlaceORMs.get(i).address;
+        }
+
+        edtFrom.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
+        edtWhere.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
+
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<FavoritePlaceORM>> listLoader) {
 
     }
 

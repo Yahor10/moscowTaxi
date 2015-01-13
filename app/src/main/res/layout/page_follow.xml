@@ -52,7 +52,7 @@
                 android:paddingLeft="@dimen/page_order_padding_left">
 
                 <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
-                    android:id="@+id/edt_from"
+                    android:id="@+id/edt_taxi_id"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"

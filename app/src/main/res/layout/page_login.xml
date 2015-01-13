@@ -13,13 +13,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="number"/>
+        android:hint="number"
+         android:inputType="phone"/>
 
     <EditText android:id="@+id/edt_code_sms"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="sms-code"/>
+        android:hint="sms-code"
+        android:inputType="number"/>
     <Button
          android:id="@+id/button_authorize"
         android:layout_width="fill_parent"

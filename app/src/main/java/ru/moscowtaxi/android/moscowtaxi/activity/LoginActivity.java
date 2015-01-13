@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +18,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -30,7 +31,6 @@ import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.helpers.HashUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
-import ru.moscowtaxi.android.moscowtaxi.helpers.http.requestModels.BaseRequestModel;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
@@ -137,18 +137,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         butRegistration.setOnClickListener(this);
 
         // FOR DEBUG
-        if ("".equals(PreferenceUtils.getCurrentUserPhone(this))) {
-            PreferenceUtils.setCurrentPhone(this, "79510677310");
-        }
+//        if ("".equals(PreferenceUtils.getCurrentUserPhone(this))) {
+//            PreferenceUtils.setCurrentPhone(this, "79510677310");
+//        }
 
-        if ("".equals(PreferenceUtils.getCurrentUserHash(this))) {
-            PreferenceUtils.setCurrentHash(this, "eaf441351bf076375ab3a90f8b89b696");
-        }
+//        if ("".equals(PreferenceUtils.getCurrentUserHash(this))) {
+//            PreferenceUtils.setCurrentHash(this, "eaf441351bf076375ab3a90f8b89b696");
+//        }
 
-        if ("".equals(PreferenceUtils.getDeviceId(this))) {
-            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-//            PreferenceUtils.setDeviceId(this, "000");
-        }
+//        if ("".equals(PreferenceUtils.getDeviceId(this))) {
+//            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
+        PreferenceUtils.setDeviceId(this, "128128");
+//        }
 
 //        startActivity(new Intent(this,MainActivity.class));
 //        finish();
@@ -158,13 +158,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_authorize:
-                if(edtPhoneNumber.getText().length()<7){
+                if (edtPhoneNumber.getText().length() < 7) {
                     edtPhoneNumber.setError("Слишком короткий номер");
                     return;
+                } else {
+                    PreferenceUtils.setCurrentPhone(this, edtPhoneNumber.getText().toString());
                 }
-                if(edtSmsCode.getText().length()<3){
+                if (edtSmsCode.getText().length() < 3) {
                     edtSmsCode.setError("Слишком короткий код");
                     return;
+                } else {
+                    PreferenceUtils.setCurrentHash(this, HashUtils.md5(edtSmsCode.getText().toString()));
                 }
                 if (WebUtils.isOnline(this)) {
                     final ProgressDialog progressDialog = new ProgressDialog(this);
@@ -176,7 +180,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             .build();
                     TaxiApi service = restAdapter.create(TaxiApi.class);
 
-                String phone = edtPhoneNumber.getText().toString();
+                    String phone = edtPhoneNumber.getText().toString();
 //                    String phone = PreferenceUtils.getCurrentUserPhone(this);
                     String id = PreferenceUtils.getDeviceId(this);
                     String hash = HashUtils.md5(edtSmsCode.getText().toString());
@@ -187,8 +191,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                             try {
 
                                 progressDialog.dismiss();
+                                Gson gson = new Gson();
+                                LoginRequest loginRequest = gson.fromJson(WebUtils.getResponseString(s), LoginRequest.class);
+                                if (loginRequest.c >= 1) {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    finish();
+
+                                }
+
                                 Log.d("LOGIN", WebUtils.getResponseString(s));
-                                Toast.makeText(getApplicationContext(),"Result = "+WebUtils.getResponseString(s) , Toast.LENGTH_SHORT).show();
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -200,14 +211,14 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                             try {
                                 progressDialog.dismiss();
-                            }catch (Exception e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_auth) , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
                         }
                     });
-                }else{
-                    Toast.makeText(getApplicationContext(),getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.button_registration:
@@ -250,6 +261,24 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 getActivity().finish();
             }
         }
+
+
+    }
+
+    public class LoginRequest {
+        public int c;
+        public ArrayTypes d;
+
+
+        public class ArrayTypes {
+            ArrayList<e> classes;
+
+            public class e {
+                int id;
+                String name;
+            }
+        }
+
     }
 
 
