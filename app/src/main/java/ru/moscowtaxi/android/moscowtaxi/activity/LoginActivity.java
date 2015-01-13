@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -145,10 +146,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //            PreferenceUtils.setCurrentHash(this, "eaf441351bf076375ab3a90f8b89b696");
 //        }
 
-//        if ("".equals(PreferenceUtils.getDeviceId(this))) {
-//            PreferenceUtils.setDeviceId(this, Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-        PreferenceUtils.setDeviceId(this, "128128");
-//        }
+        if ("".equals(PreferenceUtils.getDeviceId(this))) {
+            TelephonyManager manager=(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String deviceid=manager.getDeviceId();
+            PreferenceUtils.setDeviceId(this, deviceid);
+        }
 
 //        startActivity(new Intent(this,MainActivity.class));
 //        finish();
@@ -192,7 +194,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                                 progressDialog.dismiss();
                                 Gson gson = new Gson();
-                                LoginRequest loginRequest = gson.fromJson(WebUtils.getResponseString(s), LoginRequest.class);
+                                String str = WebUtils.getResponseString(s);
+                                LoginRequest loginRequest = gson.fromJson(str, LoginRequest.class);
                                 if (loginRequest.c >= 1) {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     finish();
@@ -201,8 +204,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                                 Log.d("LOGIN", WebUtils.getResponseString(s));
 
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
                             }
                         }
 
