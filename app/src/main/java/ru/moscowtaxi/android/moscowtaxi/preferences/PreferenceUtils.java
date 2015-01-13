@@ -5,6 +5,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
 public class PreferenceUtils {
 
     public static void setCurrentUser(Context context, String masterPassword) {
@@ -62,4 +68,23 @@ public class PreferenceUtils {
         return defaultSharedPreferences.getString(
                 PreferenceKeys.KEY_DEVICE_ID, "");
     }
+
+    public static List<String> getSavedAddresses(Context context,String key){
+        SharedPreferences defaultSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        final HashSet<String> defValues = new HashSet<String>();
+        defValues.add("ул.Солнечкая");
+        defValues.add("ул.Лунная");
+        final Set<String> stringSet = defaultSharedPreferences.getStringSet(PreferenceKeys.KEY_SAVED_PLACES, defValues);
+        final Iterator<String> iterator = stringSet.iterator();
+        List<String>list = new ArrayList<String>();
+        while (iterator.hasNext()){
+            final String next = iterator.next().toLowerCase();
+            if(next.startsWith(key)){
+                list.add(next);
+            }
+        }
+        return list;
+    }
+
 }
