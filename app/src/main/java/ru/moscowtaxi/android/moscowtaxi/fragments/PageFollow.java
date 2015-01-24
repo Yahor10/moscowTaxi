@@ -2,12 +2,22 @@ package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,17 +26,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
@@ -35,7 +42,7 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageFollow extends Fragment implements View.OnTouchListener, View.OnClickListener{
+public class PageFollow extends Fragment implements View.OnTouchListener, View.OnClickListener {
 
     static final float ZOOM_MAP_WITH_LAYOUT = 11;
     static final float ZOOM_MAP_WITHOUT_LAYOUT = 13;
@@ -43,19 +50,29 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     static final float CHANGES_DISTANCE_FOR_RELOADING_NEW_DATA = 500;
 
 
+    private BroadcastReceiver receiver;
+
+
     public float fingerDownPoint_Y = 0;
 
     MapView mMapView;
-    private GoogleMap googleMap;
-
     View mainLayout;
     View viewLevel;
     View viewLevelPoint;
     View viewBetweenLMainAndMap;
     Button butCallLayout;
     EditText edtTaxiId;
-
-
+    private GoogleMap googleMap;
+    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+//            mMarker = googleMap.addMarker(new MarkerOptions().position(loc));
+            if (googleMap != null) {
+                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, ZOOM_MAP_WITHOUT_LAYOUT));
+            }
+        }
+    };
 
     public PageFollow() {
 
@@ -66,6 +83,16 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         return fragment;
     }
 
+    public static void setMargins(View v, int l, int t, int r, int b) {
+        // if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+        // ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v
+        // .getLayoutParams();
+        // p.setMargins(l, t, r, b);
+        v.setPadding(l, t, r, b);
+        v.requestLayout();
+        // }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,15 +100,13 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
         mainLayout = (View) rootView.findViewById(R.id.layot_main);
         viewBetweenLMainAndMap = (View) rootView.findViewById(R.id.view_on_map);
-        viewLevel = (View)rootView.findViewById(R.id.view_level);
-        viewLevelPoint = (View)rootView.findViewById(R.id.view_level_point);
-        edtTaxiId = (EditText)rootView.findViewById(R.id.edt_taxi_id);
+        viewLevel = (View) rootView.findViewById(R.id.view_level);
+        viewLevelPoint = (View) rootView.findViewById(R.id.view_level_point);
+        edtTaxiId = (EditText) rootView.findViewById(R.id.edt_taxi_id);
         mainLayout.setOnTouchListener(this);
 
-      rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
+        rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
         rootView.findViewById(R.id.but_follow_by_number).setOnClickListener(this);
-
-
 
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -97,38 +122,73 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
         googleMap = mMapView.getMap();
         // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
+//        double latitude = 17.385044;
+//        double longitude = 78.486671;
+//
+//        // create marker
+//        MarkerOptions marker = new MarkerOptions().position(
+//                new LatLng(latitude, longitude)).title("Hello Maps");
+//
+//        // Changing marker icon
+//        marker.icon(BitmapDescriptorFactory
+//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+//
+//        // adding marker
+//        googleMap.addMarker(marker);
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
+//        googleMap.animateCamera(CameraUpdateFactory
+//                .newCameraPosition(cameraPosition));
 
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
+//        googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
+        centerMapOnMyLocation();
 
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
 
-        // adding marker
-        googleMap.addMarker(marker);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("app", "Network connectivity change");
+                if (intent.getExtras() != null) {
+                    NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
+                    if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
+                        centerMapOnMyLocation();
+                    }
+                }
+//            if(intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY,Boolean.FALSE)) {
+//                Log.d("app","There's no network connectivity");
+//            }
+            }
+        };
+        getActivity().registerReceiver(receiver, filter);
+
 
         return rootView;
     }
 
 
-    public static void setMargins(View v, int l, int t, int r, int b) {
-        // if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-        // ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v
-        // .getLayoutParams();
-        // p.setMargins(l, t, r, b);
-        v.setPadding(l, t, r, b);
-        v.requestLayout();
-        // }
-    }
+    private void centerMapOnMyLocation() {
 
+        googleMap.setMyLocationEnabled(true);
+
+        LocationManager locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        if (location != null) {
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(location.getLatitude(), location.getLongitude()), 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                    .zoom(ZOOM_MAP_WITHOUT_LAYOUT)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .build();                   // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        }
+    }
 
     private void hideLayout() {
 //        butCallLayout.setVisibility(View.VISIBLE);
@@ -159,6 +219,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+        try {
+            getActivity().unregisterReceiver(receiver);
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -185,8 +250,8 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
             case MotionEvent.ACTION_UP:
 
                 setMargins(mainLayout, 0, 0, 0, 0);
-                int[] pos1 = { 0, 0 };
-                int[] pos2 = { 0, 0 };
+                int[] pos1 = {0, 0};
+                int[] pos2 = {0, 0};
 
                 viewLevel.getLocationOnScreen(pos1);
                 viewLevelPoint.getLocationOnScreen(pos2);
@@ -198,9 +263,9 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                float delta = (fingerDownPoint_Y - motionEvent.getY()  );
-                if(delta>0){
-                    setMargins(mainLayout,0,-(int)delta,0,0);
+                float delta = (fingerDownPoint_Y - motionEvent.getY());
+                if (delta > 0) {
+                    setMargins(mainLayout, 0, -(int) delta, 0, 0);
                 }
 
                 break;
@@ -214,7 +279,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.view_but_from_history:
 //                ((MainActivity)getActivity()).onNavigationDrawerItemSelected(3);
                 break;
@@ -238,7 +303,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                     String hash = PreferenceUtils.getCurrentUserHash(getActivity());
                     String id_taxi = edtTaxiId.getText().toString();
 
-                    service.getStatus(phone, id, hash, id_taxi , new Callback<Response>() {
+                    service.getStatus(phone, id, hash, id_taxi, new Callback<Response>() {
                         @Override
                         public void success(Response s, Response response) {
                             String message = "Статут заказа не известен";
@@ -253,8 +318,8 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
                             try {
                                 int number = Integer.parseInt(message);
-                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = "+ number,"Заказ успешно обработан");
-                                messageAndTitle.show(getChildFragmentManager(),"");
+                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + number, "Заказ успешно обработан");
+                                messageAndTitle.show(getChildFragmentManager(), "");
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
@@ -273,4 +338,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                 break;
         }
     }
+
 }
+
+
