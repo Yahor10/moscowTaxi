@@ -149,6 +149,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         if ("".equals(PreferenceUtils.getDeviceId(this))) {
             TelephonyManager manager=(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String deviceid=manager.getDeviceId();
+//            String deviceid="128128";
             PreferenceUtils.setDeviceId(this, deviceid);
         }
 

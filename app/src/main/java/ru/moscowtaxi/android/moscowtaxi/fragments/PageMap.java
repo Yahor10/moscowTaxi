@@ -1,6 +1,7 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,8 +24,20 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 11/30/14.
@@ -114,6 +128,69 @@ public class PageMap extends Fragment {
 //            }
             }
         };
+
+        if (WebUtils.isOnline(getActivity())) {
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Wait ...");
+            progressDialog.show();
+
+            RestAdapter restAdapter = new RestAdapter.Builder()
+                    .setEndpoint(TaxiApi.MAIN_URL)
+                    .build();
+            TaxiApi service = restAdapter.create(TaxiApi.class);
+
+            String phone = PreferenceUtils.getCurrentUserPhone(getActivity());
+            String id = PreferenceUtils.getDeviceId(getActivity());
+            String hash = PreferenceUtils.getCurrentUserHash(getActivity());
+
+
+            service.getAllDrivers(phone, id, hash, new Callback<Response>() {
+                @Override
+                public void success(Response s, Response response) {
+                    String message = "Статут заказа не известен";
+                    try {
+                        progressDialog.dismiss();
+                        message = WebUtils.getResponseString(s);
+                        Log.d("ORDER", message);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        Gson gson = new Gson();
+                        String str = WebUtils.getResponseString(s);
+                        AllDriversRequest drivers = gson.fromJson(str, AllDriversRequest.class);
+
+                        for (AllDriversRequest.ArrayTypes.Driver d : drivers.d.drivers) {
+                            String[] geo_data = d.geo.split(",");
+                            d.latitude = Double.valueOf(geo_data[0]);
+                            d.longitude = Double.valueOf(geo_data[1]);
+
+                            Marker marker = googleMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(d.latitude, d.longitude))
+                                    .title(d.name));
+
+                        }
+
+
+//                        DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle(message, "водители");
+//                        messageAndTitle.show(getChildFragmentManager(), "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity().getApplicationContext(), "ОШИБКА С СЕРВЕРА = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
     }
 
     @Override
@@ -138,5 +215,29 @@ public class PageMap extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+
+    public class AllDriversRequest {
+        public int c;
+        public ArrayTypes d;
+
+
+        public class ArrayTypes {
+            ArrayList<Driver> drivers;
+
+            public class Driver {
+                int id;
+                String name;
+                String surname;
+                String geo;
+                long geo_time;
+                String auto;
+
+                double latitude;
+                double longitude;
+            }
+        }
+
     }
 }

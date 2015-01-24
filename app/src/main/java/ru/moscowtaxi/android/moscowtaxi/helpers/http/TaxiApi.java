@@ -41,4 +41,11 @@ public interface TaxiApi {
     public void getStatus(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
                           @Field("order") String  id_taxi, Callback<Response> callback);
 
+
+
+    @FormUrlEncoded
+    @POST("/client/api/driver")
+    public void getAllDrivers(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5, Callback<Response> callback);
+
+
 }
