@@ -1,5 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.data;
 
+import com.google.gson.annotations.Expose;
 import com.j256.ormlite.field.DatabaseField;
 
 /**

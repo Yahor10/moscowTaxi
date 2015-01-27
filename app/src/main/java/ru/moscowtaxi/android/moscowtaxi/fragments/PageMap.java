@@ -130,9 +130,6 @@ public class PageMap extends Fragment {
         };
 
         if (WebUtils.isOnline(getActivity())) {
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Wait ...");
-            progressDialog.show();
 
             RestAdapter restAdapter = new RestAdapter.Builder()
                     .setEndpoint(TaxiApi.MAIN_URL)
@@ -149,7 +146,6 @@ public class PageMap extends Fragment {
                 public void success(Response s, Response response) {
                     String message = "Статут заказа не известен";
                     try {
-                        progressDialog.dismiss();
                         message = WebUtils.getResponseString(s);
                         Log.d("ORDER", message);
 
@@ -184,7 +180,6 @@ public class PageMap extends Fragment {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    progressDialog.dismiss();
                     Toast.makeText(getActivity().getApplicationContext(), "ОШИБКА С СЕРВЕРА = " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });

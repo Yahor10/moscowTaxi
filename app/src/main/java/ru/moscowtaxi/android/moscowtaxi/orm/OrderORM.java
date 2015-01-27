@@ -16,6 +16,6 @@ public class OrderORM extends EntityORM {
     @SerializedName(value = "c")
     public String comment;
     @SerializedName(value = "g")
-    public int geoData;
+    public String geoData;
 
 }

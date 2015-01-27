@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
@@ -45,6 +46,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.LoginActivity;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
@@ -207,27 +209,32 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
 
                     OrderModel orderModel = new OrderModel();
-                    orderModel.date = "" + System.currentTimeMillis();
+//                    orderModel.date = "" + System.currentTimeMillis();
                     orderModel.route = new ArrayList<OrderORM>();
+                    orderModel.date = "0";
 
                     OrderORM orderORM_FROM = new OrderORM();
                     orderORM_FROM.street = edtFrom.getText().toString();
-                    orderORM_FROM.house = "51a";
-                    orderORM_FROM.comment = " coment 1";
-                    orderORM_FROM.geoData = 1200;
+                    orderORM_FROM.house = "666";
+                    orderORM_FROM.comment = "Это тестирование приложения!!!!! заказ не действительный!!!";
+                    orderORM_FROM.geoData = "55.7522200,37.6155600";
 
                     OrderORM orderORM_WHERE = new OrderORM();
                     orderORM_WHERE.street = edtWhere.getText().toString();
-                    orderORM_WHERE.house = "2";
+                    orderORM_WHERE.house = "666";
                     orderORM_WHERE.comment = edtKoment.getText().toString();
-                    orderORM_WHERE.geoData = 1400;
+                    orderORM_WHERE.geoData = "56.7522200,38.6155600";
+                    orderORM_WHERE.comment = "Это тестирование приложения!!!!! заказ не действительный!!!";
 
                     orderModel.route.add(orderORM_FROM);
                     orderModel.route.add(orderORM_WHERE);
                     orderModel.typeCar = "1";
 
+                    Gson gson = new Gson();
+                    String str_gson = gson.toJson(orderModel);
 
-                    service.orderCost(phone, id, hash, orderModel, new Callback<Response>() {
+
+                    service.orderCost(phone, id, hash, str_gson, new Callback<Response>() {
                         @Override
                         public void success(Response s, Response response) {
                             String message = "Заказ не выполнен";
@@ -241,9 +248,15 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                             }
 
                             try {
-                                int number = Integer.parseInt(message);
-                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + number, "Заказ успешно обработан");
-                                messageAndTitle.show(getChildFragmentManager(), "");
+
+                                Gson gson = new Gson();
+                                String str = WebUtils.getResponseString(s);
+                                OrderRequest orderRequest = gson.fromJson(str, OrderRequest.class);
+                                if (orderRequest.c >= 1) {
+                                    DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = "+ orderRequest.d, "Заказ успешно обработан");
+                                    messageAndTitle.show(getChildFragmentManager(), "");
+
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
@@ -438,6 +451,11 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
             }
             super.onPostExecute(s);
         }
+    }
+
+    public class OrderRequest{
+        int c;
+        int d;
     }
 
 }

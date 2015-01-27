@@ -28,6 +28,9 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -317,9 +320,26 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                             }
 
                             try {
-                                int number = Integer.parseInt(message);
-                                DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + number, "Заказ успешно обработан");
-                                messageAndTitle.show(getChildFragmentManager(), "");
+                                Gson gson = new Gson();
+                                String str = WebUtils.getResponseString(s);
+                                FollowRequest orderRequest = gson.fromJson(str, FollowRequest.class);
+                                if (orderRequest.c >= 1) {
+                                    String[] geo_data = orderRequest.d.driverGeo.split(",");
+                                    if(geo_data.length == 2) {
+
+                                        hideLayout();
+                                        orderRequest.d.latitude = Double.valueOf(geo_data[0]);
+                                        orderRequest.d.longitude = Double.valueOf(geo_data[1]);
+
+                                        Marker marker = googleMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(orderRequest.d.latitude, orderRequest.d.longitude))
+                                                .title(orderRequest.d.driver));
+
+                                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                                new LatLng(orderRequest.d.latitude, orderRequest.d.longitude), 13));
+                                    }
+
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
@@ -336,6 +356,30 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                 break;
             default:
                 break;
+        }
+    }
+
+    public class FollowRequest{
+        int c;
+        Data d;
+
+        public class Data{
+            String status;
+            long timestamp;
+            String driver;
+            String driverId;
+            String driverGeo;
+            String driverGeoTime;
+            String driverTel;
+            String feedTime;
+            String auto;
+            String cost;
+            String feed;
+
+            double latitude;
+            double longitude;
+
+
         }
     }
 
