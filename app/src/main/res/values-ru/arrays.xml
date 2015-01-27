@@ -6,6 +6,9 @@
 
     <string-array name="tariffs">
         <item>Тарифный план</item>
+        <item>Эконом</item>
+        <item>Бизнес</item>
+        <item>Комфорт</item>
     </string-array>
 
     <string-array name="additional_settings">

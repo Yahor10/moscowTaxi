@@ -113,6 +113,7 @@
     <!--Tariffs -->
     <string name="tariff_bussiness">Бизнесс</string>
     <string name="tariff_economi">Эконом</string>
+    <string name="tariff_comfort">Комфорт</string>
 
     <!--Order status -->
     <string name="order_allocation">Заказ на распределении</string>
