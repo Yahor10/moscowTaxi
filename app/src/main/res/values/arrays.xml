@@ -13,5 +13,8 @@
 
     <string-array name="additional_settings">
         <item>Дополнительные параметры</item>
+        <item>Машина универсал</item>
+        <item>Детское кресло</item>
+        <item>Перевозка животного</item>
     </string-array>
 </resources>

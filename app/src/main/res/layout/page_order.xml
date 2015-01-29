@@ -6,8 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="top"
         android:background="@android:color/black"
+        android:gravity="top"
         android:orientation="vertical">
 
         <TextView
@@ -241,29 +241,57 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/page_order_padding_left">
 
 
-            <TextView
-                android:id="@+id/text_hour"
+            <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="@color/gray_text"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_minutes"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="2"
-                android:textColor="@color/gray_text"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/text_hour"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/gray_text" />
+
+                    <TextView
+                        android:id="@+id/text_minutes"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text="00"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="@color/gray_text" />
+
+                </LinearLayout>
+
+                <TextView android:id="@+id/txt_day_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Сегодня"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/orange_color"
+                    android:textSize="@dimen/page_order_title_size" />
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="1dp"
@@ -309,6 +337,7 @@
             </FrameLayout>
         </LinearLayout>
 
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
@@ -318,7 +347,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="60dp">
+            android:layout_height="70dp">
 
             <Spinner
                 android:id="@+id/spinner_tariff"
@@ -334,11 +363,30 @@
                 android:layout_marginTop="5dp"
                 android:background="@color/gray_divider" />
 
-            <Spinner
-                android:id="@+id/spinner_additional_settings"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spinner_additional_settings"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/txt_child_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.2"
+                    android:text="3 года"
+                    android:textColor="@color/orange_color"
+                    android:textSize="@dimen/page_order_title_size"
+                    android:visibility="gone" />
+            </LinearLayout>
+
 
         </LinearLayout>
 

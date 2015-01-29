@@ -1,6 +1,7 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.app.ProgressDialog;
@@ -20,9 +21,11 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +41,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,12 +50,11 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.activity.LoginActivity;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
+import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogNumberPicker;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
-import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.AutoCompleteAdressAdapter;
-import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoritesPlacesListAdapter;
+import ru.moscowtaxi.android.moscowtaxi.helpers.callbacks.NumberPickerCallBack;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
@@ -61,10 +64,38 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>> {
+public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>>, NumberPickerCallBack {
 
     private static final int LOADER_ID = 102;
 
+
+    private static final long DELTA_TIME_ORDER = 1200000;
+    private static final long DAY_MILLISECONDS = 86400000;
+    public int dayOrder;
+    public int monthOrder;
+    public int yearOrder;
+    DatePickerDialog.OnDateSetListener myCallBack = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+
+            Calendar calendar = Calendar.getInstance();
+            int curDay = calendar.get(Calendar.DAY_OF_YEAR);
+            int curYear = calendar.get(Calendar.YEAR);
+            calendar.set(Calendar.YEAR,year);
+            calendar.set(Calendar.MONTH,monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            int orderDay = calendar.get(Calendar.DAY_OF_YEAR);
+            int orderYear = calendar.get(Calendar.YEAR);
+            if (orderDay == curDay && orderYear == curYear) {
+                txtOrderDay.setText("Сегодня");
+            } else {
+                txtOrderDay.setText("" + dayOfMonth + "." + (monthOfYear + 1) + "." + year);
+            }
+
+
+        }
+    };
     AutoCompleteTextView edtFrom;
     AutoCompleteTextView edtWhere;
     EditText edtKoment;
@@ -75,6 +106,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
     View butClearKoment;
     TextView textHour;
     TextView textMinutes;
+    TextView txtChildAge;
+    TextView txtOrderDay;
     Spinner spinnerTariff;
     Spinner spinnerAdditionalSettings;
     Button butGetTaxi;
@@ -88,6 +121,10 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     public static Fragment newInstance() {
         PageOrder fragment = new PageOrder();
+        Calendar calendar = Calendar.getInstance();
+        fragment.dayOrder = calendar.get(Calendar.DAY_OF_MONTH);
+        fragment.monthOrder = calendar.get(Calendar.MONTH);
+        fragment.yearOrder = calendar.get(Calendar.YEAR);
         return fragment;
     }
 
@@ -108,6 +145,11 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         textHour = (TextView) rootView.findViewById(R.id.text_hour);
         textMinutes = (TextView) rootView.findViewById(R.id.text_minutes);
+        txtChildAge = (TextView) rootView.findViewById(R.id.txt_child_age);
+        txtOrderDay = (TextView) rootView.findViewById(R.id.txt_day_order);
+
+        txtChildAge.setOnClickListener(this);
+        txtOrderDay.setOnClickListener(this);
 
         spinnerTariff = (Spinner) rootView.findViewById(R.id.spinner_tariff);
         spinnerAdditionalSettings = (Spinner) rootView.findViewById(R.id.spinner_additional_settings);
@@ -131,6 +173,23 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(wrapper, R.array.additional_settings,
                         android.R.layout.simple_spinner_dropdown_item);
         spinnerAdditionalSettings.setAdapter(additionSettingsAdapter);
+        spinnerAdditionalSettings.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 2) {
+                    txtChildAge.setVisibility(View.VISIBLE);
+                    DialogNumberPicker dialogNumberPicker = new DialogNumberPicker("Возраст ребёнка", 1, 8, PageOrder.this);
+                    dialogNumberPicker.show(getChildFragmentManager(), "number_picker_dialog");
+                } else {
+                    txtChildAge.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         butGetTaxi = (Button) rootView.findViewById(R.id.button_get_taxi);
         butCallOperator = (Button) rootView.findViewById(R.id.button_call_operator);
@@ -149,6 +208,13 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootView;
+    }
+
+    private void showDatePickerDialog(int year, int month, int day) {
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), myCallBack, year, month, day);
+        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        dialog.show();
+
     }
 
     private void connectGoogleApiClient() {
@@ -178,10 +244,12 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 break;
             case R.id.view_but_get_car_now:
                 mcurrentTime = Calendar.getInstance();
+                mcurrentTime.setTimeInMillis(System.currentTimeMillis() + DELTA_TIME_ORDER);
                 hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 minute = mcurrentTime.get(Calendar.MINUTE);
                 textHour.setText(Integer.toString(hour));
                 textMinutes.setText(Integer.toString(minute));
+                txtOrderDay.setText("Сегодня");
                 break;
             case R.id.view_but_cleat_koment:
                 edtKoment.setText("");
@@ -253,7 +321,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                                 String str = WebUtils.getResponseString(s);
                                 OrderRequest orderRequest = gson.fromJson(str, OrderRequest.class);
                                 if (orderRequest.c >= 1) {
-                                    DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = "+ orderRequest.d, "Заказ успешно обработан");
+                                    DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + orderRequest.d, "Заказ успешно обработан");
                                     messageAndTitle.show(getChildFragmentManager(), "");
 
                                 }
@@ -296,6 +364,23 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
                 break;
+            case R.id.txt_child_age:
+                DialogNumberPicker dialogNumberPicker = new DialogNumberPicker("Возраст ребёнка", 1, 8, PageOrder.this);
+                dialogNumberPicker.show(getChildFragmentManager(), "number_picker_dialog");
+
+                break;
+
+            case R.id.txt_day_order:
+                Calendar calendar = Calendar.getInstance();
+                int curDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int curMonth = calendar.get(Calendar.MONTH);
+                int curYear = calendar.get(Calendar.YEAR);
+                showDatePickerDialog(curYear, curMonth, curDay);
+
+                break;
+            default:
+
+                break;
         }
     }
 
@@ -331,12 +416,12 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
     @Override
     public void onLoadFinished(Loader<List<FavoritePlaceORM>> listLoader, List<FavoritePlaceORM> favoritePlaceORMs) {
 
-        if(favoritePlaceORMs==null || favoritePlaceORMs.size()<=0){
+        if (favoritePlaceORMs == null || favoritePlaceORMs.size() <= 0) {
             return;
         }
         String[] adresses = new String[favoritePlaceORMs.size()];
 
-        for ( int i = 0; i< adresses.length; i++){
+        for (int i = 0; i < adresses.length; i++) {
             adresses[i] = favoritePlaceORMs.get(i).address;
         }
 
@@ -348,6 +433,13 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     @Override
     public void onLoaderReset(Loader<List<FavoritePlaceORM>> listLoader) {
+
+    }
+
+    @Override
+    public void setNumber(int value) {
+
+        txtChildAge.setText(getResources().getQuantityString(R.plurals.age_plurals, value, value));
 
     }
 
@@ -453,7 +545,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         }
     }
 
-    public class OrderRequest{
+    public class OrderRequest {
         int c;
         int d;
     }
