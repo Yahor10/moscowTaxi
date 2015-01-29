@@ -1,7 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +16,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,32 +31,25 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.io.Serializable;
+
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
-import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
-import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.services.FollowOrderService;
 
 /**
  * Created by alex-pers on 11/30/14.
  */
 public class PageFollow extends Fragment implements View.OnTouchListener, View.OnClickListener {
 
+    public static final String KEY_ORDER_ID = "key_order_id";
+    public static final String KEY_RECIEVER_FOLLOW = "key_reciever_follow";
+    public static final String KEY_RECIEVER_DATA_FROM_SERVER = "key_reciever_data_from_server";
     static final float ZOOM_MAP_WITH_LAYOUT = 11;
     static final float ZOOM_MAP_WITHOUT_LAYOUT = 13;
     static final int DURATION_ZOOM_ANIMATION = 2000;
     static final float CHANGES_DISTANCE_FOR_RELOADING_NEW_DATA = 500;
-
-
-    private BroadcastReceiver receiver;
-
-
     public float fingerDownPoint_Y = 0;
-
     MapView mMapView;
     View mainLayout;
     View viewLevel;
@@ -65,6 +57,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     View viewBetweenLMainAndMap;
     Button butCallLayout;
     EditText edtTaxiId;
+    FollowReciever recieverFollow;
+    TextView txtStatus;
+
+
+    private BroadcastReceiver receiver;
     private GoogleMap googleMap;
     private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
         @Override
@@ -107,6 +104,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         viewLevelPoint = (View) rootView.findViewById(R.id.view_level_point);
         edtTaxiId = (EditText) rootView.findViewById(R.id.edt_taxi_id);
         mainLayout.setOnTouchListener(this);
+        txtStatus = (TextView) rootView.findViewById(R.id.txt_status);
 
         rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
         rootView.findViewById(R.id.but_follow_by_number).setOnClickListener(this);
@@ -170,7 +168,6 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         return rootView;
     }
 
-
     private void centerMapOnMyLocation() {
 
         googleMap.setMyLocationEnabled(true);
@@ -216,6 +213,12 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        recieverFollow = new FollowReciever();
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(KEY_RECIEVER_FOLLOW);
+
+        getActivity().registerReceiver(recieverFollow, filter);
     }
 
     @Override
@@ -224,9 +227,20 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         mMapView.onPause();
         try {
             getActivity().unregisterReceiver(receiver);
+
         } catch (Exception e) {
 
         }
+
+        try {
+            getActivity().unregisterReceiver(recieverFollow);
+
+        } catch (Exception e) {
+
+        }
+
+        getActivity().stopService( new Intent(getActivity(),
+                FollowOrderService.class));
     }
 
     @Override
@@ -291,67 +305,19 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                     edtTaxiId.setError("Слишком короткий код");
                     return;
                 }
+                Integer id = 0;
+                try {
+                    id = Integer.parseInt(edtTaxiId.getText().toString());
+                } catch (Exception e) {
+                    edtTaxiId.setError("Код не может содержать символы");
+                    return;
+                }
+
                 if (WebUtils.isOnline(getActivity())) {
-                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Wait ...");
-                    progressDialog.show();
-
-                    RestAdapter restAdapter = new RestAdapter.Builder()
-                            .setEndpoint(TaxiApi.MAIN_URL)
-                            .build();
-                    TaxiApi service = restAdapter.create(TaxiApi.class);
-
-                    String phone = PreferenceUtils.getCurrentUserPhone(getActivity());
-                    String id = PreferenceUtils.getDeviceId(getActivity());
-                    String hash = PreferenceUtils.getCurrentUserHash(getActivity());
-                    String id_taxi = edtTaxiId.getText().toString();
-
-                    service.getStatus(phone, id, hash, id_taxi, new Callback<Response>() {
-                        @Override
-                        public void success(Response s, Response response) {
-                            String message = "Статут заказа не известен";
-                            try {
-                                progressDialog.dismiss();
-                                message = WebUtils.getResponseString(s);
-                                Log.d("ORDER", message);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                Gson gson = new Gson();
-                                String str = WebUtils.getResponseString(s);
-                                FollowRequest orderRequest = gson.fromJson(str, FollowRequest.class);
-                                if (orderRequest.c >= 1) {
-                                    String[] geo_data = orderRequest.d.driverGeo.split(",");
-                                    if(geo_data.length == 2) {
-
-                                        hideLayout();
-                                        orderRequest.d.latitude = Double.valueOf(geo_data[0]);
-                                        orderRequest.d.longitude = Double.valueOf(geo_data[1]);
-
-                                        Marker marker = googleMap.addMarker(new MarkerOptions()
-                                                .position(new LatLng(orderRequest.d.latitude, orderRequest.d.longitude))
-                                                .title(orderRequest.d.driver));
-
-                                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                                new LatLng(orderRequest.d.latitude, orderRequest.d.longitude), 13));
-                                    }
-
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity().getApplicationContext(), "ОШИБКА С СЕРВЕРА = " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Intent intent = new Intent(getActivity(),
+                            FollowOrderService.class);
+                    intent.putExtra(KEY_ORDER_ID, id.intValue());
+                    getActivity().startService(intent);
                 }
                 break;
             default:
@@ -359,29 +325,78 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         }
     }
 
-    public class FollowRequest{
-        int c;
-        Data d;
+    public void updatePage(FollowRequest followRequest) {
+        if (followRequest != null) {
+            Gson gson = new Gson();
+            String str = gson.toJson(followRequest);
 
-        public class Data{
-            String status;
-            long timestamp;
-            String driver;
-            String driverId;
-            String driverGeo;
-            String driverGeoTime;
-            String driverTel;
-            String feedTime;
-            String auto;
-            String cost;
-            String feed;
+            if (followRequest.c == 1) {
 
-            double latitude;
-            double longitude;
+                if (followRequest.d.latitude > 0 && followRequest.d.longitude > 0) {
+                    googleMap.clear();
+                    Marker marker = googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(followRequest.d.latitude, followRequest.d.longitude))
+                            .title(followRequest.d.driver));
+
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                            new LatLng(followRequest.d.latitude, followRequest.d.longitude), 15));
+                }
+                if(followRequest.d.status!=null ){
+                    if("complete".equals(followRequest.d.status)){
+                        txtStatus.setText(R.string.order_complete);
+                    }else if("exchange".equals(followRequest.d.status)){
+                        txtStatus.setText(R.string.order_allocation);
+                    } else{
+                        txtStatus.setText(R.string.order_allocation);
+                    }
+
+                }
+            }else{
+                txtStatus.setText(R.string.order_allocation);
+            }
+
+        } else {
+            txtStatus.setText(R.string.order_allocation);
+        }
+    }
+
+    public class FollowReciever extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("FOLLOW_FRAGMENT", "RECIEVER!!!!");
+
+            FollowRequest followRequest = (FollowRequest) intent.getExtras().getSerializable(KEY_RECIEVER_DATA_FROM_SERVER);
+            updatePage(followRequest);
 
 
         }
     }
+
+    public class FollowRequest implements Serializable {
+        public int c;
+        public Data d;
+
+        public class Data implements Serializable {
+            public String status;
+            public long timestamp;
+            public String driver;
+            public String driverId;
+            public String driverGeo;
+            public String driverGeoTime;
+            public String driverTel;
+            public String feedTime;
+            public String auto;
+            public String cost;
+            public String feed;
+
+            public double latitude;
+            public double longitude;
+
+
+        }
+    }
+
 
 }
 

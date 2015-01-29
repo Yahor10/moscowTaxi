@@ -38,8 +38,13 @@ public interface TaxiApi {
 
     @FormUrlEncoded
     @POST("/client/api/order/status")
-    public void getStatus(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
+    public void getStatusAsynk(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
                           @Field("order") String  id_taxi, Callback<Response> callback);
+
+    @FormUrlEncoded
+    @POST("/client/api/order/status")
+    public Response getStatusSynk(@Field("phone") String phoneNumber, @Field("imei") String phoneId, @Field("hash") String hashMD5,
+                               @Field("order") String  id_taxi);
 
 
 

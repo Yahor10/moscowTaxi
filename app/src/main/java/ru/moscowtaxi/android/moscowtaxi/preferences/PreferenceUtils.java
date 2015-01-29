@@ -69,7 +69,22 @@ public class PreferenceUtils {
                 PreferenceKeys.KEY_DEVICE_ID, "");
     }
 
-    public static List<String> getSavedAddresses(Context context,String key){
+
+//    public static void setLastOrderId(Context context, int id) {
+//        SharedPreferences.Editor pEditor = PreferenceManager.getDefaultSharedPreferences(context)
+//                .edit();
+//        pEditor.putInt(PreferenceKeys.KEY_LAST_ORDER_ID, id);
+//        pEditor.commit();
+//    }
+//
+//    public static int getLastOrderId(Context context) {
+//        SharedPreferences defaultSharedPreferences = PreferenceManager
+//                .getDefaultSharedPreferences(context);
+//        return defaultSharedPreferences.getInt(
+//                PreferenceKeys.KEY_LAST_ORDER_ID, 0);
+//    }
+
+    public static List<String> getSavedAddresses(Context context, String key) {
         SharedPreferences defaultSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         final HashSet<String> defValues = new HashSet<String>();
@@ -77,10 +92,10 @@ public class PreferenceUtils {
         defValues.add("ул.Лунная");
         final Set<String> stringSet = defaultSharedPreferences.getStringSet(PreferenceKeys.KEY_SAVED_PLACES, defValues);
         final Iterator<String> iterator = stringSet.iterator();
-        List<String>list = new ArrayList<String>();
-        while (iterator.hasNext()){
+        List<String> list = new ArrayList<String>();
+        while (iterator.hasNext()) {
             final String next = iterator.next().toLowerCase();
-            if(next.startsWith(key)){
+            if (next.startsWith(key)) {
                 list.add(next);
             }
         }

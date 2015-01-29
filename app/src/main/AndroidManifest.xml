@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBb9Q8t595278vyeeoF8tgWgEDClLVYr5w" />
+            android:value="AIzaSyD534OAY5JeZg7bZOfJGogY3VkZA3OApTI" />
 
 
         <activity
@@ -56,6 +56,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".helpers.services.FollowOrderService"></service>
 
 
     </application>
