@@ -41,7 +41,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -51,6 +50,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
+import ru.moscowtaxi.android.moscowtaxi.dialogs.CustomTimePickerDialog;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogNumberPicker;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
@@ -82,9 +82,9 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
             Calendar calendar = Calendar.getInstance();
             int curDay = calendar.get(Calendar.DAY_OF_YEAR);
             int curYear = calendar.get(Calendar.YEAR);
-            calendar.set(Calendar.YEAR,year);
-            calendar.set(Calendar.MONTH,monthOfYear);
-            calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             int orderDay = calendar.get(Calendar.DAY_OF_YEAR);
             int orderYear = calendar.get(Calendar.YEAR);
             if (orderDay == curDay && orderYear == curYear) {
@@ -92,10 +92,15 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
             } else {
                 txtOrderDay.setText("" + dayOfMonth + "." + (monthOfYear + 1) + "." + year);
             }
+            dayOrder = dayOfMonth;
+            monthOrder = monthOfYear;
+            yearOrder = year;
 
 
         }
     };
+    public int hourOrder;
+    public int minuteOrder;
     AutoCompleteTextView edtFrom;
     AutoCompleteTextView edtWhere;
     EditText edtKoment;
@@ -351,14 +356,31 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
             case R.id.text_minutes:
             case R.id.text_hour:
                 mcurrentTime = Calendar.getInstance();
+                mcurrentTime.setTimeInMillis(System.currentTimeMillis() + DELTA_TIME_ORDER);
                 hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                CustomTimePickerDialog mTimePicker;
+                mTimePicker = new CustomTimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        textHour.setText(Integer.toString(selectedHour));
-                        textMinutes.setText(Integer.toString(selectedMinute));
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, yearOrder);
+                        calendar.set(Calendar.MONTH, monthOrder);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOrder);
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        calendar.set(Calendar.MINUTE, selectedMinute);
+                        long curentOrderTime = System.currentTimeMillis() ;
+                        if (curentOrderTime < calendar.getTimeInMillis()) {
+                            textHour.setText(Integer.toString(selectedHour));
+                            textMinutes.setText(Integer.toString(selectedMinute));
+                            hourOrder = selectedHour;
+                            minuteOrder = selectedMinute;
+
+                        } else {
+                            Toast.makeText(getActivity(), "Время не может быть раньше существующего", Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");

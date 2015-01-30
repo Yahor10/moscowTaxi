@@ -143,29 +143,43 @@
       <file leaf-file-name="PageOrder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47699758" vertical-offset="223" max-vertical-offset="2325">
-              <caret line="89" column="47" selection-start-line="89" selection-start-column="47" selection-end-line="89" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.18599033" vertical-offset="3373" max-vertical-offset="5025">
+              <caret line="371" column="74" selection-start-line="371" selection-start-column="74" selection-end-line="371" selection-end-column="74" />
               <folding>
                 <element signature="docComment;class#PageOrder#0" expanded="false" />
-                <element signature="e#2854#3728#0" expanded="true" />
-                <element signature="e#3721#3722#0" expanded="true" />
+                <element signature="e#2903#3883#0" expanded="true" />
+                <element signature="e#3876#3877#0" expanded="true" />
                 <element signature="method#PageOrder#0;class#PageOrder#0" expanded="false" />
                 <element signature="method#onCreateView#0;class#PageOrder#0" expanded="false" />
-                <element signature="method#onClick#0;class#PageOrder#0" expanded="false" />
-                <element signature="e#9590#9646#0" expanded="true" />
-                <element signature="e#10753#10805#0" expanded="true" />
-                <element signature="e#14851#14914#0" expanded="true" />
+                <element signature="e#9799#9855#0" expanded="true" />
+                <element signature="e#10962#11014#0" expanded="true" />
+                <element signature="e#15060#15123#0" expanded="true" />
+                <element signature="e#15866#17113#0" expanded="true" />
+                <element signature="e#17094#17095#0" expanded="true" />
                 <element signature="method#onConnected#0;class#PageOrder#0" expanded="false" />
                 <element signature="method#onConnectionSuspended#0;class#PageOrder#0" expanded="false" />
                 <element signature="method#onConnectionFailed#0;class#PageOrder#0" expanded="false" />
                 <element signature="method#onCreateLoader#0;class#PageOrder#0" expanded="false" />
-                <element signature="e#18449#18518#0" expanded="true" />
+                <element signature="e#19640#19709#0" expanded="true" />
                 <element signature="class#OrderModel#0;class#PageOrder#0" expanded="false" />
                 <element signature="docComment;class#GetAddressTask#0;class#PageOrder#0" expanded="false" />
                 <element signature="class#GetAddressTask#0;class#PageOrder#0" expanded="false" />
-                <element signature="e#20570#20631#0" expanded="true" />
-                <element signature="e#21129#21190#0" expanded="true" />
-                <element signature="e#22186#22247#0" expanded="true" />
+                <element signature="e#21761#21822#0" expanded="true" />
+                <element signature="e#22320#22381#0" expanded="true" />
+                <element signature="e#23377#23438#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomTimePickerDialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/CustomTimePickerDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1965#1973#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1398,7 +1412,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/constants/ConstantsJson.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/orm/FavoritePlaceORM.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item_favorite_place.xml" />
@@ -1446,8 +1459,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/age_plurals.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_number_picker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/callbacks/NumberPickerCallBack.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/DialogNumberPicker.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/page_order.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/DialogNumberPicker.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/CustomTimePickerDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java" />
       </list>
     </option>
@@ -2018,21 +2032,21 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25972223" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33054394" sideWeight="0.5854167" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53974897" sideWeight="0.5854167" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.49511856" sideWeight="0.41458333" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.37943262" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08647141" sideWeight="0.54791665" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32914925" sideWeight="0.5923611" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32914925" sideWeight="0.5923611" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.6205674" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.061805554" sideWeight="0.6294326" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41805556" sideWeight="0.6294326" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32775453" sideWeight="0.49930555" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="100" y="122" width="1240" height="612" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2136,7 +2150,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java</url>
-          <line>277</line>
+          <line>282</line>
           <properties />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
@@ -2154,19 +2168,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java</url>
-          <line>303</line>
+          <line>308</line>
           <properties />
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java</url>
-          <line>322</line>
+          <line>327</line>
           <properties />
           <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java</url>
-          <line>321</line>
+          <line>326</line>
           <properties />
           <option name="timeStamp" value="53" />
         </line-breakpoint>
@@ -2188,21 +2202,20 @@
           <properties />
           <option name="timeStamp" value="86" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java</url>
+          <line>372</line>
+          <properties />
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="88" />
+      <option name="time" value="89" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/adapters/FavoritesPlacesListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2830188" vertical-offset="1111" max-vertical-offset="2265">
-          <caret line="164" column="66" selection-start-line="164" selection-start-column="66" selection-end-line="164" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/helpers/WebUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="650" max-vertical-offset="1350">
@@ -2635,16 +2648,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/DialogNumberPicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5471698" vertical-offset="133" max-vertical-offset="885">
-          <caret line="34" column="51" selection-start-line="34" selection-start-column="51" selection-end-line="34" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/page_order.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.148149" vertical-offset="4040" max-vertical-offset="7995">
@@ -2685,31 +2688,53 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/DialogNumberPicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.76600444" vertical-offset="223" max-vertical-offset="885">
+          <caret line="38" column="67" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/dialogs/CustomTimePickerDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1110">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1965#1973#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ru/moscowtaxi/android/moscowtaxi/fragments/PageOrder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47699758" vertical-offset="223" max-vertical-offset="2325">
-          <caret line="89" column="47" selection-start-line="89" selection-start-column="47" selection-end-line="89" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.18599033" vertical-offset="3373" max-vertical-offset="5025">
+          <caret line="371" column="74" selection-start-line="371" selection-start-column="74" selection-end-line="371" selection-end-column="74" />
           <folding>
             <element signature="docComment;class#PageOrder#0" expanded="false" />
-            <element signature="e#2854#3728#0" expanded="true" />
-            <element signature="e#3721#3722#0" expanded="true" />
+            <element signature="e#2903#3883#0" expanded="true" />
+            <element signature="e#3876#3877#0" expanded="true" />
             <element signature="method#PageOrder#0;class#PageOrder#0" expanded="false" />
             <element signature="method#onCreateView#0;class#PageOrder#0" expanded="false" />
-            <element signature="method#onClick#0;class#PageOrder#0" expanded="false" />
-            <element signature="e#9590#9646#0" expanded="true" />
-            <element signature="e#10753#10805#0" expanded="true" />
-            <element signature="e#14851#14914#0" expanded="true" />
+            <element signature="e#9799#9855#0" expanded="true" />
+            <element signature="e#10962#11014#0" expanded="true" />
+            <element signature="e#15060#15123#0" expanded="true" />
+            <element signature="e#15866#17113#0" expanded="true" />
+            <element signature="e#17094#17095#0" expanded="true" />
             <element signature="method#onConnected#0;class#PageOrder#0" expanded="false" />
             <element signature="method#onConnectionSuspended#0;class#PageOrder#0" expanded="false" />
             <element signature="method#onConnectionFailed#0;class#PageOrder#0" expanded="false" />
             <element signature="method#onCreateLoader#0;class#PageOrder#0" expanded="false" />
-            <element signature="e#18449#18518#0" expanded="true" />
+            <element signature="e#19640#19709#0" expanded="true" />
             <element signature="class#OrderModel#0;class#PageOrder#0" expanded="false" />
             <element signature="docComment;class#GetAddressTask#0;class#PageOrder#0" expanded="false" />
             <element signature="class#GetAddressTask#0;class#PageOrder#0" expanded="false" />
-            <element signature="e#20570#20631#0" expanded="true" />
-            <element signature="e#21129#21190#0" expanded="true" />
-            <element signature="e#22186#22247#0" expanded="true" />
+            <element signature="e#21761#21822#0" expanded="true" />
+            <element signature="e#22320#22381#0" expanded="true" />
+            <element signature="e#23377#23438#0" expanded="true" />
           </folding>
         </state>
       </provider>
