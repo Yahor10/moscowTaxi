@@ -21,7 +21,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit.Callback;
@@ -147,10 +146,20 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //        }
 
         if ("".equals(PreferenceUtils.getDeviceId(this))) {
-            TelephonyManager manager=(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String deviceid=manager.getDeviceId();
+            TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String deviceid = manager.getDeviceId();
 //            String deviceid="128128";
             PreferenceUtils.setDeviceId(this, deviceid);
+        }
+        String phone = PreferenceUtils.getCurrentUserPhone(getApplicationContext());
+//                    String phone = PreferenceUtils.getCurrentUserPhone(this);
+        String id = PreferenceUtils.getDeviceId(this);
+        String hash = PreferenceUtils.getCurrentUserHash(getApplicationContext());
+
+        if (WebUtils.isOnline(this)) {
+            if (!"".equals(phone) && !"".equals(hash)) {
+                loginUser(phone, hash, id);
+            }
         }
 
 //        startActivity(new Intent(this,MainActivity.class));
@@ -174,54 +183,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     PreferenceUtils.setCurrentHash(this, HashUtils.md5(edtSmsCode.getText().toString()));
                 }
                 if (WebUtils.isOnline(this)) {
-                    final ProgressDialog progressDialog = new ProgressDialog(this);
-                    progressDialog.setMessage("Wait ...");
-                    progressDialog.show();
-
-                    RestAdapter restAdapter = new RestAdapter.Builder()
-                            .setEndpoint(TaxiApi.MAIN_URL)
-                            .build();
-                    TaxiApi service = restAdapter.create(TaxiApi.class);
 
                     String phone = edtPhoneNumber.getText().toString();
 //                    String phone = PreferenceUtils.getCurrentUserPhone(this);
                     String id = PreferenceUtils.getDeviceId(this);
                     String hash = HashUtils.md5(edtSmsCode.getText().toString());
+                    loginUser(phone, hash, id);
 
-                    service.login(phone, id, hash, new Callback<Response>() {
-                        @Override
-                        public void success(Response s, Response response) {
-                            try {
-
-                                progressDialog.dismiss();
-                                Gson gson = new Gson();
-                                String str = WebUtils.getResponseString(s);
-                                LoginRequest loginRequest = gson.fromJson(str, LoginRequest.class);
-                                if (loginRequest.c >= 1) {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    finish();
-
-                                }
-
-                                Log.d("LOGIN", WebUtils.getResponseString(s));
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                            try {
-                                progressDialog.dismiss();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 } else {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
                 }
@@ -235,6 +203,54 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 startActivity(intent1);
                 break;
         }
+    }
+
+    public void loginUser(String phone, String hash, String id) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Wait ...");
+        progressDialog.show();
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(TaxiApi.MAIN_URL)
+                .build();
+        TaxiApi service = restAdapter.create(TaxiApi.class);
+
+//
+
+        service.login(phone, id, hash, new Callback<Response>() {
+            @Override
+            public void success(Response s, Response response) {
+                try {
+
+                    progressDialog.dismiss();
+                    Gson gson = new Gson();
+                    String str = WebUtils.getResponseString(s);
+                    LoginRequest loginRequest = gson.fromJson(str, LoginRequest.class);
+                    if (loginRequest.c >= 1) {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+
+                    }
+
+                    Log.d("LOGIN", WebUtils.getResponseString(s));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                try {
+                    progressDialog.dismiss();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_auth), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public static class ErrorDialogFragment extends DialogFragment {
