@@ -36,14 +36,14 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 public class AutoCompleteAdressAdapter extends ArrayAdapter<String> implements Filterable {
 
     private LayoutInflater mInflater;
-//    private Geocoder mGeocoder;
+    private Geocoder mGeocoder;
     private StringBuilder mSb = new StringBuilder();
 
     public AutoCompleteAdressAdapter(final Context context) {
         super(context, -1);
         mInflater = LayoutInflater.from(context);
-//        Locale myLocale = new Locale("ru", "RU");
-//        mGeocoder = new Geocoder(context,myLocale);
+        Locale myLocale = new Locale("ru", "RU");
+        mGeocoder = new Geocoder(context,myLocale);
     }
 
     @Override

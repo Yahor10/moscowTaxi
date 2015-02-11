@@ -22,7 +22,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -54,6 +53,7 @@ import ru.moscowtaxi.android.moscowtaxi.dialogs.CustomTimePickerDialog;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogNumberPicker;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
+import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.NEWAutoCompleteAdapter;
 import ru.moscowtaxi.android.moscowtaxi.helpers.callbacks.NumberPickerCallBack;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
@@ -64,7 +64,7 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 /**
  * Created by alex-pers on 11/30/14.
  */
-public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>>, NumberPickerCallBack {
+public class PageOrder extends Fragment implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LoaderManager.LoaderCallbacks<List<FavoritePlaceORM>>, NumberPickerCallBack, AdapterView.OnItemClickListener {
 
     private static final int LOADER_ID = 102;
 
@@ -162,7 +162,9 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
         textHour.setOnClickListener(this);
         textMinutes.setOnClickListener(this);
 //        edtFrom.requestFocus();
-//        edtFrom.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
+//        edtFrom.setThreshold(4);
+        edtFrom.setThreshold(1);
+        edtFrom.setAdapter(new NEWAutoCompleteAdapter(getActivity(), R.layout.list_item_autocomplete));
 //        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
 
 
@@ -369,7 +371,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                         calendar.set(Calendar.DAY_OF_MONTH, dayOrder);
                         calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                         calendar.set(Calendar.MINUTE, selectedMinute);
-                        long curentOrderTime = System.currentTimeMillis() ;
+                        long curentOrderTime = System.currentTimeMillis();
                         if (curentOrderTime < calendar.getTimeInMillis()) {
                             textHour.setText(Integer.toString(selectedHour));
                             textMinutes.setText(Integer.toString(selectedMinute));
@@ -447,8 +449,8 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
             adresses[i] = favoritePlaceORMs.get(i).address;
         }
 
-        edtFrom.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
-        edtWhere.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
+//        edtFrom.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
+//        edtWhere.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, adresses));
 
 
     }
@@ -463,6 +465,12 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         txtChildAge.setText(getResources().getQuantityString(R.plurals.age_plurals, value, value));
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        String str = (String) adapterView.getItemAtPosition(i);
+        Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
     }
 
     public class OrderModel {
