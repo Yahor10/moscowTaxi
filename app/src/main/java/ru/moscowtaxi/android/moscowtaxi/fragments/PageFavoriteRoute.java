@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -19,11 +16,9 @@ import java.util.List;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.enumeration.OrderType;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoriteRouteListAdapter;
-import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.HistoryListViewAdapter;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoriteRouteLoader;
-import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
-import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Created by alex-pers on 12/2/14.
@@ -59,7 +54,9 @@ public class PageFavoriteRoute extends Fragment implements LoaderManager.LoaderC
                     items = new ArrayList<FavoriteRouteORM>();
                 }
 
+                String currentUser = PreferenceUtils.getCurrentUser(getActivity().getApplicationContext());
                 FavoriteRouteORM item1 = new FavoriteRouteORM();
+                item1.userName = currentUser;
                 item1.name = "Название";
                 item1.addressFrom = "Адресс откуда";
                 item1.addressTo = "Адресс куда";
@@ -68,14 +65,17 @@ public class PageFavoriteRoute extends Fragment implements LoaderManager.LoaderC
                 item1.is_edited_now = true;
 
                 items.add(item1);
+
+                FavoriteRouteORM.insertOrUpdateFavoritePlace(getActivity().getApplicationContext(), item1);
                 adapter.setItems(items);
                 adapter.notifyDataSetChanged();
+
 
             }
         });
 
 
-        getLoaderManager().initLoader(LOADER_ID,null,this);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         return rootView;
     }
 
@@ -86,7 +86,7 @@ public class PageFavoriteRoute extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoadFinished(Loader<List<FavoriteRouteORM>> loader, List<FavoriteRouteORM> data) {
-        adapter = new FavoriteRouteListAdapter(getActivity().getLayoutInflater(),data);
+        adapter = new FavoriteRouteListAdapter(getActivity().getLayoutInflater(), data);
         listView.setAdapter(adapter);
     }
 

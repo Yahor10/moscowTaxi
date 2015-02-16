@@ -1,20 +1,18 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +30,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.activity.FavoritesActivity;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 
 /**
@@ -42,41 +39,34 @@ import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
  */
 public class NavigationDrawerFragment extends Fragment {
 
-    // имена атрибутов для Map
-    final String ATTRIBUTE_NAME_TEXT = "text";
-    final String ATTRIBUTE_NAME_TEXT2 = "text2";
-
-
     /**
      * Remember the position of the selected item.
      */
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
     /**
      * Per the design guidelines, you should show the drawer on launch until the user manually
      * expands it. This shared preference tracks this.
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
+    private static int ORDER_TAXI_MENU_ID = 23;
+    // имена атрибутов для Map
+    final String ATTRIBUTE_NAME_TEXT = "text";
+    final String ATTRIBUTE_NAME_TEXT2 = "text2";
     /**
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
-
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
-
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
-
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
     private MenuItem orderTaxiMenuItem;
-    private static int ORDER_TAXI_MENU_ID = 23;
 
     public NavigationDrawerFragment() {
     }
@@ -100,7 +90,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated (Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
@@ -108,7 +98,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,17 +108,17 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        String[] texts1 = { getString(R.string.navigation_personal_info), getString(R.string.navigation_favorites), getString(R.string.navigation_favorites_rides),
-                getString(R.string.navigation_history_rides), getString(R.string.navigation_rewards) };
-        String[] texts2 = { getString(R.string.navigation_personal_info_change), getString(R.string.navigation_favorites_list), getString(R.string.navigation_favorites_list),
-                getString(R.string.navigation_history_rides_list),  getString(R.string.navigation_private_rewards) };
+        String[] texts1 = {getString(R.string.navigation_personal_info), getString(R.string.navigation_favorites), getString(R.string.navigation_favorites_rides),
+                getString(R.string.navigation_history_rides), getString(R.string.navigation_rewards)};
+        String[] texts2 = {getString(R.string.navigation_personal_info_change), getString(R.string.navigation_favorites_list), getString(R.string.navigation_favorites_list),
+                getString(R.string.navigation_history_rides_list), getString(R.string.navigation_private_rewards)};
         int img = R.drawable.ic_launcher;
 
         // упаковываем данные в понятную для адаптера структуру
         ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(
                 texts1.length);
         Map<String, Object> m;
-        for (int i = 0; i < texts1.length-1; i++) {
+        for (int i = 0; i < texts1.length - 1; i++) {
             m = new HashMap<String, Object>();
             m.put(ATTRIBUTE_NAME_TEXT, texts1[i]);
             m.put(ATTRIBUTE_NAME_TEXT2, texts2[i]);
@@ -136,14 +126,14 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // массив имен атрибутов, из которых будут читаться данные
-        String[] from = { ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_TEXT2,
-                };
+        String[] from = {ATTRIBUTE_NAME_TEXT, ATTRIBUTE_NAME_TEXT2,
+        };
         // массив ID View-компонентов, в которые будут вставлять данные
-        int[] to = { android.R.id.text1, android.R.id.text2 };
+        int[] to = {android.R.id.text1, android.R.id.text2};
 
         // создаем адаптер
         SimpleAdapter sAdapter = new SimpleAdapter(getActivity(), data, android.R.layout.simple_list_item_activated_2,
-                from, to){
+                from, to) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -158,7 +148,7 @@ public class NavigationDrawerFragment extends Fragment {
         };
 
 
-                mDrawerListView.setAdapter(sAdapter);
+        mDrawerListView.setAdapter(sAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -185,7 +175,7 @@ public class NavigationDrawerFragment extends Fragment {
         // Action Bar
 
         // Adapter
-       MainActivity. CustomSpinnerAdapter adapter =
+        MainActivity.CustomSpinnerAdapter adapter =
                 (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(getActivity(), R.array.cities,
                         android.R.layout.simple_spinner_dropdown_item);
 
@@ -210,7 +200,6 @@ public class NavigationDrawerFragment extends Fragment {
 
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-
 
 
         // ActionBarDrawerToggle ties together the the proper interactions
@@ -328,10 +317,17 @@ public class NavigationDrawerFragment extends Fragment {
         MainActivity activity = (MainActivity) getActivity();
         int currentpage = activity.getCurrentpage();
 
-        orderTaxiMenuItem = menu.add(0,ORDER_TAXI_MENU_ID,0,R.string.order_taxi);
+        orderTaxiMenuItem = menu.add(0, ORDER_TAXI_MENU_ID, 0, R.string.order_taxi);
         orderTaxiMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        orderTaxiMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                ((MainActivity) getActivity()).onNavigationDrawerItemSelected(0);
+                return true;
+            }
+        });
 
-        if(currentpage == 0){
+        if (currentpage == 0) {
             menu.removeItem(orderTaxiMenuItem.getItemId());
         }
 
@@ -364,7 +360,7 @@ public class NavigationDrawerFragment extends Fragment {
         // Action Bar
 
         // Adapter
-        MainActivity. CustomSpinnerAdapter adapter =
+        MainActivity.CustomSpinnerAdapter adapter =
                 (MainActivity.CustomSpinnerAdapter) MainActivity.CustomSpinnerAdapter.createFromResource(getActivity(), R.array.cities,
                         android.R.layout.simple_spinner_dropdown_item);
 

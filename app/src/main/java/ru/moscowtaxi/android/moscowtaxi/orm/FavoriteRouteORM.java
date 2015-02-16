@@ -75,34 +75,34 @@ public class FavoriteRouteORM extends EntityORM {
     }
 
 
-    public static void insertOrUpdateFavoritePlace(Context context, FavoriteRouteORM place) {
+    public static void insertOrUpdateFavoritePlace(Context context, FavoriteRouteORM routeORM) {
 
         try {
             DatabaseHelper helper = OpenHelperManager.getHelper(context,
                     DatabaseHelper.class);
             final Dao<FavoriteRouteORM, String> dao = helper.getFavoriteRouteDao();
             PreparedQuery<FavoriteRouteORM> prepare = dao.queryBuilder().where()
-                    .eq(FavoriteRouteORM.KEY_ID, place.getId()).prepare();
+                    .eq(FavoriteRouteORM.KEY_ID, routeORM.getId()).prepare();
             List<FavoriteRouteORM> query = dao.query(prepare);
             if (query.isEmpty()) {
 
-                if (insertFavoriteRoute(context, place) == 0) {
+                if (insertFavoriteRoute(context, routeORM) == 0) {
                     throw new IllegalArgumentException("cannot create favorite place");
                 }
             } else {
                 UpdateBuilder<FavoriteRouteORM, String> updateBuilder = dao
                         .updateBuilder();
-                updateBuilder.updateColumnValue(FavoriteRouteORM.NAME, place.name);
-                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_FROM, place.addressFrom);
-                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_TO, place.addressTo);
-                updateBuilder.updateColumnValue(FavoriteRouteORM.TIME, place.time);
-                updateBuilder.updateColumnValue(FavoriteRouteORM.TYPE, place.type);
-                updateBuilder.where().eq(FavoritePlaceORM.KEY_ID, place.getId());
+                updateBuilder.updateColumnValue(FavoriteRouteORM.NAME, routeORM.name);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_FROM, routeORM.addressFrom);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_TO, routeORM.addressTo);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.TIME, routeORM.time);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.TYPE, routeORM.type);
+                updateBuilder.where().eq(FavoritePlaceORM.KEY_ID, routeORM.getId());
                 PreparedUpdate<FavoriteRouteORM> prepare2 = updateBuilder.prepare();
                 dao.update(prepare2);
             }
         } catch (Exception e1) {
-
+            e1.printStackTrace();
         } finally {
             OpenHelperManager.releaseHelper();
         }
