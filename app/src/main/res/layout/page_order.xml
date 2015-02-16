@@ -33,11 +33,12 @@
             android:orientation="horizontal"
             android:paddingLeft="@dimen/page_order_padding_left">
 
-            <AutoCompleteTextView
+            <ru.moscowtaxi.android.moscowtaxi.view.OrangeEditText
                 android:id="@+id/edt_from"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
+                android:dropDownWidth="fill_parent"
                 android:textColor="@color/gray_text" />
 
             <View
@@ -148,6 +149,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
+                android:dropDownWidth="fill_parent"
                 android:textColor="@color/gray_text" />
 
             <View
@@ -282,11 +284,12 @@
 
                 </LinearLayout>
 
-                <TextView android:id="@+id/txt_day_order"
+                <TextView
+                    android:id="@+id/txt_day_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Сегодня"
                     android:layout_marginTop="10dp"
+                    android:text="Сегодня"
                     android:textColor="@color/orange_color"
                     android:textSize="@dimen/page_order_title_size" />
 

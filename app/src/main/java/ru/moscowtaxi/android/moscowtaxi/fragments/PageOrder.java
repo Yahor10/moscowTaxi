@@ -161,11 +161,10 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
         textHour.setOnClickListener(this);
         textMinutes.setOnClickListener(this);
-//        edtFrom.requestFocus();
-//        edtFrom.setThreshold(4);
         edtFrom.setThreshold(1);
+        edtWhere.setThreshold(1);
         edtFrom.setAdapter(new NEWAutoCompleteAdapter(getActivity(), R.layout.list_item_autocomplete));
-//        edtWhere.setAdapter(new AutoCompleteAdressAdapter(getActivity()));
+        edtWhere.setAdapter(new NEWAutoCompleteAdapter(getActivity(), R.layout.list_item_autocomplete));
 
 
         Activity activity = getActivity();
@@ -385,7 +384,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle("Время вызова");
                 mTimePicker.show();
                 break;
             case R.id.txt_child_age:

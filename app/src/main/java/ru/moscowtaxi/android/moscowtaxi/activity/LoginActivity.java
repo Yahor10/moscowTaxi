@@ -227,6 +227,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     String str = WebUtils.getResponseString(s);
                     LoginRequest loginRequest = gson.fromJson(str, LoginRequest.class);
                     if (loginRequest.c >= 1) {
+                        Toast.makeText(getApplicationContext(), "Авторизация прошла успешно!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
 

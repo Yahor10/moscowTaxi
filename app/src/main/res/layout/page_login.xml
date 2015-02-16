@@ -13,14 +13,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="number"
+        android:hint="Номер"
          android:inputType="phone"/>
 
     <EditText android:id="@+id/edt_code_sms"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="sms-code"
+        android:hint="СМС-код"
         android:inputType="number"/>
     <Button
          android:id="@+id/button_authorize"
@@ -40,7 +40,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="временная кнопка"
-        style="@style/ButtonText"/>
+        style="@style/ButtonText"
+        android:visibility="gone"/>
 
 
 

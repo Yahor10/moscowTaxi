@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
->
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/lay_state_edited"
@@ -33,15 +32,28 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/txt_above_edt_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Имя"
                     android:textColor="@android:color/white"
-                    android:singleLine="true" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:text="@string/favorite_name"
                     android:singleLine="true"
+                    android:text="@string/favorite_name"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </LinearLayout>
@@ -61,9 +73,22 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:textColor="@android:color/white"
+                    android:visibility="gone"
                     android:gravity="center"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/txt_above_edt_adress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="Адресс"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:layout_width="match_parent"

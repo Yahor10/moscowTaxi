@@ -1,17 +1,15 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
-import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
-import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 
 /**
  * Created by alex-pers on 12/13/14.
@@ -71,15 +69,29 @@ public class FavoriteRouteListAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-//        holder.setData(items.get(i));
+        holder.view_but_delete = convertView.findViewById(R.id.view_but_delete);
+
+        holder.setData(items.get(i));
+
 
         return convertView;
     }
 
     public class Holder {
 
+        public View view_but_delete;
 
-        public void setData(OrderORM data) {
+
+        public void setData(final FavoriteRouteORM data) {
+            view_but_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    getItems().remove(data);
+                    notifyDataSetChanged();
+                    FavoriteRouteORM.deleteFavoriteRouteByID(context, data.getId());
+                }
+            });
 
         }
     }

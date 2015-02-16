@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -154,7 +153,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                 if (intent.getExtras() != null) {
                     NetworkInfo ni = (NetworkInfo) intent.getExtras().get(ConnectivityManager.EXTRA_NETWORK_INFO);
                     if (ni != null && ni.getState() == NetworkInfo.State.CONNECTED) {
-                        centerMapOnMyLocation();
+                        try {
+                            centerMapOnMyLocation();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 //            if(intent.getExtras().getBoolean(ConnectivityManager.EXTRA_NO_CONNECTIVITY,Boolean.FALSE)) {
@@ -162,7 +165,11 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 //            }
             }
         };
-        getActivity().registerReceiver(receiver, filter);
+        try {
+            getActivity().registerReceiver(receiver, filter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return rootView;
@@ -239,7 +246,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
         }
 
-        getActivity().stopService( new Intent(getActivity(),
+        getActivity().stopService(new Intent(getActivity(),
                 FollowOrderService.class));
     }
 
@@ -341,17 +348,17 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                             new LatLng(followRequest.d.latitude, followRequest.d.longitude), 15));
                 }
-                if(followRequest.d.status!=null ){
-                    if("complete".equals(followRequest.d.status)){
+                if (followRequest.d.status != null) {
+                    if ("complete".equals(followRequest.d.status)) {
                         txtStatus.setText(R.string.order_complete);
-                    }else if("exchange".equals(followRequest.d.status)){
+                    } else if ("exchange".equals(followRequest.d.status)) {
                         txtStatus.setText(R.string.order_allocation);
-                    } else{
+                    } else {
                         txtStatus.setText(R.string.order_allocation);
                     }
 
                 }
-            }else{
+            } else {
                 txtStatus.setText(R.string.order_allocation);
             }
 

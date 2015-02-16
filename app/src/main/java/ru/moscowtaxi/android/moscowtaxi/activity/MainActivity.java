@@ -1,6 +1,5 @@
 package ru.moscowtaxi.android.moscowtaxi.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -33,26 +32,26 @@ import java.util.Locale;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.fragments.NavigationDrawerFragment;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
+import ru.moscowtaxi.android.moscowtaxi.fragments.PageHistory;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward_History;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks , GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener  {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static int PAGE_MAIN = 0;
     public static int PAGE_FAVORITE_PLACE = 1;
     public static int PAGE_FAVORITE_ROUTE = 2;
     public static int PAGE_HISTORY = 3;
     public static int PAGE_REWARDS = 4;
-    private int current_page = -1;
     public Fragment current_fragment = null;
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     public NavigationDrawerFragment mNavigationDrawerFragment;
+    private int current_page = -1;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +117,7 @@ public class MainActivity extends Activity
                     }
                     return;
                 }
-                fragment = PageReward_History.newInstance(1);
+                fragment = PageHistory.newInstance();
                 break;
             case 4:
                 if (current_page == PAGE_REWARDS) {
@@ -179,6 +178,10 @@ public class MainActivity extends Activity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    public Location getLastLocation() {
+        return mLastLocation;
     }
 
     /**
@@ -247,10 +250,6 @@ public class MainActivity extends Activity
         }
     }
 
-    public Location getLastLocation() {
-        return mLastLocation;
-    }
-
     /**
      * A subclass of AsyncTask that calls getFromLocation() in the
      * background. The class definition has these generic types:
@@ -261,10 +260,10 @@ public class MainActivity extends Activity
      */
     public static class GetAddressTask extends
             AsyncTask<Location, Void, String> {
-        Context mContext;
         private final EditText edtFrom;
+        Context mContext;
 
-        public GetAddressTask(Context context,EditText editText) {
+        public GetAddressTask(Context context, EditText editText) {
             super();
             mContext = context;
             edtFrom = editText;

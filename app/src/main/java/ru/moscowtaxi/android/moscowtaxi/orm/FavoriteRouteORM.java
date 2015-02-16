@@ -1,11 +1,15 @@
 package ru.moscowtaxi.android.moscowtaxi.orm;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.PreparedUpdate;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
@@ -21,7 +25,7 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 @DatabaseTable(tableName = "favorite_route")
 public class FavoriteRouteORM extends EntityORM {
-//
+    //
     public static final String NAME = "name";
     public static final String ADDRESS_FROM = "address_from";
     public static final String ADDRESS_TO = "address_to";
@@ -40,7 +44,8 @@ public class FavoriteRouteORM extends EntityORM {
     public OrderType type;
 
     public boolean is_edited_now;
-//
+
+    //
 //
     public FavoriteRouteORM() {
 
@@ -69,6 +74,41 @@ public class FavoriteRouteORM extends EntityORM {
         return result;
     }
 
+
+    public static void insertOrUpdateFavoritePlace(Context context, FavoriteRouteORM place) {
+
+        try {
+            DatabaseHelper helper = OpenHelperManager.getHelper(context,
+                    DatabaseHelper.class);
+            final Dao<FavoriteRouteORM, String> dao = helper.getFavoriteRouteDao();
+            PreparedQuery<FavoriteRouteORM> prepare = dao.queryBuilder().where()
+                    .eq(FavoriteRouteORM.KEY_ID, place.getId()).prepare();
+            List<FavoriteRouteORM> query = dao.query(prepare);
+            if (query.isEmpty()) {
+
+                if (insertFavoriteRoute(context, place) == 0) {
+                    throw new IllegalArgumentException("cannot create favorite place");
+                }
+            } else {
+                UpdateBuilder<FavoriteRouteORM, String> updateBuilder = dao
+                        .updateBuilder();
+                updateBuilder.updateColumnValue(FavoriteRouteORM.NAME, place.name);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_FROM, place.addressFrom);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.ADDRESS_TO, place.addressTo);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.TIME, place.time);
+                updateBuilder.updateColumnValue(FavoriteRouteORM.TYPE, place.type);
+                updateBuilder.where().eq(FavoritePlaceORM.KEY_ID, place.getId());
+                PreparedUpdate<FavoriteRouteORM> prepare2 = updateBuilder.prepare();
+                dao.update(prepare2);
+            }
+        } catch (Exception e1) {
+
+        } finally {
+            OpenHelperManager.releaseHelper();
+        }
+    }
+
+
     public static List<FavoriteRouteORM> getFavoriteRoutes(Context context) {
         List<FavoriteRouteORM> query = null;
         try {
@@ -85,6 +125,29 @@ public class FavoriteRouteORM extends EntityORM {
             OpenHelperManager.releaseHelper();
         }
         return query;
+    }
+
+
+    public static boolean deleteFavoriteRouteByID(Context context, long id) {
+        try {
+            DatabaseHelper helper = OpenHelperManager.getHelper(context,
+                    DatabaseHelper.class);
+            final Dao<FavoriteRouteORM, String> dao = helper.getFavoriteRouteDao();
+
+            DeleteBuilder<FavoriteRouteORM, String> deleteBuilder = dao.deleteBuilder();
+            deleteBuilder.where().eq(KEY_ID, id);
+            int key = deleteBuilder.delete();
+
+            if (key < 0) {
+                Log.e(null, "delete event by id");
+                return false;
+            }
+
+        } catch (SQLException e) {
+        } finally {
+            OpenHelperManager.releaseHelper();
+        }
+        return true;
     }
 
 

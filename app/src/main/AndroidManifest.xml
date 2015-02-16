@@ -23,7 +23,7 @@
         android:theme="@style/AppTheme">
 
 
-        <!-- AIzaSyBb9Q8t595278vyeeoF8tgWgEDClLVYr5w - DEBUG-->
+        <!-- AIzaSyBcGBgHCG7zNNQVzbM4cnk12_2QH9i7AV0 - DEBUG-->
         <!--AIzaSyD534OAY5JeZg7bZOfJGogY3VkZA3OApTI - RELEASE -->
 
         <meta-data
@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBb9Q8t595278vyeeoF8tgWgEDClLVYr5w" />
+            android:value="AIzaSyD534OAY5JeZg7bZOfJGogY3VkZA3OApTI" />
 
 
         <activity
@@ -48,7 +48,8 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

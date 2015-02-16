@@ -23,6 +23,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import ru.moscowtaxi.android.moscowtaxi.R;
+
 /**
  * Created by alex-pers on 2/11/15.
  */
@@ -31,7 +33,7 @@ public class NEWAutoCompleteAdapter extends ArrayAdapter<String> implements Filt
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyBb9Q8t595278vyeeoF8tgWgEDClLVYr5w";
+    private static final String API_KEY = "AIzaSyDmsVRymCBfGJb9LAqccNgPXgFV4_ibXoE";
     Filter filter;
     private ArrayList<String> resultList;
     private LayoutInflater inflator;
@@ -39,7 +41,7 @@ public class NEWAutoCompleteAdapter extends ArrayAdapter<String> implements Filt
     public NEWAutoCompleteAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         resultList = new ArrayList<String>();
-        inflator = ((Activity)context).getLayoutInflater();
+        inflator = ((Activity) context).getLayoutInflater();
     }
 
     @Override
@@ -54,17 +56,19 @@ public class NEWAutoCompleteAdapter extends ArrayAdapter<String> implements Filt
 
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
-        final TextView tv;
+        final View view;
+        TextView txt;
         if (convertView != null) {
-            tv = (TextView) convertView;
+            view = (View) convertView;
         } else {
-            tv = (TextView) inflator.inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
+            view = (View) inflator.inflate(R.layout.list_item_autocomplete, parent, false);
         }
 
+        txt = (TextView) view.findViewById(R.id.txt_adress_autocomplete);
 //        tv.setText(createFormattedAddressFromAddress(getItem(position)));
-        tv.setText(getItem(position));
+        txt.setText(getItem(position));
 
-        return tv;
+        return view;
     }
 
     @Override
@@ -120,7 +124,7 @@ public class NEWAutoCompleteAdapter extends ArrayAdapter<String> implements Filt
             StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
             sb.append("?sensor=false&key=" + API_KEY);
 //            sb.append("&components=country:ru");
-            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
+            sb.append("&input=" + URLEncoder.encode("Москва," + input, "utf8"));
 
             URL url = new URL(sb.toString());
             conn = (HttpURLConnection) url.openConnection();

@@ -7,22 +7,17 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.http.HEAD;
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
-import ru.moscowtaxi.android.moscowtaxi.orm.FavoriteRouteORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
@@ -91,6 +86,8 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
         holder.butDelete = (LinearLayout) convertView.findViewById(R.id.removeLayout);
         holder.butDetectAdress = (LinearLayout) convertView.findViewById(R.id.detectLayout);
         holder.butSave = (LinearLayout) convertView.findViewById(R.id.saveLayout);
+        holder.txtAboveAdress = (TextView) convertView.findViewById(R.id.txt_above_edt_adress);
+        holder.txtAboveName = (TextView) convertView.findViewById(R.id.txt_above_edt_name);
 
         holder.setData(items.get(i));
 
@@ -106,6 +103,10 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
 
         EditText edtName;
         EditText edtAdress;
+
+        TextView txtAboveName;
+        TextView txtAboveAdress;
+
 
         LinearLayout butChange;
         LinearLayout butDelete;
@@ -124,26 +125,61 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             }
 
 
-            View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+//            View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if (!hasFocus) {
+//                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
+//                                Context.INPUT_METHOD_SERVICE);
+//                        imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
+//                    }
+//                }
+//            };
+//            edtName.setOnFocusChangeListener(focusChangeListener);
+//
+//            edtAdress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                @Override
+//                public void onFocusChange(View v, boolean hasFocus) {
+//                    if (!hasFocus) {
+//                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
+//                                Context.INPUT_METHOD_SERVICE);
+//                        imm.hideSoftInputFromWindow(edtAdress.getWindowToken(), 0);
+//                    }
+//                }
+//            });
+            txtAboveAdress.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
-                                Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
-                    }
-                }
-            };
-            edtName.setOnFocusChangeListener(focusChangeListener);
+                public void onClick(View view) {
+                    edtName.setVisibility(View.GONE);
 
-            edtAdress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        InputMethodManager imm = (InputMethodManager) edtName.getContext().getSystemService(
-                                Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(edtName.getWindowToken(), 0);
+                    txtAboveName.setVisibility(View.VISIBLE);
+                    edtAdress.setVisibility(View.VISIBLE);
+                    if ("".equals(edtName.getText().toString())) {
+                        txtAboveName.setText("Имя");
+                    } else {
+                        txtAboveName.setText(edtName.getText());
                     }
+
+                    txtAboveAdress.setVisibility(View.GONE);
+
+                    edtAdress.requestFocus();
+                }
+            });
+
+            txtAboveName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    edtAdress.setVisibility(View.GONE);
+                    txtAboveAdress.setVisibility(View.VISIBLE);
+                    edtName.setVisibility(View.VISIBLE);
+                    if ("".equals(edtAdress.getText().toString())) {
+                        txtAboveAdress.setText("Адресс");
+                    } else {
+                        txtAboveAdress.setText(edtName.getText());
+                    }
+
+                    txtAboveName.setVisibility(View.GONE);
+                    edtName.requestFocus();
                 }
             });
 
@@ -167,8 +203,8 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     Editable text = edtName.getText();
                     Editable text1 = edtAdress.getText();
                     Context context = view.getContext();
-                    if(TextUtils.isEmpty(text) || TextUtils.isEmpty(text1)){
-                        Toast.makeText(context,context.getString(R.string.empty_edit_text_error),Toast.LENGTH_SHORT).show();
+                    if (TextUtils.isEmpty(text) || TextUtils.isEmpty(text1)) {
+                        Toast.makeText(context, context.getString(R.string.empty_edit_text_error), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -178,7 +214,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     data.address = text1.toString();
 
                     FavoritesPlacesListAdapter.this.notifyDataSetChanged();
-                    FavoritePlaceORM.insertOrUpdateFavoritePlace(context,data);
+                    FavoritePlaceORM.insertOrUpdateFavoritePlace(context, data);
 
 
                 }
@@ -190,17 +226,17 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     Context context = view.getContext();
                     getItems().remove(data);
                     notifyDataSetChanged();
-                    FavoritePlaceORM.deleteFavoritePlaceByID(context,data.getId());
+                    FavoritePlaceORM.deleteFavoritePlaceByID(context, data.getId());
                 }
             });
 
             butDetectAdress.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v){
+                public void onClick(View v) {
                     MainActivity activity = (MainActivity) v.getContext();
                     Location lastLocation = activity.getLastLocation();
                     if (lastLocation != null) {
-                        new MainActivity.GetAddressTask(activity,edtAdress).execute(lastLocation);
+                        new MainActivity.GetAddressTask(activity, edtAdress).execute(lastLocation);
                     } else {
                         Toast.makeText(activity, activity.getString(R.string.failed_determinate_location), Toast.LENGTH_SHORT).show();
                     }

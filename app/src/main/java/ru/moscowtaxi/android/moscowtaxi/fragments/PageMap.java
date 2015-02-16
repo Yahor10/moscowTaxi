@@ -1,7 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -158,14 +158,36 @@ public class PageMap extends Fragment {
                         String str = WebUtils.getResponseString(s);
                         AllDriversRequest drivers = gson.fromJson(str, AllDriversRequest.class);
 
+                        double last_taxi_latitude = 0;
+                        double last_taxi_longitude = 0;
                         for (AllDriversRequest.ArrayTypes.Driver d : drivers.d.drivers) {
-                            String[] geo_data = d.geo.split(",");
-                            d.latitude = Double.valueOf(geo_data[0]);
-                            d.longitude = Double.valueOf(geo_data[1]);
+                            if (d.geo != null && !"".equals(d.geo)) {
+                                String[] geo_data = d.geo.split(",");
+                                d.latitude = Double.valueOf(geo_data[0]);
+                                d.longitude = Double.valueOf(geo_data[1]);
+                                last_taxi_latitude = d.latitude;
+                                last_taxi_longitude = d.longitude;
 
-                            Marker marker = googleMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(d.latitude, d.longitude))
-                                    .title(d.name));
+                                Marker marker = googleMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(d.latitude, d.longitude))
+                                        .title(d.name)
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.point_taxi_small)));
+                            }
+
+                        }
+                        if(last_taxi_latitude>0 && last_taxi_longitude>0){
+                            googleMap.setMyLocationEnabled(true);
+
+
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                        new LatLng(last_taxi_latitude,last_taxi_longitude),10));
+
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(new LatLng(last_taxi_latitude,last_taxi_longitude))      // Sets the center of the map to location user
+                                        .zoom(10)                   // Sets the zoom
+                                        .bearing(90)                // Sets the orientation of the camera to east
+                                        .build();                   // Creates a CameraPosition from the builder
+                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
                         }
 

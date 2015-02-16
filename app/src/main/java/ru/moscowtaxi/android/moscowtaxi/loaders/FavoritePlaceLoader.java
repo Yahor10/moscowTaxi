@@ -2,10 +2,7 @@ package ru.moscowtaxi.android.moscowtaxi.loaders;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Loader;
-import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
@@ -42,24 +39,8 @@ public class FavoritePlaceLoader extends AsyncTaskLoader<List<FavoritePlaceORM>>
 
     @Override
     public List<FavoritePlaceORM> loadInBackground() {
-        List<FavoritePlaceORM> data = FavoritePlaceORM.getFavoritesPlaces(getContext());
 
 
-        FavoritePlaceORM item1  = new FavoritePlaceORM();
-        item1.name =  "Работа";
-        item1.address = "Minsk ave.Nezavisimosti";
-        item1.is_edited_now = false;
-
-        FavoritePlaceORM item2  = new FavoritePlaceORM();
-        item2.name =  "Дом";
-        item2.address = "Гродненская обл. Кореличский р-н. д.Цирин";
-        item2.is_edited_now = false;
-
-        data.add(item1);
-        data.add(item2);
-
-
-
-        return data;
+        return FavoritePlaceORM.getFavoritesPlaces(getContext());
     }
 }
