@@ -43,7 +43,7 @@ public class RegistrationActivity extends Activity {
 //                    RegistrationTask registrationTask = new RegistrationTask(edtPhoneNumber.getText().toString(), Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID), RegistrationActivity.this.getApplicationContext());
 //                    registrationTask.execute();
                     final ProgressDialog progressDialog = new ProgressDialog(RegistrationActivity.this);
-                    progressDialog.setMessage("Wait ...");
+                    progressDialog.setMessage(getString(R.string.wait));
                     progressDialog.show();
                     RestAdapter restAdapter = new RestAdapter.Builder()
                             .setEndpoint(TaxiApi.MAIN_URL)
@@ -63,7 +63,6 @@ public class RegistrationActivity extends Activity {
                             try {
                                 progressDialog.dismiss();
                                 Log.d("REGISTRATION", WebUtils.getResponseString(response));
-                                Toast.makeText(getApplicationContext(), "Result = " + WebUtils.getResponseString(response), Toast.LENGTH_SHORT).show();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -78,7 +77,7 @@ public class RegistrationActivity extends Activity {
                                 e.printStackTrace();
                             }
                             Log.d("REGISTRATION_FAIL", error.toString());
-                            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.error_connection_occured,Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -86,55 +85,5 @@ public class RegistrationActivity extends Activity {
             }
         });
     }
-
-//    private class RegistrationTask extends AsyncTask<Void, Void, Boolean> {
-//        String phoneNumber;
-//        String phoneId;
-//        Context context;
-//
-//        public RegistrationTask(String number, String id, Context context) {
-//            this.phoneNumber = number;
-//            this.phoneId = id;
-//            this.context = context;
-//        }
-//
-//        @Override
-//        protected Boolean doInBackground(Void... voids) {
-//
-//            TaxiHttpClient client = new TaxiHttpClient(context);
-//            String result = client.registrateUser(phoneNumber, phoneId);
-//
-//
-//
-//            if (result == null || result.isEmpty()) {
-//                return false;
-//            } else {
-//                Log.d("REGISTRATION_TASK",result);
-//                return true;
-//            }
-//
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Boolean aBoolean) {
-//            super.onPostExecute(aBoolean);
-//            String text = "";
-//            if (aBoolean) {
-//                text = "Ожидайте СМС";
-//            } else {
-//                text = " Регистрация не сработала";
-//            }
-//
-//            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
-//
-//
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//        }
-//    }
-
 
 }

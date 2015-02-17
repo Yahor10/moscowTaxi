@@ -19,8 +19,8 @@
 
     <string name="favorites_places">Избранные места</string>
     <string name="favorites_route">Избранные маршруты</string>
-    <string name="add_favorites_place">Добавить адресс</string>
-    <string name="favorite_address">Адресс</string>
+    <string name="add_favorites_place">Добавить адрес</string>
+    <string name="favorite_address">Адрес</string>
     <string name="favorite_name">Название</string>
 
     <!-- MAIN PAGE-->
@@ -35,7 +35,7 @@
 
     <!-- MAIN PAGE-->
 
-    <string name="addresses">Адресса</string>
+    <string name="addresses">Адреса</string>
 
     <!-- Actions -->
     <string name="edit">Изменить</string>
@@ -47,7 +47,7 @@
     <string name="call_operator">Позвонить оператору</string>
     <string name="clear">Очистить</string>
     <string name="time_order_taxi">Время подачи машины</string>
-    <string name="my_adresses">Мои адресса</string>
+    <string name="my_adresses">Мои адреса</string>
     <string name="find_order">Отследить</string>
 
 
@@ -128,7 +128,20 @@
     <string name="order_wait_driver">Заказ предложен водителю (у водителя есть
     возможность не принимать заказ)</string>
 
-
+   <!-- Registration -->
+    <string name="register_success_sms_sended">
+        Регистрация прошла успешна.На ваш номер отправлен смс-код активации.
+    </string>
+    <string name="wait">
+        Подождите...
+    </string>
+   <string name="phone_hint">
+        Номер телефона
+    </string>
+    <string name="do_registration">
+        Зарегистрироваться
+    </string>
+    <string name="smd_code">СМС-код</string>
 
 
 </resources>

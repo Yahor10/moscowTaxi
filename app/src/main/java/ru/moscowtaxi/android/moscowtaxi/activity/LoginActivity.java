@@ -207,7 +207,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     public void loginUser(String phone, String hash, String id) {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Wait ...");
+        progressDialog.setMessage(getString(R.string.wait));
         progressDialog.show();
 
         RestAdapter restAdapter = new RestAdapter.Builder()

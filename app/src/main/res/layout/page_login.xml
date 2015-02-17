@@ -13,14 +13,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="Номер"
+        android:hint="@string/phone_hint"
          android:inputType="phone"/>
 
     <EditText android:id="@+id/edt_code_sms"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:hint="СМС-код"
+        android:hint="@string/smd_code"
         android:inputType="number"/>
     <Button
          android:id="@+id/button_authorize"
@@ -33,7 +33,7 @@
         android:id="@+id/button_registration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Зарегестрироваться"
+        android:text="@string/do_registration"
         style="@style/ButtonText"/>
     <Button
         android:id="@+id/button_go_main"

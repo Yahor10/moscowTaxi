@@ -14,13 +14,13 @@
         android:layout_width="fill_parent"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content"
-        android:hint="phone" android:inputType="phone"/>
+        android:hint="@string/phone_hint" android:inputType="phone"/>
 
     <Button
         android:id="@+id/button_registration"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         style="@style/ButtonText"
-        android:text="Зарегистрироваться" />
+        android:text="@string/do_registration" />
 
 </LinearLayout>
