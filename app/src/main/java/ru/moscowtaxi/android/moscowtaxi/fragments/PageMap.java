@@ -81,8 +81,8 @@ public class PageMap extends Fragment {
 
 
         getActivity().registerReceiver(receiver, filter);
-        centerMapOnMyLocation();
-
+//        centerMapOnMyLocation();
+          centerMapToMoscow();
 
         return rootView;
     }
@@ -107,6 +107,23 @@ public class PageMap extends Fragment {
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         }
+    }
+
+    private void centerMapToMoscow() {
+
+        googleMap.setMyLocationEnabled(true);
+
+
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                    new LatLng(55.75222, 37.61556), 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(55.75222, 37.61556))      // Sets the center of the map to location user
+                    .zoom(10)                   // Sets the zoom
+                    .bearing(90)                // Sets the orientation of the camera to east
+                    .build();                   // Creates a CameraPosition from the builder
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 
     @Override
@@ -175,21 +192,21 @@ public class PageMap extends Fragment {
                             }
 
                         }
-                        if(last_taxi_latitude>0 && last_taxi_longitude>0){
-                            googleMap.setMyLocationEnabled(true);
-
-
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(last_taxi_latitude,last_taxi_longitude),10));
-
-                                CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .target(new LatLng(last_taxi_latitude,last_taxi_longitude))      // Sets the center of the map to location user
-                                        .zoom(10)                   // Sets the zoom
-                                        .bearing(90)                // Sets the orientation of the camera to east
-                                        .build();                   // Creates a CameraPosition from the builder
-                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-                        }
+//                        if(last_taxi_latitude>0 && last_taxi_longitude>0){
+//                            googleMap.setMyLocationEnabled(true);
+//
+//
+//                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                                        new LatLng(last_taxi_latitude,last_taxi_longitude),10));
+//
+//                                CameraPosition cameraPosition = new CameraPosition.Builder()
+//                                        .target(new LatLng(last_taxi_latitude,last_taxi_longitude))      // Sets the center of the map to location user
+//                                        .zoom(10)                   // Sets the zoom
+//                                        .bearing(90)                // Sets the orientation of the camera to east
+//                                        .build();                   // Creates a CameraPosition from the builder
+//                                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//
+//                        }
 
 
 //                        DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle(message, "водители");

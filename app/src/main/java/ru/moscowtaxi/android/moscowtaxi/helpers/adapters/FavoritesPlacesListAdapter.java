@@ -175,7 +175,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     if ("".equals(edtAdress.getText().toString())) {
                         txtAboveAdress.setText("Адресс");
                     } else {
-                        txtAboveAdress.setText(edtName.getText());
+                        txtAboveAdress.setText(edtAdress.getText());
                     }
 
                     txtAboveName.setVisibility(View.GONE);
