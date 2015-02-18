@@ -124,6 +124,7 @@
 
             </LinearLayout>
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -145,7 +146,7 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="10dp"
-                android:text="№ 234466"
+                android:text="№"
                 android:textColor="@color/orange_color"
                 android:textSize="20sp" />
 
@@ -179,7 +180,7 @@
                             android:id="@+id/txt_from_here"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=": Минск"
+                            android:text=""
                             android:textColor="@color/gray_text" />
                     </LinearLayout>
 
@@ -197,7 +198,7 @@
                             android:id="@+id/txt_where"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=": Moscow"
+                            android:text=""
                             android:textColor="@color/gray_text" />
                     </LinearLayout>
 
@@ -215,7 +216,7 @@
                             android:id="@+id/txt_time_auto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=" 12 00"
+                            android:text=" "
                             android:textColor="@color/gray_text" />
                     </LinearLayout>
 

@@ -58,6 +58,7 @@ import ru.moscowtaxi.android.moscowtaxi.helpers.callbacks.NumberPickerCallBack;
 import ru.moscowtaxi.android.moscowtaxi.helpers.http.TaxiApi;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
@@ -329,6 +330,13 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                                 if (orderRequest.c >= 1) {
                                     DialogMessageAndTitle messageAndTitle = new DialogMessageAndTitle("Номер заказа = " + orderRequest.d, "Заказ успешно обработан");
                                     messageAndTitle.show(getChildFragmentManager(), "");
+
+                                    OrderHistoryORM historyORM = new OrderHistoryORM();
+                                    historyORM.userName = PreferenceUtils.getCurrentUser(getActivity());
+                                    historyORM.number = orderRequest.d;
+                                    historyORM.addressFrom = edtFrom.getText().toString();
+                                    historyORM.addressTo = edtWhere.getText().toString();
+                                    OrderHistoryORM.insertOrUpdateHistory(getActivity().getApplicationContext(), historyORM);
 
                                 }
                             } catch (Exception e) {

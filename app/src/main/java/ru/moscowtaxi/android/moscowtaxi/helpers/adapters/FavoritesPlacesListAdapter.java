@@ -1,5 +1,6 @@
 package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,10 +29,12 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
 
     List<FavoritePlaceORM> items;
     LayoutInflater inflater;
+    Context context;
 
-    public FavoritesPlacesListAdapter(LayoutInflater inflater, List<FavoritePlaceORM> data) {
-        this.inflater = inflater;
+    public FavoritesPlacesListAdapter(Context context, List<FavoritePlaceORM> data) {
+        this.context = context;
         items = data;
+        this.inflater = ((Activity) context).getLayoutInflater();
     }
 
 
@@ -81,7 +85,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
         holder.txtName = (TextView) convertView.findViewById(R.id.name);
         holder.txtAdress = (TextView) convertView.findViewById(R.id.address);
         holder.edtName = (EditText) convertView.findViewById(R.id.nameEdit);
-        holder.edtAdress = (EditText) convertView.findViewById(R.id.addressEdit);
+        holder.edtAdress = (AutoCompleteTextView) convertView.findViewById(R.id.addressEdit);
         holder.butChange = (LinearLayout) convertView.findViewById(R.id.editLayout);
         holder.butDelete = (LinearLayout) convertView.findViewById(R.id.removeLayout);
         holder.butDetectAdress = (LinearLayout) convertView.findViewById(R.id.detectLayout);
@@ -89,7 +93,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
         holder.txtAboveAdress = (TextView) convertView.findViewById(R.id.txt_above_edt_adress);
         holder.txtAboveName = (TextView) convertView.findViewById(R.id.txt_above_edt_name);
 
-        holder.setData(items.get(i));
+        holder.setData(items.get(i), context);
 
         return convertView;
     }
@@ -102,7 +106,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
         TextView txtAdress;
 
         EditText edtName;
-        EditText edtAdress;
+        AutoCompleteTextView edtAdress;
 
         TextView txtAboveName;
         TextView txtAboveAdress;
@@ -114,7 +118,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
         LinearLayout butSave;
 
 
-        public void setData(final FavoritePlaceORM data) {
+        public void setData(final FavoritePlaceORM data, Context c) {
 
             if (data.is_edited_now) {
                 linStateEdited.setVisibility(View.VISIBLE);
@@ -147,6 +151,10 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
 //                    }
 //                }
 //            });
+
+            edtAdress.setThreshold(1);
+            edtAdress.setAdapter(new NEWAutoCompleteAdapter(c, R.layout.list_item_autocomplete));
+
             txtAboveAdress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

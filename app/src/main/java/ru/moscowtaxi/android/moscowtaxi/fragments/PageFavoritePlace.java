@@ -94,7 +94,7 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onLoadFinished(Loader<List<FavoritePlaceORM>> loader, List<FavoritePlaceORM> data) {
         // TODO check null adapters
-        adapter = new FavoritesPlacesListAdapter(getActivity().getLayoutInflater(), data);
+        adapter = new FavoritesPlacesListAdapter(getActivity(), data);
         listView.setAdapter(adapter);
     }
 

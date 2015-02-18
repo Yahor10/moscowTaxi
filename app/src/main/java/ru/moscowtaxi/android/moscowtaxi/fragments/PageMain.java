@@ -104,7 +104,12 @@ public class PageMain extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        mViewPager.setCurrentItem(positionOfViewPager, true);
+        setCurrentItem(positionOfViewPager);
+    }
+
+    public void setCurrentItem(int position) {
+        positionOfViewPager= position;
+        mViewPager.setCurrentItem(position, true);
     }
 
     private void updateTabs(int currentTab) {

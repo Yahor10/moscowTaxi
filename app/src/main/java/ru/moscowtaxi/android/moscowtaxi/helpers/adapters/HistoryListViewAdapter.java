@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
-import ru.moscowtaxi.android.moscowtaxi.orm.OrderORM;
 import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
@@ -38,7 +37,7 @@ public class HistoryListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public OrderHistoryORM getItem(int i) {
         if (items == null)
             return null;
         return items.get(i);
@@ -81,15 +80,28 @@ public class HistoryListViewAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-//        holder.setData(items.get(i));
+        holder.txtIdTaxi = (TextView) convertView.findViewById(R.id.txt_number_order);
+        holder.txtFrom = (TextView) convertView.findViewById(R.id.txt_from_here);
+        holder.txtWhere = (TextView) convertView.findViewById(R.id.txt_where);
+
+        holder.setData(items.get(i));
 
         return convertView;
     }
 
     public class Holder {
+        TextView txtIdTaxi;
+        TextView txtFrom;
+        TextView txtWhere;
 
+        public void setData(OrderHistoryORM history) {
+            if (!"".equals(history.number))
+                txtIdTaxi.setText("" + history.number);
 
-        public void setData(OrderORM data) {
+            if (!"".equals(history.addressFrom))
+                txtFrom.setText(history.addressFrom);
+            if (!"".equals(history.addressTo))
+                txtWhere.setText(history.addressTo);
 
         }
     }

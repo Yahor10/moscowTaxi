@@ -63,7 +63,9 @@ public class RegistrationActivity extends Activity {
                             try {
                                 progressDialog.dismiss();
                                 Log.d("REGISTRATION", WebUtils.getResponseString(response));
-                                Toast.makeText(getApplicationContext(), "Result = " + WebUtils.getResponseString(response), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Регистрация прошла успешно, ожидайте СМС.", Toast.LENGTH_LONG).show();
+                                onBackPressed();
+                                finish();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -78,7 +80,7 @@ public class RegistrationActivity extends Activity {
                                 e.printStackTrace();
                             }
                             Log.d("REGISTRATION_FAIL", error.toString());
-                            Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Ошибка при регистрации", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

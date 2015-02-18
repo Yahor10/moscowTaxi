@@ -29,8 +29,8 @@
     <string name="order_data">Данные</string>
     <string name="map">Карта</string>
     <!-- page order-->
-    <string name="from_here">Откуда</string>
-    <string name="where">Куда</string>
+    <string name="from_here">Откуда:</string>
+    <string name="where">Куда:</string>
     <!-- rage order-->
 
     <!-- MAIN PAGE-->

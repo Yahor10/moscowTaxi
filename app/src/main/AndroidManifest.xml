@@ -46,6 +46,9 @@
         <activity android:name=".activity.RegistrationActivity">
 
         </activity>
+        <activity android:name=".activity.FromHistoryActivity">
+
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
@@ -35,16 +36,25 @@ import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageHistory;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward_History;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    public final static int KEY_ACTIVITY_RESULT_FROM_HISTORY = 1;
     public static int PAGE_MAIN = 0;
     public static int PAGE_FAVORITE_PLACE = 1;
     public static int PAGE_FAVORITE_ROUTE = 2;
     public static int PAGE_HISTORY = 3;
     public static int PAGE_REWARDS = 4;
+    public static String KEY_ACTIVITY_RESULT_FROM_HISTORY_data = "key_from_history_data";
+    public static OrderHistoryORM historyORM;
+    public static boolean flag_from_history = false;
+
     public Fragment current_fragment = null;
+
+
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -182,6 +192,28 @@ public class MainActivity extends Activity
 
     public Location getLastLocation() {
         return mLastLocation;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+
+        switch (requestCode) {
+            case KEY_ACTIVITY_RESULT_FROM_HISTORY:
+                Bundle bundle = data.getExtras();
+                OrderHistoryORM historyORM = (OrderHistoryORM) bundle.getSerializable(KEY_ACTIVITY_RESULT_FROM_HISTORY_data);
+
+
+                if (current_fragment instanceof PageMain) {
+                    ((PageMain) current_fragment).setCurrentItem(1);
+                    MainActivity.historyORM = historyORM;
+                    flag_from_history = true;
+
+                }
+
+        }
     }
 
     /**
@@ -349,5 +381,6 @@ public class MainActivity extends Activity
             super.onPostExecute(s);
         }
     }
+
 
 }

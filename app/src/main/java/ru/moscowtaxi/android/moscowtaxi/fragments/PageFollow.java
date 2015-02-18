@@ -24,17 +24,20 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.Gson;
 
 import java.io.Serializable;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.FromHistoryActivity;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.helpers.WebUtils;
 import ru.moscowtaxi.android.moscowtaxi.helpers.services.FollowOrderService;
+import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
 
 /**
  * Created by alex-pers on 11/30/14.
@@ -58,6 +61,9 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     EditText edtTaxiId;
     FollowReciever recieverFollow;
     TextView txtStatus;
+    TextView txtFrom;
+    TextView txtWhere;
+    TextView txtNumberOrder;
 
 
     private BroadcastReceiver receiver;
@@ -104,6 +110,9 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         edtTaxiId = (EditText) rootView.findViewById(R.id.edt_taxi_id);
         mainLayout.setOnTouchListener(this);
         txtStatus = (TextView) rootView.findViewById(R.id.txt_status);
+        txtFrom = (TextView) rootView.findViewById(R.id.txt_from_here);
+        txtWhere = (TextView) rootView.findViewById(R.id.txt_where);
+        txtNumberOrder = (TextView) rootView.findViewById(R.id.txt_number_order);
 
         rootView.findViewById(R.id.view_but_from_history).setOnClickListener(this);
         rootView.findViewById(R.id.but_follow_by_number).setOnClickListener(this);
@@ -121,26 +130,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         }
 
         googleMap = mMapView.getMap();
-        // latitude and longitude
-//        double latitude = 17.385044;
-//        double longitude = 78.486671;
-//
-//        // create marker
-//        MarkerOptions marker = new MarkerOptions().position(
-//                new LatLng(latitude, longitude)).title("Hello Maps");
-//
-//        // Changing marker icon
-//        marker.icon(BitmapDescriptorFactory
-//                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-//
-//        // adding marker
-//        googleMap.addMarker(marker);
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
-//        googleMap.animateCamera(CameraUpdateFactory
-//                .newCameraPosition(cameraPosition));
 
-//        googleMap.setOnMyLocationChangeListener(myLocationChangeListener);
         centerMapOnMyLocation();
 
         IntentFilter filter = new IntentFilter();
@@ -226,12 +216,33 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         filter.addAction(KEY_RECIEVER_FOLLOW);
 
         getActivity().registerReceiver(recieverFollow, filter);
+        if(MainActivity.flag_from_history)
+        setDataFromHistory(MainActivity.historyORM);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
         try {
             getActivity().unregisterReceiver(receiver);
 
@@ -248,18 +259,6 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
         getActivity().stopService(new Intent(getActivity(),
                 FollowOrderService.class));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mMapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mMapView.onLowMemory();
     }
 
     @Override
@@ -305,7 +304,8 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.view_but_from_history:
-//                ((MainActivity)getActivity()).onNavigationDrawerItemSelected(3);
+                Intent i = new Intent(getActivity(), FromHistoryActivity.class);
+                getActivity().startActivityForResult(i, MainActivity.KEY_ACTIVITY_RESULT_FROM_HISTORY);
                 break;
             case R.id.but_follow_by_number:
                 if (edtTaxiId.getText().length() < 1) {
@@ -334,8 +334,6 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
 
     public void updatePage(FollowRequest followRequest) {
         if (followRequest != null) {
-            Gson gson = new Gson();
-            String str = gson.toJson(followRequest);
 
             if (followRequest.c == 1) {
 
@@ -343,7 +341,9 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                     googleMap.clear();
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(followRequest.d.latitude, followRequest.d.longitude))
-                            .title(followRequest.d.driver));
+                            .title(followRequest.d.driver)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.point_taxi_small)));
+
 
                     googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                             new LatLng(followRequest.d.latitude, followRequest.d.longitude), 15));
@@ -358,12 +358,35 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                     }
 
                 }
+
             } else {
                 txtStatus.setText(R.string.order_allocation);
             }
 
         } else {
             txtStatus.setText(R.string.order_allocation);
+        }
+    }
+
+    public void setDataFromHistory(OrderHistoryORM history) {
+
+        if (history != null) {
+            if (null == edtTaxiId || null == txtWhere || null == txtFrom || null == txtStatus || null==txtNumberOrder)
+                return;
+
+            if (!"".equals(history.number)) {
+                edtTaxiId.setText("" + history.number);
+                txtNumberOrder.setText("№" + history.number);
+            }
+
+            txtStatus.setText(R.string.order_complete);
+            if (!"".equals(history.addressFrom))
+                txtFrom.setText(history.addressFrom);
+            if (!"".equals(history.addressTo))
+                txtWhere.setText(history.addressTo);
+
+
+            MainActivity.flag_from_history = false;
         }
     }
 

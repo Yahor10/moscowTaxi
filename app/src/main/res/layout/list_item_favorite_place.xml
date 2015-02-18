@@ -75,6 +75,7 @@
                     android:layout_weight="1"
                     android:visibility="gone"
                     android:gravity="center"
+                    android:dropDownWidth="fill_parent"
                     android:singleLine="true"
                     android:textColor="@android:color/white" />
 

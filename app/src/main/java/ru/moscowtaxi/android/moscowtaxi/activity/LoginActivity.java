@@ -55,6 +55,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 // gl es version feature.
                 if (featureInfo.name == null) {
                     if (featureInfo.reqGlEsVersion != FeatureInfo.GL_ES_VERSION_UNDEFINED) {
+
                         return getMajorVersion(featureInfo.reqGlEsVersion);
                     } else {
                         return 1; // Lack of property means OpenGL ES
@@ -119,6 +120,45 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_authorize:
+                if (edtPhoneNumber.getText().length() < 7) {
+                    edtPhoneNumber.setError("Слишком короткий номер");
+                    return;
+                } else {
+                    PreferenceUtils.setCurrentPhone(this, edtPhoneNumber.getText().toString());
+                }
+                if (edtSmsCode.getText().length() < 3) {
+                    edtSmsCode.setError("Слишком короткий код");
+                    return;
+                } else {
+                    PreferenceUtils.setCurrentHash(this, HashUtils.md5(edtSmsCode.getText().toString()));
+                }
+                if (WebUtils.isOnline(this)) {
+
+                    String phone = edtPhoneNumber.getText().toString();
+//                    String phone = PreferenceUtils.getCurrentUserPhone(this);
+                    String id = PreferenceUtils.getDeviceId(this);
+                    String hash = HashUtils.md5(edtSmsCode.getText().toString());
+                    loginUser(phone, hash, id);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.button_registration:
+                Intent intent = new Intent(this, RegistrationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.button_go_main:
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
+                break;
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_login);
@@ -164,45 +204,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 //        startActivity(new Intent(this,MainActivity.class));
 //        finish();
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_authorize:
-                if (edtPhoneNumber.getText().length() < 7) {
-                    edtPhoneNumber.setError("Слишком короткий номер");
-                    return;
-                } else {
-                    PreferenceUtils.setCurrentPhone(this, edtPhoneNumber.getText().toString());
-                }
-                if (edtSmsCode.getText().length() < 3) {
-                    edtSmsCode.setError("Слишком короткий код");
-                    return;
-                } else {
-                    PreferenceUtils.setCurrentHash(this, HashUtils.md5(edtSmsCode.getText().toString()));
-                }
-                if (WebUtils.isOnline(this)) {
-
-                    String phone = edtPhoneNumber.getText().toString();
-//                    String phone = PreferenceUtils.getCurrentUserPhone(this);
-                    String id = PreferenceUtils.getDeviceId(this);
-                    String hash = HashUtils.md5(edtSmsCode.getText().toString());
-                    loginUser(phone, hash, id);
-
-                } else {
-                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_no_internet_connection), Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.button_registration:
-                Intent intent = new Intent(this, RegistrationActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.button_go_main:
-                Intent intent1 = new Intent(this, MainActivity.class);
-                startActivity(intent1);
-                break;
-        }
     }
 
     public void loginUser(String phone, String hash, String id) {
