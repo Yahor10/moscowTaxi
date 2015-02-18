@@ -55,7 +55,7 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public FavoritePlaceORM getItem(int i) {
         if (items == null)
             return null;
         return items.get(i);

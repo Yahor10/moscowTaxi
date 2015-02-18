@@ -14,6 +14,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
  */
 
 @DatabaseTable(tableName = "favorite_place")
-public class FavoritePlaceORM extends EntityORM {
+public class FavoritePlaceORM extends EntityORM implements Serializable {
 
 
     public static final String NAME = "name";

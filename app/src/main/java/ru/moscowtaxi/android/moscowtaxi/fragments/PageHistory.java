@@ -46,17 +46,7 @@ public class PageHistory extends Fragment implements LoaderManager.LoaderCallbac
         View rootView = inflater.inflate(R.layout.page_history, container, false);
         listView = (ListView) rootView.findViewById(R.id.list_history);
 
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

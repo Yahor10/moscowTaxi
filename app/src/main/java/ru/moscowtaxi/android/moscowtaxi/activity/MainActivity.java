@@ -36,23 +36,28 @@ import ru.moscowtaxi.android.moscowtaxi.fragments.PageFavorite;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageHistory;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageMain;
 import ru.moscowtaxi.android.moscowtaxi.fragments.PageReward_History;
+import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
 import ru.moscowtaxi.android.moscowtaxi.orm.OrderHistoryORM;
 
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public final static int KEY_ACTIVITY_RESULT_FROM_HISTORY = 1;
+    public final static int KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE = 2;
     public static int PAGE_MAIN = 0;
     public static int PAGE_FAVORITE_PLACE = 1;
     public static int PAGE_FAVORITE_ROUTE = 2;
     public static int PAGE_HISTORY = 3;
     public static int PAGE_REWARDS = 4;
     public static String KEY_ACTIVITY_RESULT_FROM_HISTORY_data = "key_from_history_data";
+    public static String KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE_data = "key_from_favorite_place";
+    public static String KEY_PLAСE_NUMBER = "key_place_number";
+
     public static OrderHistoryORM historyORM;
-    public static boolean flag_from_history = false;
+    public static String adressFromLibrirary = "";
+    public static boolean flag_from_or_to_editText = true;//true--from___false-to
 
     public Fragment current_fragment = null;
-
 
 
     /**
@@ -199,20 +204,31 @@ public class MainActivity extends Activity
         if (data == null) {
             return;
         }
-
+        Bundle bundle;
         switch (requestCode) {
             case KEY_ACTIVITY_RESULT_FROM_HISTORY:
-                Bundle bundle = data.getExtras();
+                bundle = data.getExtras();
                 OrderHistoryORM historyORM = (OrderHistoryORM) bundle.getSerializable(KEY_ACTIVITY_RESULT_FROM_HISTORY_data);
 
 
                 if (current_fragment instanceof PageMain) {
                     ((PageMain) current_fragment).setCurrentItem(1);
                     MainActivity.historyORM = historyORM;
-                    flag_from_history = true;
 
                 }
+                break;
+            case KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE:
+                flag_from_or_to_editText = data.getBooleanExtra(KEY_PLAСE_NUMBER, true);
+                bundle = data.getExtras();
 
+                FavoritePlaceORM favoritePlaceORM = (FavoritePlaceORM) bundle.getSerializable(KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE_data);
+                 adressFromLibrirary = favoritePlaceORM.address;
+                if (current_fragment instanceof PageMain) {
+                    ((PageMain) current_fragment).setCurrentItem(0);
+                }else {
+                    onNavigationDrawerItemSelected(0);
+                }
+                break;
         }
     }
 

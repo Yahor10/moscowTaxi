@@ -216,7 +216,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
         filter.addAction(KEY_RECIEVER_FOLLOW);
 
         getActivity().registerReceiver(recieverFollow, filter);
-        if(MainActivity.flag_from_history)
+
         setDataFromHistory(MainActivity.historyORM);
     }
 
@@ -371,7 +371,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
     public void setDataFromHistory(OrderHistoryORM history) {
 
         if (history != null) {
-            if (null == edtTaxiId || null == txtWhere || null == txtFrom || null == txtStatus || null==txtNumberOrder)
+            if (null == edtTaxiId || null == txtWhere || null == txtFrom || null == txtStatus || null == txtNumberOrder)
                 return;
 
             if (!"".equals(history.number)) {
@@ -386,7 +386,7 @@ public class PageFollow extends Fragment implements View.OnTouchListener, View.O
                 txtWhere.setText(history.addressTo);
 
 
-            MainActivity.flag_from_history = false;
+            MainActivity.historyORM = null;
         }
     }
 

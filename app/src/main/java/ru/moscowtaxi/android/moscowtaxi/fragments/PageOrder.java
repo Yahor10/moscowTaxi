@@ -48,6 +48,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.FromLibraryAddress;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.CustomTimePickerDialog;
 import ru.moscowtaxi.android.moscowtaxi.dialogs.DialogMessageAndTitle;
@@ -224,6 +225,20 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!"".equals(MainActivity.adressFromLibrirary)) {
+            if (MainActivity.flag_from_or_to_editText) {
+                edtFrom.setText(MainActivity.adressFromLibrirary);
+            } else {
+                edtWhere.setText(MainActivity.adressFromLibrirary);
+            }
+            MainActivity.adressFromLibrirary = "";
+        }
+    }
+
     private void connectGoogleApiClient() {
         if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
             mGoogleApiClient.connect();
@@ -246,8 +261,14 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                 }
                 break;
             case R.id.view_but_my_adreeses_from:
+                Intent intent_from = new Intent(getActivity(), FromLibraryAddress.class);
+                intent_from.putExtra(MainActivity.KEY_PLAСE_NUMBER, true);
+                getActivity().startActivityForResult(intent_from, MainActivity.KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE);
                 break;
             case R.id.view_but_my_adreeses_where:
+                Intent intent_to = new Intent(getActivity(), FromLibraryAddress.class);
+                intent_to.putExtra(MainActivity.KEY_PLAСE_NUMBER, false);
+                getActivity().startActivityForResult(intent_to, MainActivity.KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE);
                 break;
             case R.id.view_but_get_car_now:
                 mcurrentTime = Calendar.getInstance();

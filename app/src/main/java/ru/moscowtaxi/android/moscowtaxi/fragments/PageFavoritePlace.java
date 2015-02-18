@@ -1,19 +1,24 @@
 package ru.moscowtaxi.android.moscowtaxi.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.FromLibraryAddress;
+import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
 import ru.moscowtaxi.android.moscowtaxi.helpers.adapters.FavoritesPlacesListAdapter;
 import ru.moscowtaxi.android.moscowtaxi.loaders.FavoritePlaceLoader;
 import ru.moscowtaxi.android.moscowtaxi.orm.FavoritePlaceORM;
@@ -26,6 +31,7 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
     private static final int LOADER_ID = 101;
     ListView listView;
     FavoritesPlacesListAdapter adapter;
+    public boolean flag_edit_text = false;
 
     public static PageFavoritePlace newInstance() {
         PageFavoritePlace fragment = new PageFavoritePlace();
@@ -59,7 +65,7 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
             @Override
             public void onClick(View view) {
                 List<FavoritePlaceORM> items = adapter.getItems();
-                for ( FavoritePlaceORM item : items){
+                for (FavoritePlaceORM item : items) {
                     item.is_edited_now = false;
                 }
                 if (items == null) {
@@ -75,6 +81,29 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
                 adapter.setItems(items);
                 adapter.notifyDataSetChanged();
 
+            }
+        });
+
+        if (getActivity() instanceof FromLibraryAddress) {
+            Intent intent = getActivity().getIntent();
+            if (intent!=null){
+                flag_edit_text = intent.getBooleanExtra(MainActivity.KEY_PLAСE_NUMBER,true);
+            }
+        }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Activity activity = getActivity();
+                if (activity instanceof FromLibraryAddress) {
+                    Intent intent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(MainActivity.KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE_data, adapter.getItem(i));
+                    intent.putExtra(MainActivity.KEY_PLAСE_NUMBER,flag_edit_text);
+                    intent.putExtras(bundle);
+                    activity.setResult(MainActivity.KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE, intent);
+                    activity.finish();
+                }
             }
         });
 

@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
-                    android:text=": Воробьёвы горы" />
+                    android:text=" Воробьёвы горы" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
-                    android:text=": Красная площадь" />
+                    android:text=" Красная площадь" />
             </LinearLayout>
 
             <LinearLayout
