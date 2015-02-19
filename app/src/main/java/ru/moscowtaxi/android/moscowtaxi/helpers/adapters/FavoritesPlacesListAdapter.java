@@ -245,6 +245,23 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
             butDetectAdress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+                    edtName.setVisibility(View.GONE);
+
+                    txtAboveName.setVisibility(View.VISIBLE);
+                    edtAdress.setVisibility(View.VISIBLE);
+                    if ("".equals(edtName.getText().toString())) {
+                        txtAboveName.setText("Имя");
+                    } else {
+                        txtAboveName.setText(edtName.getText());
+                    }
+
+                    txtAboveAdress.setVisibility(View.GONE);
+
+                    edtAdress.requestFocus();
+
+
                     MainActivity activity = (MainActivity) v.getContext();
                     Location lastLocation = activity.getLastLocation();
                     if (lastLocation != null) {
