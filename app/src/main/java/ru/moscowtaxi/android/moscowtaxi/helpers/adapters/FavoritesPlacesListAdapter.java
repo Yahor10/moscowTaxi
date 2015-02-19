@@ -3,11 +3,14 @@ package ru.moscowtaxi.android.moscowtaxi.helpers.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -152,8 +155,9 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
 //                }
 //            });
 
-            edtAdress.setThreshold(1);
+            edtAdress.setThreshold(2);
             edtAdress.setAdapter(new NEWAutoCompleteAdapter(c, R.layout.list_item_autocomplete));
+
 
             txtAboveAdress.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -244,13 +248,12 @@ public class FavoritesPlacesListAdapter extends BaseAdapter {
                     MainActivity activity = (MainActivity) v.getContext();
                     Location lastLocation = activity.getLastLocation();
                     if (lastLocation != null) {
-                        new MainActivity.GetAddressTask(activity, edtAdress).execute(lastLocation);
+                        new MainActivity.GetAddressTask(activity, edtAdress,FavoritesPlacesListAdapter.this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, lastLocation);
                     } else {
                         Toast.makeText(activity, activity.getString(R.string.failed_determinate_location), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-
         }
     }
 }

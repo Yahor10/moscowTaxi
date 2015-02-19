@@ -91,7 +91,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="Адресс"
+                    android:text="@string/address"
                     android:textColor="@android:color/white" />
 
                 <TextView

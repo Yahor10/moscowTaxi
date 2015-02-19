@@ -74,7 +74,7 @@ public class PageFavoritePlace extends Fragment implements LoaderManager.LoaderC
 
                 FavoritePlaceORM item1 = new FavoritePlaceORM();
                 item1.name = "Название";
-                item1.address = "Адресс";
+                item1.address = getString(R.string.address);
                 item1.is_edited_now = true;
 
                 items.add(item1);

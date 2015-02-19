@@ -18,7 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -83,6 +85,8 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
 
+        buildGoogleApiClient();
+        connectGoogleApiClient();
     }
 
 
@@ -309,18 +313,26 @@ public class MainActivity extends Activity
     public static class GetAddressTask extends
             AsyncTask<Location, Void, String> {
         private final EditText edtFrom;
+        private final BaseAdapter mAdapter;
         Context mContext;
 
         public GetAddressTask(Context context, EditText editText) {
             super();
             mContext = context;
             edtFrom = editText;
+            mAdapter = null;
+        }
+
+        public GetAddressTask(Context context, EditText editText,BaseAdapter adapter) {
+            super();
+            mContext = context;
+            edtFrom = editText;
+            mAdapter = adapter;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            edtFrom.setText("");
         }
 
         /**
@@ -393,7 +405,13 @@ public class MainActivity extends Activity
             Log.v(null, "ADDRESS" + s);
             if (!TextUtils.isEmpty(s)) {
                 edtFrom.setText(s);
+                edtFrom.requestFocus();
             }
+
+            if(mAdapter != null){
+                Log.v(null,"update adapter");
+            }
+
             super.onPostExecute(s);
         }
     }

@@ -362,7 +362,7 @@ public class PageOrder extends Fragment implements View.OnClickListener, GoogleA
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getActivity(), "Result = " + message, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "ОШИБКА С СЕРВЕРА =  " + message, Toast.LENGTH_SHORT).show();
                             }
                         }
 
