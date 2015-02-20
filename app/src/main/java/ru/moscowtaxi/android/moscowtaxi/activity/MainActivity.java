@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -334,6 +335,8 @@ public class MainActivity extends Activity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Activity activity = (Activity) mContext;
+            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         }
 
         /**
@@ -413,6 +416,8 @@ public class MainActivity extends Activity
                 Log.v(null,"update adapter");
             }
 
+            Activity activity = (Activity) mContext;
+            activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
             super.onPostExecute(s);
         }
     }
