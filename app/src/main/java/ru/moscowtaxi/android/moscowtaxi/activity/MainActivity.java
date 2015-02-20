@@ -19,7 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Adapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -93,6 +93,16 @@ public class MainActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+
+
+        try {
+            final InputMethodManager imm = (InputMethodManager) getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
+
         Fragment fragment;
         switch (position) {
             case 0:
@@ -228,10 +238,10 @@ public class MainActivity extends Activity
                 bundle = data.getExtras();
 
                 FavoritePlaceORM favoritePlaceORM = (FavoritePlaceORM) bundle.getSerializable(KEY_ACTIVITY_RESULT_FROM_FAVORITE_PLACE_data);
-                 adressFromLibrirary = favoritePlaceORM.address;
+                adressFromLibrirary = favoritePlaceORM.address;
                 if (current_fragment instanceof PageMain) {
                     ((PageMain) current_fragment).setCurrentItem(0);
-                }else {
+                } else {
                     onNavigationDrawerItemSelected(0);
                 }
                 break;
@@ -325,7 +335,7 @@ public class MainActivity extends Activity
             mAdapter = null;
         }
 
-        public GetAddressTask(Context context, EditText editText,BaseAdapter adapter) {
+        public GetAddressTask(Context context, EditText editText, BaseAdapter adapter) {
             super();
             mContext = context;
             edtFrom = editText;
@@ -412,8 +422,8 @@ public class MainActivity extends Activity
                 edtFrom.requestFocus();
             }
 
-            if(mAdapter != null){
-                Log.v(null,"update adapter");
+            if (mAdapter != null) {
+                Log.v(null, "update adapter");
             }
 
             Activity activity = (Activity) mContext;
