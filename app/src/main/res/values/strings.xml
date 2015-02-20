@@ -129,7 +129,7 @@
     <string name="order_wait_driver">Заказ предложен водителю (у водителя есть
     возможность не принимать заказ)</string>
 
-   <!-- Registration -->
+    <!-- Registration -->
     <string name="register_success_sms_sended">
         Регистрация прошла успешна.На ваш номер отправлен смс-код активации.
     </string>
@@ -145,4 +145,5 @@
     <string name="smd_code">СМС-код</string>
 
 
+    <string name="log_out"><u>Выйти и сменить номер</u></string>
 </resources>

@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -30,7 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ru.moscowtaxi.android.moscowtaxi.R;
+import ru.moscowtaxi.android.moscowtaxi.activity.LoginActivity;
 import ru.moscowtaxi.android.moscowtaxi.activity.MainActivity;
+import ru.moscowtaxi.android.moscowtaxi.preferences.PreferenceUtils;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -99,6 +102,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,6 +111,23 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
+
+
+        View footerView = (View) inflater.inflate(R.layout.footer_view_menu, null);
+
+        footerView.findViewById(R.id.txt_log_out).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PreferenceUtils.setCurrentHash(getActivity(), "");
+                PreferenceUtils.setCurrentPhone(getActivity(), "");
+                PreferenceUtils.setCurrentUser(getActivity(), "");
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+        mDrawerListView.addFooterView(footerView);
 
         String[] texts1 = {getString(R.string.navigation_personal_info), getString(R.string.navigation_favorites), getString(R.string.navigation_favorites_rides),
                 getString(R.string.navigation_history_rides), getString(R.string.navigation_rewards)};

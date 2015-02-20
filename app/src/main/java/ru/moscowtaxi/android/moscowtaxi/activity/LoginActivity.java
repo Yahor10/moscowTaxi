@@ -202,8 +202,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
         }
 
-        startActivity(new Intent(this,MainActivity.class));
-        finish();
+//        startActivity(new Intent(this,MainActivity.class));
+//        finish();
     }
 
     public void loginUser(String phone, String hash, String id) {

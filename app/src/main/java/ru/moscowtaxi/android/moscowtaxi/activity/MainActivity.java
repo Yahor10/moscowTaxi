@@ -139,18 +139,19 @@ public class MainActivity extends Activity
                 fragment = PageHistory.newInstance();
                 break;
             case 4:
-                if (current_page == PAGE_REWARDS) {
-                    return;
-                } else if (current_page == PAGE_HISTORY) {
-                    ViewPager pager = ((PageReward_History) current_fragment).mViewPager;
-                    if (pager != null) {
-                        pager.setCurrentItem(0, true);
-                        current_page = position;
-                    }
-                    return;
-                }
-                fragment = PageReward_History.newInstance(0);
-                break;
+                return;
+//                if (current_page == PAGE_REWARDS) {
+//                    return;
+//                } else if (current_page == PAGE_HISTORY) {
+//                    ViewPager pager = ((PageReward_History) current_fragment).mViewPager;
+//                    if (pager != null) {
+//                        pager.setCurrentItem(0, true);
+//                        current_page = position;
+//                    }
+//                    return;
+//                }
+//                fragment = PageReward_History.newInstance(0);
+//                break;
             default:
                 fragment = PlaceholderFragment.newInstance(position + 1);
         }
